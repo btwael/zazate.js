@@ -420,6 +420,43 @@ function minor_eleventh(note) {
 
 // absolute
 
+function minor_thirteenth(note) {
+	/*Builds a minor thirteenth chord on note.
+	Example:
+	{{{
+	>>> minor_thirteenth('C')
+	['C', 'Eb', 'G', 'Bb', 'D', 'A']
+	}}}*/
+	var arr = minor_ninth(note);
+	arr.push(intervals.major_sixth(note));
+	return arr;
+}
+
+
+function major_thirteenth(note) {
+	/*Builds a major thirteenth chord on note.
+	Example:
+	{{{
+	>>> major_thirteenth('C')
+	['C', 'E', 'G', 'B', 'D', 'A']
+	}}}*/
+	var arr = major_ninth(note);
+	arr.push(intervals.major_sixth(note));
+	return arr;
+}
+
+
+function dominant_thirteenth(note) {
+	/*Builds a dominant thirteenth chord on note.
+	Example:
+	{{{
+	>>> dominant_thirteenth('C')
+	['C', 'E', 'G', 'Bb', 'D', 'A']
+	}}}*/
+	var arr = dominant_ninth(note);
+	arr.push(intervals.major_sixth(note));
+	return arr;
+}
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -448,3 +485,6 @@ exports.dominant_flat_ninth = dominant_flat_ninth
 exports.dominant_sharp_ninth = dominant_sharp_ninth;
 exports.eleventh = eleventh;
 exports.minor_eleventh = minor_eleventh;
+exports.minor_thirteenth = minor_thirteenth;
+exports.major_thirteenth = major_thirteenth;
+exports.dominant_thirteenth = dominant_thirteenth;
