@@ -381,6 +381,45 @@ function dominant_sharp_ninth(note) {
 	res[4] = notes.augment(intervals.major_second(note));
 	return res;
 }
+
+/*===================================================================
+							Elevenths
+===================================================================*/
+
+// diatonic
+
+
+// absolute
+
+
+function eleventh(note) {
+	/*Builds an eleventh chord on note.
+	Example:
+	{{{
+	>>> eleventh("C")
+	['C', 'G', 'Bb', 'F']
+	}}}*/
+	return [note, intervals.perfect_fifth(note), intervals.minor_seventh(note), intervals.perfect_fourth(note)];
+}
+
+function minor_eleventh(note) {
+	/*Builds a minor eleventh chord on note.
+	Example:
+	{{{
+	>>> minor_eleventh("C")
+	['C', 'Eb', 'G', 'Bb', 'F']
+	}}}*/
+	var arr = minor_seventh(note);
+	arr.push(intervals.perfect_fourth(note));
+	return arr;
+}
+
+/*===================================================================
+							Thirteenths
+===================================================================*/
+
+// absolute
+
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -407,3 +446,5 @@ exports.major_ninth = major_ninth;
 exports.dominant_ninth = dominant_ninth;
 exports.dominant_flat_ninth = dominant_flat_ninth
 exports.dominant_sharp_ninth = dominant_sharp_ninth;
+exports.eleventh = eleventh;
+exports.minor_eleventh = minor_eleventh;
