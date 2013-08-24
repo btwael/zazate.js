@@ -325,15 +325,38 @@ function sixth_ninth(note) {
 function minor_ninth(note) {
 	/*Builds a minor ninth chord on note.
 	Example:
-{{{
->>> minor_ninth("C")
-['C', 'Eb', 'G', 'Bb', 'D']
-}}}*/
+	{{{
+	>>> minor_ninth("C")
+	['C', 'Eb', 'G', 'Bb', 'D']
+	}}}*/
 	var arr = minor_seventh(note);
 	arr.push(intervals.major_second(note));
 	return arr;
 }
 
+function major_ninth(note) {
+	/*Builds a major ninth chord on note.
+	Example:
+	{{{
+	>>> major_ninth("C")
+	['C', 'E', 'G', 'B', 'D']
+	}}}*/
+	var arr = major_seventh(note);
+	arr.push(intervals.major_second(note));
+	return arr;
+}
+
+function dominant_ninth(note) {
+	/*Builds a dominant ninth chord on note.
+	Example:
+	{{{
+	>>> dominant_ninth("C")
+	['C', 'E', 'G', 'Bb', 'D']
+	}}}*/
+	var arr = dominant_seventh(note);
+	arr.push(intervals.major_second(note));
+	return arr;
+}
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -356,3 +379,5 @@ exports.major_sixth = major_sixth;
 exports.dominant_sixth = dominant_sixth;
 exports.sixth_ninth = sixth_ninth;
 exports.minor_ninth = minor_ninth;
+exports.major_ninth = major_ninth;
+exports.dominant_ninth = dominant_ninth;
