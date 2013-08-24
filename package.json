@@ -1,0 +1,14 @@
+{
+	"name": "zazate.js",
+	"version": "0.1.0",
+	"description": "Unfancy PHP",
+	"author": {
+		"name": "Wael Amine Boutglay",
+		"email": "btwael@gmail.com"
+	},
+	"main": "core/init.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/btwael/zazate.js.git"
+	}
+}
