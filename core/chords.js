@@ -357,6 +357,30 @@ function dominant_ninth(note) {
 	arr.push(intervals.major_second(note));
 	return arr;
 }
+
+function dominant_flat_ninth(note) {
+	/*Builds a dominant flat ninth chord on note.
+	Example:
+	{{{
+	>>> dominant_ninth("C")
+	['C', 'E', 'G', 'Bb', 'Db']
+	}}}*/
+	var res = dominant_ninth(note);
+	res[4] = intervals.minor_second(note);
+	return res;
+}
+
+function dominant_sharp_ninth(note) {
+	/*Builds a dominant sharp ninth chord on note.
+	Example:
+	{{{
+	>>> dominant_ninth("C")
+	['C', 'E', 'G', 'Bb', 'D#']
+	}}}*/
+	var res = dominant_ninth(note);
+	res[4] = notes.augment(intervals.major_second(note));
+	return res;
+}
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -381,3 +405,5 @@ exports.sixth_ninth = sixth_ninth;
 exports.minor_ninth = minor_ninth;
 exports.major_ninth = major_ninth;
 exports.dominant_ninth = dominant_ninth;
+exports.dominant_flat_ninth = dominant_flat_ninth
+exports.dominant_sharp_ninth = dominant_sharp_ninth;

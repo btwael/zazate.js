@@ -1,7 +1,8 @@
 {
 	"name": "zazate.js",
 	"version": "0.1.0",
-	"description": "Unfancy PHP",
+	"description": "Music theory and notation library for javascript and node.js
+",
 	"author": {
 		"name": "Wael Amine Boutglay",
 		"email": "btwael@gmail.com"
