@@ -457,6 +457,64 @@ function dominant_thirteenth(note) {
 	arr.push(intervals.major_sixth(note));
 	return arr;
 }
+
+/*===================================================================
+							Suspended Chords
+===================================================================*/
+
+// absolute
+
+function suspended_triad(note) {
+	/*An alias for suspended_fourth_triad*/
+	return suspended_fourth_triad(note)
+}
+
+
+function suspended_second_triad(note) {
+	/*Builds a suspended second triad on note.
+	Example:
+	{{{
+	>>> suspended_second_triad("C")
+	["C", "D", "G"]
+	}}}*/
+	return [note, intervals.major_second(note), intervals.perfect_fifth(note)];
+}
+
+
+function suspended_fourth_triad(note) {
+	/*Builds a suspended fourth triad on note.
+	Example:
+	{{{
+	>>> suspended_fourth_triad("C")
+	["C", "F", "G"]
+	}}}*/
+	return [note, intervals.perfect_fourth(note), intervals.perfect_fifth(note)]
+}
+
+function suspended_seventh(note) {
+	/*Builds a suspended (flat) seventh chord on note.
+	Example:
+	{{{
+	>>> suspended_seventh("C")
+	["C", "F", "G", "Bb"]
+	}}}*/
+	var arr = suspended_fourth_triad(note);
+	arr.push(intervals.minor_seventh(note));
+	return arr;
+}
+
+function suspended_fourth_ninth(note) {
+	/*Builds a suspended fourth flat ninth chord on note.
+	Example:
+	{{{
+	>>> suspended_ninth("C")
+	['C', 'F', 'G', 'Db']
+	}}}*/
+	var arr = suspended_fourth_triad(note);
+	arr.push(intervals.minor_second(note));
+	return arr;
+}
+
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -488,3 +546,8 @@ exports.minor_eleventh = minor_eleventh;
 exports.minor_thirteenth = minor_thirteenth;
 exports.major_thirteenth = major_thirteenth;
 exports.dominant_thirteenth = dominant_thirteenth;
+exports.suspended_triad = suspended_triad;
+exports.suspended_second_triad = suspended_second_triad;
+exports.suspended_fourth_triad = suspended_fourth_triad;
+exports.suspended_seventh = suspended_seventh;
+exports.suspended_fourth_ninth = suspended_fourth_ninth;
