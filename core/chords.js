@@ -543,6 +543,44 @@ function augmented_minor_seventh(note) {
 	return arr;
 }
 
+/*===================================================================
+							Various, Altered and Special chords
+===================================================================*/
+function dominant_flat_five(note) {
+	/*Builds a dominant flat five chord on note.
+	Example:
+	{{{
+	>>> dominant_flat_five("C")
+	['C', 'E', 'Gb', 'Bb']
+	}}}*/
+	var res = dominant_seventh(note)
+	res[2] = notes.diminish(res[2])
+	return res;
+}
+
+function lydian_dominant_seventh(note) {
+	/*Builds the lydian dominant seventh (7#11) on note
+	Example:
+	{{{
+	>>> lydian_dominant_seventh('C')
+	['C', 'E', 'G', 'Bb', 'F#']
+	}}}*/
+	var arr = dominant_seventh(note);
+	arr.push(notes.augment(intervals.perfect_fourth(note)));
+	return arr;
+}
+
+function hendrix_chord(note) {
+	/*Builds the famous Hendrix chord (7b12)
+	Example:
+	{{{
+	>>> hendrix_chord('C')
+	['C', 'E', 'G', 'Bb', 'Eb']
+	}}}*/
+	var arr = dominant_seventh(note);
+	arr.push(intervals.minor_third(note));
+	return arr;
+}
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -581,3 +619,6 @@ exports.suspended_seventh = suspended_seventh;
 exports.suspended_fourth_ninth = suspended_fourth_ninth;
 exports.augmented_major_seventh = augmented_major_seventh;
 exports.augmented_minor_seventh = augmented_minor_seventh;
+exports.dominant_flat_five = dominant_flat_five;
+exports.lydian_dominant_seventh = lydian_dominant_seventh;
+exports.hendrix_chord = hendrix_chord;
