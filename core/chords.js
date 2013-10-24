@@ -515,6 +515,34 @@ function suspended_fourth_ninth(note) {
 	return arr;
 }
 
+/*===================================================================
+							Augmented Chords
+===================================================================*/
+
+function augmented_major_seventh(note) {
+	/*Builds an augmented major seventh chord on note.
+	Example:
+	{{{
+	>>> augmented_major_seventh("C") 
+	["C", "E", "G#", "B"]
+	}}}*/
+	var arr = augmented_triad(note);
+	arr.push(intervals.major_seventh(note));
+	return arr;
+}
+
+function augmented_minor_seventh(note) {
+	/*Builds an augmented minor seventh chord on note.
+	Example:
+	{{{
+	>>> augmented_minor_seventh("C")
+	["C", "E", "G#", "Bb"]
+	}}}*/
+	var arr = augmented_triad(note);
+	arr.push(intervals.minor_seventh(note));
+	return arr;
+}
+
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -551,3 +579,5 @@ exports.suspended_second_triad = suspended_second_triad;
 exports.suspended_fourth_triad = suspended_fourth_triad;
 exports.suspended_seventh = suspended_seventh;
 exports.suspended_fourth_ninth = suspended_fourth_ninth;
+exports.augmented_major_seventh = augmented_major_seventh;
+exports.augmented_minor_seventh = augmented_minor_seventh;
