@@ -581,6 +581,116 @@ function hendrix_chord(note) {
 	arr.push(intervals.minor_third(note));
 	return arr;
 }
+
+/*===================================================================
+							Chords by harmonic function
+===================================================================*/
+
+function tonic(key) {
+	/*Returns the tonic chord in key.
+	Example:
+	{{{
+	>>> tonic("C") 
+	["C", "E", "G"]
+	}}}*/
+	return triads(key)[0];
+}
+
+function tonic7(key) {
+	/*Same as tonic(key), but returns seventh chord instead*/
+	return sevenths(key)[0];
+}
+
+function supertonic(key) {
+	/*Returns the supertonic chord in key.
+	Example:
+	{{{
+	>>> supertonic("C")
+	["D", "F", "A"]
+	}}}*/
+	return triads(key)[1];
+}
+
+function supertonic7(key) {
+	/*Same as supertonic(key), but returns seventh chord*/
+	return sevenths(key)[1];
+}
+
+function mediant(key) {
+	/*Returns the mediant chord in key.
+	Example:
+	{{{
+	>>> mediant("C") 
+	["E", "G", "B"]
+	}}}*/
+	return triads(key)[2];
+}
+
+function mediant7(key) {
+	/*Same as mediant(key), but returns seventh chord*/
+	return sevenths(key)[2];
+}
+
+function subdominant(key) {
+	/*Returns the subdominant chord in key.
+	Example:
+	{{{
+	>>> subdominant("C") 
+	["F", "A", "C"]
+	}}}*/
+	return triads(key)[3];
+}
+
+function subdominant7(key) {
+	/*Same as subdominant(key), but returns seventh chord*/
+	return sevenths(key)[3];
+}
+
+function dominant(key) {
+	/*Returns the dominant chord in key.
+	Example:
+	{{{
+	>>> dominant("C") 
+	["G", "B", "D"]
+	}}}*/
+	return triads(key)[4];
+}
+
+function dominant7(key) {
+	/*Same as dominant(key), but returns seventh chord*/
+	return sevenths(key)[4];
+}
+
+function submediant(key) {
+	/*Returns the submediant chord in key.
+	Example:
+	{{{
+	>>> submediant("C") 
+	["A", "C", "E"]
+	}}}*/
+	return triads(key)[5];
+}
+
+function submediant7(key) {
+	/*Same as submediant(key), but returns seventh chord*/
+	return sevenths(key)[5];
+}
+
+function subtonic(key) {
+	/*Returns the subtonic in key.
+	Example:
+	{{{
+	>>> subtonic("C")
+	['B', 'D', 'F']
+	}}}*/
+	return triads(key)[6];
+}
+
+function subtonic7(key) {
+	/*Same as subtonic(key), but returns seventh chord*/
+	return sevenths(key)[6];
+}
+
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -622,3 +732,17 @@ exports.augmented_minor_seventh = augmented_minor_seventh;
 exports.dominant_flat_five = dominant_flat_five;
 exports.lydian_dominant_seventh = lydian_dominant_seventh;
 exports.hendrix_chord = hendrix_chord;
+exports.tonic = tonic;
+exports.tonic7 = tonic7;
+exports.supertonic = supertonic;
+exports.supertonic7 = supertonic7;
+exports.mediant = mediant;
+exports.mediant7 = mediant7;
+exports.subdominant = subdominant;
+exports.subdominant7 = subdominant7;
+exports.dominant = dominant;
+exports.dominant7 = dominant7;
+exports.submediant = submediant;
+exports.subdominant7 = subdominant7;
+exports.subtonic = subtonic;
+exports.subtonic7 = subtonic7;
