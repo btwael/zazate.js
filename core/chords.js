@@ -691,7 +691,100 @@ function subtonic7(key) {
 	return sevenths(key)[6];
 }
 
-//export
+/*===================================================================
+							Aliases
+===================================================================*/
+
+function I(key) {
+	return tonic(key);
+}
+
+function I7(key) {
+	return tonic7(key);
+}
+
+function ii(key) {
+	return supertonic(key);
+}
+
+function II(key) {
+	return supertonic(key);
+}
+
+function ii7(key) {
+	return supertonic7(key);
+}
+
+function II7(key) {
+	return supertonic7(key);
+}
+
+function iii(key) {
+	return mediant(key);
+}
+
+function III(key) {
+	return mediant(key);
+}
+
+function iii7(key) {
+	return mediant7(key);
+}
+
+function III7(key) {
+	return mediant7(key);
+}
+
+function IV(key) {
+	return subdominant(key);
+}
+
+function IV7(key) {
+	return subdominant7(key);
+}
+
+function V(key) {
+	return dominant(key);
+}
+
+function V7(key) {
+	return dominant7(key);
+}
+
+function vi(key) {
+	return submediant(key);
+}
+
+function VI(key) {
+	return submediant(key);
+}
+
+function vi7(key) {
+	return submediant7(key);
+}
+
+function VI7(key) {
+	return submediant7(key);
+}
+
+function vii(key) {
+	return subtonic(key);
+}
+
+function VII(key) {
+	return subtonic(key);
+}
+
+function vii7(key) {
+	return subtonic(key);
+}
+
+function VII7(key) {
+	return subtonic7(key);
+}
+
+//export}
+
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
 exports.chord_shorthand_meaning = chord_shorthand_meaning;
@@ -746,3 +839,25 @@ exports.submediant = submediant;
 exports.subdominant7 = subdominant7;
 exports.subtonic = subtonic;
 exports.subtonic7 = subtonic7;
+exports.I = I;
+exports.I7 = I7;
+exports.ii = ii;
+exports.II = II;
+exports.ii7 = ii7;
+exports.II7 = II7;
+exports.iii = iii;
+exports.III = III;
+exports.iii7 = iii7;
+exports.III7 = III7;
+exports.IV = IV;
+exports.IV7 = IV7;
+exports.V = V;
+exports.V7 = V7;
+exports.vi = vi;
+exports.VI = VI;
+exports.vi7 = vi7;
+exports.VI7 = VI7;
+exports.vii = vii;
+exports.VII = VII;
+exports.vii7 = vii7;
+exports.VII7 = VII7;
