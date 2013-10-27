@@ -783,8 +783,33 @@ function VII7(key) {
 	return subtonic7(key);
 }
 
-//export}
+/*===================================================================
+							Inversions
+===================================================================*/
 
+function invert(chord) {
+	/*Inverts a given chord one time*/
+	var a = chord.slice(1, chord.length);
+	a.push(chord[0]);
+	return a;
+}
+
+function first_inversion(chord) {
+	/*The first inversion of a chord*/
+	return invert(chord)
+}
+
+function second_inversion(chord) {
+	/*Returns the second inversion of chord*/
+	return invert(invert(chord))
+}
+
+function third_inversion(chord) {
+	/*Returns the third inversion of chord*/
+	return invert(invert(invert(chord)))
+}
+
+//export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
 exports.chord_shorthand_meaning = chord_shorthand_meaning;
@@ -861,3 +886,7 @@ exports.vii = vii;
 exports.VII = VII;
 exports.vii7 = vii7;
 exports.VII7 = VII7;
+exports.invert = invert;
+exports.first_inversion = first_inversion;
+exports.second_inversion = second_inversion;
+exports.third_inversion = third_inversion;
