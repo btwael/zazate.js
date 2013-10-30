@@ -1,6 +1,7 @@
 var intervals = require('./intervals.js'),
 	notes = require('./notes.js'),
 	diatonic = require('./diatonic.js');
+__indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 // A cache for composed triads
 _triads_cache = {};
@@ -809,6 +810,208 @@ function third_inversion(chord) {
 	return invert(invert(invert(chord)))
 }
 
+/*===================================================================
+							Other
+===================================================================*/
+
+function from_shorthand(shorthand_string, slash) {
+	/*Takes a chord written in shorthand and returns the notes in the \
+	chord. The function can recognize triads, sevenths, sixths, ninths, elevenths, \
+	thirteenths, slashed chords and a number of altered chords. \
+	The second argument should not be given and is only used for a recursive call \
+	when a slashed chord or polychord is found. See [http://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns Wikibooks] for a nice overview of chord patterns.
+		Example:
+	{{{
+	>>> from_shorthand("Amin")
+	["A", "C", "E"]
+	>>> from_shorthand("Am/M7")
+	["A", "C", "E", "G#"]
+	>>> from_shorthand("A")
+	["A", "C#", "E"]
+	>>> from_shorthand("A/G")
+	["G", "A", "C#", "E"]
+	>>> from_shorthand("Dm|G")
+	["G", "B", "D", "F", "A"]
+	}}}
+	Recognised abbreviations: the letters `m` and `M` in the following abbreviations  \
+	can always be substituted by respectively `min`, `mi` or `-` and `maj` or `ma` (eg. \
+	`from_shorthand("Amin7") == from_shorthand("Am7")`, etc.).
+	* Triads: *'m'*, *'M'* or *''*, *'dim'*. 
+	* Sevenths: *'m7'*, *'M7'*, *'7'*, *'m7b5'*, *'dim7'*, *'m/M7'* or *'mM7'*
+	* Augmented chords: *'aug'* or *'+'*, *'7#5'* or *'M7+5'*, *'M7+'*, *'m7+'*, *'7+'*
+	* Suspended chords: *'sus4'*, *'sus2'*, *'sus47'*, *'sus'*, *'11'*, *'sus4b9'* or *'susb9'*
+	* Sixths: *'6'*, *'m6'*, *'M6'*, *'6/7'* or *'67'*, *6/9* or *69*
+	* Ninths: *'9'*, *'M9'*, *'m9'*, *'7b9'*, *'7#9'*
+	* Elevenths: *'11'*, *'7#11'*, *'m11'*
+	* Thirteenths: *'13'*, *'M13'*, *'m13'*
+	* Altered chords: *'7b5'*, *'7b9'*, *'7#9'*, *'67'* or *'6/7'*
+	* Special: *'5'*, *'NC'*, *'hendrix'*
+	*/
+
+	//warning reduce?? 
+	if(typeof shorthand_string == 'array'){
+		var res = [];
+		for(var i = 0; i < shorthand_string.length; i++) {
+			res.push(from_shorthand(shorthand_string[i]));
+		};
+		return res;
+	}
+	if(__indexOf.call(["NC", "N.C."], shorthand_string) >= 0) {
+		return [];
+	}
+
+	//Shrink shorthand_string to a format recognised by chord_shorthand
+	shorthand_string = shorthand_string.replace('min', 'm');
+	shorthand_string = shorthand_string.replace('mi', 'm');
+	shorthand_string = shorthand_string.replace('-', 'm');
+
+	shorthand_string = shorthand_string.replace('maj', 'M');
+	shorthand_string = shorthand_string.replace('ma', 'M');
+
+	//Get the note name
+	if(!notes.is_valid_note(shorthand_string[0])) {
+		throw "NoteFormatError: Unrecognised note '" + shorthand_string[0] + "' in chord '" + shorthand_string + "'";
+	}
+
+	name = shorthand_string[0];
+
+	//Look for accidentals
+	for (_i = 0, _len = shorthand_string.slice(1, shorthand_string.length).length; _i < _len; _i++) {
+		n = shorthand_string.slice(1, shorthand_string.length)[_i];
+		if (n === '#') {
+			name += n;
+		} else if (n === 'b') {
+			name += n;
+		} else {
+			break;
+		}
+	}
+
+	//Look for slashes and polychords '|'
+	slash_index = -1;
+	s = 0;
+	rest_of_string = shorthand_string.slice(name.length, shorthand_string.length);
+	for (_i = 0, _len = rest_of_string.length; _i < _len; _i++) {
+		n = rest_of_string[_i];
+		if (n === '/') {
+			slash_index = s;
+		} else if (n === '|') {
+			//Generate polychord
+			return from_shorthand(shorthand_string.slice(0, name.length + s), from_shorthand(shorthand_string.slice(name.length + s + 1, shorthand_string.length)));
+		}
+		s += 1;
+	}
+
+	//Generate slash chord
+	if(slash_index != -1 && !(__indexOf.call(["m/M7", "6/9", "6/7"], rest_of_string) >= 0)) {
+		res = shorthand_string.slice(0, name.length + slash_index);
+		return from_shorthand(shorthand_string.slice(0, name.length + slash_index), shorthand_string.slice(name.length + slash_index + 1, shorthand_string.length))
+	}
+
+	shorthand_start = name.length;
+
+	//Return chord
+	short_chord = shorthand_string.slice(shorthand_start, shorthand_string.length);
+	if(chord_shorthand.hasOwnProperty(short_chord)) {
+		res = chord_shorthand[short_chord](name);
+		if(slash != null) {
+			//Add slashed chords
+			if(typeof slash == 'string') {
+				if(notes.is_valid_note(slash)) {
+					res.unshift(slash);
+				} else {
+					throw "NoteFormatError: Unrecognised note '" + slash + "' in slash chord '" + shorthand_string + "'";
+				}
+			//Add polychords
+			} else if(typeof slash == 'object') {
+				r = slash;
+				for (_i = 0, _len = res.length; _i < _len; _i++) {
+					n = res[_i];
+					if (n !== r[r.length-1]) {
+						r.push(n);
+					}
+				}
+				return r;
+			}
+		}
+		return res;
+	} else {
+		throw "FormatError: Unknown shorthand: " + shorthand_string;
+	}
+}
+
+// A dictionairy that can be used to present
+// chord abbreviations. This dictionairy is also
+// used in from_shorthand()
+chord_shorthand = {
+		// Triads
+		"m" : minor_triad,
+		"M" : major_triad, 
+		"" : major_triad,
+		"dim" : diminished_triad,
+
+		// Augmented chords
+		"aug" : augmented_triad,
+		"+" : augmented_triad,
+		"7#5" : augmented_minor_seventh,
+		"M7+5" : augmented_minor_seventh,
+		"M7+" : augmented_major_seventh,
+		"m7+" : augmented_minor_seventh,
+		"7+" : augmented_major_seventh,
+
+		// Suspended chords
+		"sus47" : suspended_seventh,
+		"sus4" : suspended_fourth_triad,
+		"sus2" : suspended_second_triad,
+		"sus" : suspended_triad,
+		"11" : eleventh,
+		"sus4b9" : suspended_fourth_ninth,
+		"susb9" : suspended_fourth_ninth,
+
+		// Sevenths
+		"m7" : minor_seventh,
+		"M7" : major_seventh,
+		"7" : dominant_seventh,
+		"dom7" : dominant_seventh,
+		"m7b5" : minor_seventh_flat_five,
+		"dim7" : diminished_seventh,
+		"m/M7" : minor_major_seventh,
+		"mM7" : minor_major_seventh,
+		
+		
+		// Sixths
+		"m6" : minor_sixth,
+		"M6" : major_sixth,
+		"6" : major_sixth, 
+		"6/7" : dominant_sixth,
+		"67": dominant_sixth,
+		"6/9" : sixth_ninth,
+		"69" : sixth_ninth,
+
+		// Ninths
+		"9" : dominant_ninth,
+		"7b9" : dominant_flat_ninth,
+		"7#9" : dominant_sharp_ninth,
+		"M9" : major_ninth,
+		"m9" : minor_ninth,
+
+		// Elevenths
+		"7#11" : lydian_dominant_seventh,
+		"m11" : minor_eleventh,
+
+		// Thirteenths
+		"M13" : major_thirteenth,
+		"m13" : minor_thirteenth,
+
+		"13" : dominant_thirteenth,
+
+		// Altered Chords
+		"7b5" : dominant_flat_five,
+		
+		// Special
+		"hendrix" : hendrix_chord,
+		"7b12" : hendrix_chord,
+}
 //export
 exports._triads_cache = _triads_cache;
 exports._sevenths_cache = _sevenths_cache;
@@ -890,3 +1093,4 @@ exports.invert = invert;
 exports.first_inversion = first_inversion;
 exports.second_inversion = second_inversion;
 exports.third_inversion = third_inversion;
+exports.from_shorthand = from_shorthand;
