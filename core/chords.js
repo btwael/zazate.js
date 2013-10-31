@@ -1011,6 +1011,9 @@ chord_shorthand = {
 		// Special
 		"hendrix" : hendrix_chord,
 		"7b12" : hendrix_chord,
+		"5" : function(x) {
+			return [x, intervals.perfect_fifth(x)];
+		}
 }
 //export
 exports._triads_cache = _triads_cache;
