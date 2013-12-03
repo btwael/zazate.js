@@ -940,6 +940,150 @@ function from_shorthand(shorthand_string, slash) {
 	}
 }
 
+/*===================================================================
+							Chord recognition
+===================================================================*/
+
+/*function determine(chord, shorthand, no_inversions, no_polychords) {
+	//Names a chord. Can determine almost every chord, from a simple triad to a fourteen note polychord.
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	if(no_inversions == null) {
+		no_inversions = false;
+	}
+	if(no_polychords == null) {
+		no_polychords = false;
+	}
+	if(chord == []) {
+		return [];
+	} else if(chord.length == 1) {
+		return chord;
+	} else if(chord.length == 2) {
+		return [intervals.determine(chord[0], chord[1])];
+	} else if(chord.length == 3) {
+		return determine_triad(chord, shorthand, no_inversions, no_polychords);
+	} else if(chord.length == 4) {
+		return determine_seventh(chord, shorthand, no_inversions, no_polychords);
+	} else if(chord.length == 5) {
+		return determine_extended_chord5(chord, shorthand, no_inversions, no_polychords);
+	} else if(chord.length == 6) {
+		return determine_extended_chord6(chord, shorthand, no_inversions, no_polychords);
+	} else if(chord.length == 7) {
+		return determine_extended_chord7(chord, shorthand, no_inversions, no_polychords);
+	} else {
+		return determine_polychords(chord, shorthand);
+	}
+}*/
+
+
+function determine_triad(triad, shorthand, no_inversions, placeholder) {
+	/*Names the triad. Returns answers in a list. The third argument should \
+	not be given. If shorthand is True the answers will be in abbreviated form.
+
+	Can determine major, minor, diminished and suspended triads. \
+	Also knows about invertions.
+
+	Examples:
+	{{{
+	>>> determine_triad(["A", "C", "E"])
+	'A minor triad'
+	>>> determine_triad(["C", "E", "A"]) 
+	'A minor triad, first inversion'
+	>>> determine_triad(["A", "C", "E"], True)
+	'Am'
+	}}}*/
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	if(no_inversions == null) {
+		no_inversions = false;
+	}
+	if(triad.length != 3) {
+		//warning: raise exception: not a triad
+		return false;
+	}
+
+	function inversion_exhauster(triad, shorthand, tries, resulta) {
+		/*Recursive helper function that runs tries every inversion
+		and saves the result.*/
+		var result = resulta;
+		intval1 = intervals.determine(triad[0], triad[1], true);
+		intval2 = intervals.determine(triad[0], triad[2], true);
+
+		function add_result(short) {
+			result.push([short, tries, triad[0]]);
+		}
+
+		intval = intval1 + intval2;
+		if(intval == "25") {
+			add_result("sus2");
+		} else if(intval == "3b7") {
+			add_result("dom7"); // changed from just '7'
+		} else if(intval == "3b5") { 
+			add_result("7b5"); // why not b5?
+		} else if(intval == "35") {
+			add_result("M");
+		} else if(intval == "3#5") {
+			add_result("aug");
+		} else if(intval == "36") {
+			add_result("M6");
+		} else if(intval == "37") {
+			add_result("M7");
+		} else if(intval == "b3b5") {
+			add_result("dim");
+		} else if(intval == "b35") {
+			add_result("m");
+		} else if(intval == "b36") {
+			add_result("m6");
+		} else if(intval == "b3b7") {
+			add_result("m7");
+		} else if(intval == "b37") {
+			add_result("m/M7");
+		} else if(intval == "45") {
+			add_result("sus4");
+		} else if(intval == "5b7") {
+			add_result("m7");
+		} else if(intval == "57") {
+			add_result("M7");
+		}
+
+		if(tries != 3 && !no_inversions) {
+			var arr = [triad[triad.length-1]];
+			var m = triad.slice(0, triad.length-1);
+			for (var i = 0; i < m.length; i++) {
+				arr.push(m[i]);
+			};
+			return inversion_exhauster(arr, shorthand, tries + 1, result);
+		} else {
+			res = [];
+			for (var i = 0; i < result.length; i++) {
+				r = result[i];
+				if(shorthand){
+					res.push(r[2] + r[0]);
+				} else {
+					res.push(r[2] + chord_shorthand_meaning[r[0]] + int_desc(r[1]));
+				}
+			};
+			return res;
+		}
+	}
+
+	return inversion_exhauster(triad, shorthand, 1, []);
+}
+
+function int_desc(tries) {
+	/*Helper function that returns the inversion of the triad in a string*/
+	if(tries == 1) {
+		return "";
+	} else if(tries == 2) {
+		return ", first inversion";
+	} else if(tries == 3) {
+		return ", second inversion";
+	} else if(tries == 4) {
+		return ", third inversion";
+	}
+}
 // A dictionairy that can be used to present
 // chord abbreviations. This dictionairy is also
 // used in from_shorthand()
@@ -1097,3 +1241,6 @@ exports.first_inversion = first_inversion;
 exports.second_inversion = second_inversion;
 exports.third_inversion = third_inversion;
 exports.from_shorthand = from_shorthand;
+exports.chord_shorthand = chord_shorthand;
+exports.determine = determine;
+exports.determine_triad = determine_triad;
