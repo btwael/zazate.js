@@ -3,11 +3,6 @@ var notes = require('./notes.js'),
 	_ = require('../node_modules/underscore');
 
 function unison(note) {
-	/* One of the most useless methods ever written, which returns the \
-	unison of note. The key is not at all important, but is here for \
-	consistency reasons only. 
-	Example: 
-	>>> unison("C") // return 'C' */
 	return note
 }
 
@@ -15,80 +10,26 @@ function unison(note) {
 // Needs a note and a key.
 
 function second(note, key) {
-	/*Take the diatonic second of note in key.
-	Examples: 
-{{{
->>>	second("E", "C") 
-'F'
->>> second("E", "D") 
-'F#'
-}}}
-	Raises a !KeyError if the `note` is not found in the `key`. */
 	return diatonic.interval(key, note, 1);
 }
 
 function third(note, key) {
-	/* Take the diatonic third of note in key.
-	Examples:
-{{{
->>>	third("E", "C") 
-'G'
->>>	third("E", "E") 
-'G#'
-}}}
-	Raises a !KeyError if note is not found in key. */
 	return diatonic.interval(key, note, 2);
 }
 
 function fourth(note, key) {
-	/* Take the diatonic fourth of note in key.
-	Examples:
-{{{
->>>	fourth("E", "C") 
-'A'
->>>	fourth("E", "B") 
-'A#'
-}}}
-	Raises a !KeyError if note is not found in key. */
 	return diatonic.interval(key, note, 3);
 }
 
 function fifth(note, key) {
-	/* Take the diatonic fifth of note in key.
-	Examples:
-{{{
->>>	fifth("E", "C") 
-'B'
->>>	fifth("E", "F") 
-'Bb'
-}}}
-	Raises a !KeyError if note is not found in key.*/
 	return diatonic.interval(key, note, 4);
 }
 
 function sixth(note, key) {
-	/* Take the diatonic sixth of note in key.
-	Examples:
-{{{
->>>	sixth("E", "C") 
-'C'
->>> sixth("E", "B") 
-'C#'
-}}}
-	Raises a !KeyError if note is not found in key.*/
 	return diatonic.interval(key, note, 5);
 }
 
 function seventh(note, key) {
-	/* Take the diatonic seventh of note in key.
-	Examples:
-{{{
->>> seventh("E", "C") 
-'D'
->>> seventh("E", "B") 
-'D#'
-}}}
-	Raises a !KeyError if note is not found in key.*/
 	return diatonic.interval(key, note, 6);
 }
 
@@ -174,9 +115,6 @@ function major_seventh(note) {
 }
 
 function get_interval(note, interval, key) {
-	/* Gets the note an interval (in half notes) away from the given note. \
-	This will produce mostly theoretical sound results, but you should \
-	use the minor and major functions to work around the corner cases. */
 	 if (key == null) {
 		key = 'C';
 	}
@@ -203,15 +141,6 @@ function get_interval(note, interval, key) {
 }
 
 function measure(note1, note2) {
-	/*Returns an integer in the range of 0-11, determining the half note \
-steps between note1 and note2.
-	Examples:
-{{{
->>>	measure("C", "D")
-2
->>>	measure("D", "C") 
-10
-}}}*/
 	res = notes.note_to_int(note2) - notes.note_to_int(note1);
 	if(res < 0) {
 		return 12 - (res * (-1));
@@ -221,9 +150,6 @@ steps between note1 and note2.
 }
 
 function augment_or_diminish_until_the_interval_is_right(note1, note2, interval) {
-	/* A helper function for the minor and major functions. \
-	You should probably not use this directly */
-
 	var cur, note2;
 
 	cur = measure(note1, note2);
@@ -282,39 +208,11 @@ function augment_or_diminish_until_the_interval_is_right(note1, note2, interval)
 }
 
 function invert(interval) {
-	/* Invert an interval represented as `[note1, note2]`.
-	For example:
-{{{
->>> invert["C", "E"]
-["E", "C"]
-}}}	*/
 	res = interval.reverse();
 	return res;
 }
 
 function determine(note1, note2, shorthand) {
-	/*Names the interval between note1 and note2.
-	Example:
-	{{{
-	>>>	determine("C", "E") 
-	'major third'
-	>>> determine("C", "Eb") 
-	'minor third'
-	>>> determine("C", "E#") 
-	'augmented third'
-	>>> determine("C", "Ebb") 
-	'diminished third'
-	}}}
-		
-		This works for all intervals. Note that there are corner cases \
-	for 'major' fifths and fourths: 
-	{{{
-	>>> determine("C", "G") 
-	'perfect fifth'
-	>>> determine("C", "F") 
-	'perfect fourth'
-	}}}*/
-
 	if (shorthand == null) {
 		shorthand = false;
 	}
@@ -429,16 +327,6 @@ function determine(note1, note2, shorthand) {
 }
 
 function from_shorthand(note, interval, up) {
-	/* Returns the note on interval up or down.
-	Example:
-	{{{
-	>>> from_shorthand("A", "b3")
-	'C'
-	>>> from_shorthand("D", "2")
-	'E'
-	>>> from_shorthand("E", "2", False)
-	'D'
-	}}} */
 	if (up == null) {
 		up = true;
 	}
@@ -502,13 +390,6 @@ function from_shorthand(note, interval, up) {
 }
 
 function is_consonant(note1, note2, include_fourths) {
-	/* A consonance is a harmony, chord, or interval considered stable, \
-	as opposed to a dissonance (see `is_dissonant`). This function tests \
-	whether the given interval is consonant. This basically means that it \
-	checks whether the interval is (or sounds like) a unison, third, sixth, \
-	perfect fourth or perfect fifth. In classical music the fourth is \
-	considered dissonant when used contrapuntal, which is why you can choose \
-	to exclude it.*/
 	if (include_fourths == null) {
 		include_fourths = true;
 	}
@@ -516,11 +397,6 @@ function is_consonant(note1, note2, include_fourths) {
 }
 
 function is_perfect_consonant(note1, note2, include_fourths) {
-	/*Perfect consonances are either unisons, perfect fourths or fifths, \
-	or octaves (which is the same as a unison in this model; see the \
-	`container.Note` class for more). Perfect fourths are usually included \
-	as well, but are considered dissonant when used contrapuntal, which is why \
-	you can exclude them.*/
 	if (include_fourths == null) {
 		include_fourths = true;
 	}
@@ -528,16 +404,11 @@ function is_perfect_consonant(note1, note2, include_fourths) {
 	return (dhalf === 0 || dhalf === 7) || (include_fourths && dhalf === 5);
 }
 function is_imperfect_consonant(note1, note2) {
-	/*Imperfect consonances are either minor or major thirds or minor \
-	or major sixths.*/
 	var _ref;
 	return (_ref = measure(note1, note2)) === 3 || _ref === 4 || _ref === 8 || _ref === 9;
 }
 
 function is_dissonant(note1, note2, include_fourths) {
-	/*Tests whether an interval is considered unstable, dissonant. \
-	In the default case perfect fourths are considered consonant, but this can \
-	be changed with the `exclude_fourths` flag.*/
 	if(include_fourths == null) {
 		include_fourths = false;
 	}

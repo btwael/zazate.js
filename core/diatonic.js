@@ -6,13 +6,6 @@ basic_keys = ["Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "
 _key_cache = {};
 
 function get_notes(key) {
-	/*Returns an ordered list of the notes in this key. \
-	For example: if the key is set to 'F', this function will return \
-	`['F', 'G', 'A', 'Bb', 'C', 'D', 'E']`. \
-	Exotic or ridiculous keys like 'C####' or even 'Gbb##bb#b##' will work; \
-	Note however that the latter example will also get cleaned up to 'G'. \
-	This function will raise an !NoteFormatError if the key isn't recognised*/
-
 	//check cache
 	var key_dict;
 	if(_key_cache.hasOwnProperty(key)) {
@@ -70,11 +63,6 @@ function get_notes(key) {
 }
 
 function int_to_note(note_int, key) {
-	/* A better implementation of int_to_note found in the \
-	[refMingusCoreNotes notes] module. This version bears the key in mind \
-	and thus creates theoretically correct notes. Will throw a \
-	!RangeError if `note_int` is not in range(0,12) */
-
 	if(!_.range(0,12).hasObject(note_int)) {
 		throw "RangeError: Integer not in range 0-11.";
 	}
@@ -102,10 +90,6 @@ function int_to_note(note_int, key) {
 }
 
 function interval(key, start_note, interval) {
-	/* Returns the note found at the interval starting from start_note \
-	in the given key. For example interval('C', 'D', 1) will return 'E'. \
-	Will raise a !KeyError if the start_note is not a valid note.*/
-	
 	if(!notes.is_valid_note(start_note)) {
 		throw "KeyError: The start note '" + start_note + "' is not a valid note";
 	}
