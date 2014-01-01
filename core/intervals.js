@@ -183,7 +183,6 @@ function get_interval(note, interval, key) {
 	intervals = [0, 2, 4, 5, 7, 9, 11].map(function(x) {
 		return (notes.note_to_int(key) + x) % 12;
 	});
-	console.log(intervals);
 	key_notes = diatonic.get_notes(key);
 
 	var result, x, _i, _len;
