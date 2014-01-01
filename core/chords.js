@@ -1,6 +1,7 @@
 var intervals = require('./intervals.js'),
 	notes = require('./notes.js'),
-	diatonic = require('./diatonic.js');
+	diatonic = require('./diatonic.js'),
+	_ = require('../node_modules/underscore');
 __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 // A cache for composed triads
@@ -944,7 +945,7 @@ function from_shorthand(shorthand_string, slash) {
 							Chord recognition
 ===================================================================*/
 
-/*function determine(chord, shorthand, no_inversions, no_polychords) {
+function determine(chord, shorthand, no_inversions, no_polychords) {
 	//Names a chord. Can determine almost every chord, from a simple triad to a fourteen note polychord.
 	if(shorthand == null) {
 		shorthand = false;
@@ -974,7 +975,7 @@ function from_shorthand(shorthand_string, slash) {
 	} else {
 		return determine_polychords(chord, shorthand);
 	}
-}*/
+}
 
 
 function determine_triad(triad, shorthand, no_inversions, placeholder) {
@@ -1008,8 +1009,8 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 		/*Recursive helper function that runs tries every inversion
 		and saves the result.*/
 		var result = resulta;
-		intval1 = intervals.determine(triad[0], triad[1], true);
-		intval2 = intervals.determine(triad[0], triad[2], true);
+		var intval1 = intervals.determine(triad[0], triad[1], true);
+		var intval2 = intervals.determine(triad[0], triad[2], true);
 
 		function add_result(short) {
 			result.push([short, tries, triad[0]]);
@@ -1072,6 +1073,399 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 	return inversion_exhauster(triad, shorthand, 1, []);
 }
 
+function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
+	/*Determines the type of seventh chord. Returns the results in a
+	lists, ordered on inversions. Expects `seventh` to be a
+	list of 4 notes. If `shorthand` is set to True, results
+	will be returned in chord shorthand ('Cmin7', etc.) - inversions will be
+	dropped in that case.
+		Example:
+	{{{
+	>>> determine_seventh(['C', 'E', 'G', 'B'])
+	['C major seventh']
+	}}}*/
+
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	if(no_inversion == null) {
+		no_inversion = false;
+	}
+	if(no_polychords == null) {
+		no_polychords = false;
+	}
+	if(seventh.length != 4) {
+		//warning raise exception: seventh chord is not a seventh chord
+		return false
+	}
+
+	function inversion_exhauster(seventh, shorthand, tries, resulta, polychordsa) {
+		/*determine sevenths recursive functions*/
+
+		// Check whether the first three notes of seventh 
+		// are part of some triad.
+		var result = resulta;
+		var polychords = polychordsa;
+		var triads = determine_triad(seventh.slice(0, 3), true, true);
+
+		// Get the interval between the first and last note
+		var intval3 = intervals.determine(seventh[0], seventh[3]);
+
+		function add_result(short, poly) {
+			// helper function
+			if(poly == null) {
+				poly = false;
+			}
+			result.push([short, tries, seventh[0], poly]);
+		}
+
+		// Recognizing polychords
+		if(tries == 1 && !no_polychords) {
+			var p = determine_polychords(seventh, shorthand);
+			for (var i = 0; i < p.length; i++) {
+				polychords.push(p[i]);
+			};
+		}
+
+		// Recognizing sevenths
+		for(var i = 0; i < triads.length; i++) {
+			var triad = triads[i];
+			// Basic triads
+			triad = triad.slice(seventh[0].length, triad.length);
+			if(triad == "m") {
+				if(intval3 == "minor seventh") {
+					add_result("m7");
+				} else if(intval3 == "major seventh") {
+					add_result("m/M7");
+				} else if(intval3 == "major sixth") {
+					add_result("m6");
+				}
+			} else if(triad == "M") {
+				if(intval3 == "major seventh") {
+					add_result("M7");
+				} else if(intval3 == "minor seventh") {
+					add_result("7");
+				} else if(intval3 == "major sixth") {
+					add_result("M6");
+				}
+			} else if(triad == "dim") {
+				if(intval3 == "minor seventh") {
+					add_result("m7b5");
+				} else if(intval3 == "diminished seventh") {
+					add_result("dim7");
+				}
+			} else if(triad == "aug") {
+				if(intval3 == "minor seventh") {
+					add_result("m7+");
+				}
+				if(intval3 == "major seventh") {
+					add_result("M7+");
+				}
+			} else if(triad == "sus4") {
+				if(intval3 == "minor seventh") {
+					add_result("sus47");
+				} else if(intval3 == "minor second") {
+					add_result("sus4b9");
+				}
+			// Other
+			} else if(triad == 'm7') {
+				if(intval3 == 'perfect fourth') {
+					add_result("11");
+				}
+			} else if(triad == '7b5') {
+				if(intval3 == 'minor seventh') {
+					add_result("7b5");
+				}
+			}
+		}
+		// Loop until we have exhausted all the inversions
+		if(tries != 4 && !no_inversion) {
+			var arg1 = seventh.slice(0, seventh.length - 1);
+			arg1.unshift(seventh[seventh.length - 1]);
+			return inversion_exhauster(arg1, shorthand, tries + 1, result, polychords);
+		} else {
+			// Return results
+			var res = [];
+			// Reset seventh
+			var arr = seventh.slice(0, 3);
+			arr.unshift(seventh[3]);
+			seventh = arr;
+			for(var i = 0; i < result.length; i++) {
+				var x = result[i];
+				if(shorthand) {
+					res.push(x[2] + x[0]);
+				} else {
+					res.push(x[2] + chord_shorthand_meaning[x[0]] + int_desc(x[1]));
+				}
+			}
+			for(var i = 0; i < polychords.length; i++) {
+				res.push(polychords[i]);
+			};
+			return res;
+		}
+	}
+	return inversion_exhauster(seventh, shorthand, 1, [], []);
+}
+
+function determine_extended_chord5(chord, shorthand, no_inversions, no_polychords) {
+	/*Determines the names of an extended chord*/
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	if(no_inversions == null) {
+		no_inversions = false;
+	}
+	if(no_polychords == null) {
+		no_polychords = false;
+	}
+	if(chord.length != 5) {
+		//warning raise exeption: not an extended chord
+		return false;
+	}
+
+	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
+		/*Recursive helper function*/
+		var polychords = polychordsa;
+		var result = resulta;
+
+		function add_result(short) {
+			result.push([short, tries, chord[0]]);
+		}
+
+		var triads = determine_triad(chord.slice(0, 3), true, true);
+		var sevenths = determine_seventh(chord.slice(0, 4), true, true, true);
+
+		// Determine polychords
+		if(tries == 1 && !no_polychords){
+			var p = determine_polychords(chord, shorthand);
+			for (var i = 0; i < p.length; i++) {
+				polychords.push(p[i]);
+			};
+		}
+
+		// Determine 'normal' chords
+		var intval4 = intervals.determine(chord[0], chord[4]);
+		for(var i = 0; i < sevenths.length; i++) {
+			var seventh = sevenths[i];
+			seventh = seventh.slice(chord[0].length, seventh.length)
+			if(seventh == "M7") {
+				if(intval4 == 'major second') {
+					add_result("M9");
+				}
+			} else if(seventh == "m7") {
+				if(intval4 == 'major second') {
+					add_result("m9");
+				} else if(intval4 == 'perfect fourth') {
+					add_result("m11");
+				}
+			} else if(seventh == "7") {
+				if(intval4 == 'major second') {
+					add_result("9");
+				} else if(intval4 == 'minor second') {
+					add_result("7b9");
+				} else if(intval4 == 'augmented second') {
+					add_result("7#9");
+				} else if(intval4 == 'minor third') {
+					add_result("7b12");
+				} else if(intval4 == 'augmented fourth') {
+					add_result("7#11");
+				} else if(intval4 == 'major sixth') {
+					add_result("13");
+				}
+			} else if(seventh == "M6") {
+				if(intval4 == "major second") {
+					add_result("6/9");
+				} else if(intval4 == "minor seventh") {
+					add_result("6/7");
+				}
+			}
+		}
+
+		if (tries != 5 && !no_inversions) {
+			var arg1 = chord.slice(0, chord.length - 1);
+			arg1.unshift(chord[chord.length - 1]);
+			return inversion_exhauster(arg1, shorthand, tries + 1, result, polychords);
+		} else {
+			var res = []
+			for(var i = 0; i < result.length; i++) {
+				var r = result[i];
+				if(shorthand) {
+					res.push(r[2] + r[0])
+				} else {
+					res.push(r[2] + chord_shorthand_meaning[r[0]] + int_desc(r[1]))
+				}
+			}
+			for(var i = 0; i < polychords.length; i++) {
+				res.push(polychords[i]);
+			};
+			return res;
+		}
+	}
+	return inversion_exhauster(chord, shorthand, 1, [], [])
+}
+
+function determine_extended_chord6(chord, shorthand, no_inversions, no_polychords) {
+	/*Determines the names of an 6 note chord*/
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	if(no_inversions == null) {
+		no_inversions = false;
+	}
+	if(no_polychords == null) {
+		no_polychords = false;
+	}
+
+	if(chord.length != 6) {
+		//warning raise exeption: not an extended chord
+		return false;
+	}
+
+	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
+		/*Recursive helper function*/
+		var polychords = polychordsa;
+		var result = resulta;
+		// Determine polychords
+		if(tries == 1 && !no_polychords) {
+			var p = determine_polychords(chord, shorthand);
+			for (var i = 0; i < p.length; i++) {
+				polychords.push(p[i]);
+			};
+		}
+
+		function add_result(short) {
+			result.push([short, tries, chord[0]]);
+		}
+
+		var ch = determine_extended_chord5(chord.slice(0, 5), true, true, true);
+		var intval5 = intervals.determine(chord[0], chord[5]);
+
+		for(var i = 0; i < ch.length; i++) {
+			var c = ch[i];
+			c = c.slice(chord[0].length, c.length);
+			if(c == '9') {
+				if(intval5 == 'perfect fourth') {
+					add_result('11');
+				} else if(intval5 == 'augmented fourth') {
+					add_result('7#11');
+				} else if(intval5 == 'major sixth') {
+					add_result('13');
+				}
+			} else if(c == 'm9') {
+				if(intval5 == 'perfect fourth') {
+					add_result('m11');
+				} else if(intval5 == 'major sixth') {
+					add_result('m13');
+				}
+			} else if(c == 'M9') {
+				if(intval5 == 'perfect fourth') {
+					add_result('M11');
+				} else if(intval5 == 'major sixth') {
+					add_result('M13');
+				}
+			}
+		}
+
+		if(tries != 6 && !no_inversions) {
+			var arg1 = chord.slice(0, chord.length - 1);
+			arg1.unshift(chord[chord.length - 1]);
+			return inversion_exhauster(arg1, shorthand, tries + 1, result, polychords)
+		} else {
+			var res = []
+			for(var i = 0; i < result.length; i++) {
+				var r = result[i];
+				if(shorthand) {
+					res.push(r[2] + r[0])
+				} else {
+					res.push(r[2] + chord_shorthand_meaning[r[0]] + int_desc(r[1]))
+				}
+			}
+			for(var i = 0; i < polychords.length; i++) {
+				res.push(polychords[i]);
+			};
+			return res;
+		}
+	}
+	return inversion_exhauster(chord, shorthand, 1, [], []);
+}
+
+function determine_extended_chord7(chord, shorthand, no_inversions, no_polychords) {
+	/*Determines the names of an 7 note chord*/	
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	if(no_inversions == null) {
+		no_inversions = false;
+	}
+	if(no_polychords == null) {
+		no_polychords = false;
+	}
+
+	if(chord.length != 7) {
+		//warning raise exeption: not an extended chord
+		return false;
+	}
+
+	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
+		/*Recursive helper function*/
+		var polychords = polychordsa;
+		var result = resulta;
+		// Determine polychords
+		if(tries == 1 && !no_polychords) {
+			var p = determine_polychords(chord, shorthand);
+			for (var i = 0; i < p.length; i++) {
+				polychords.push(p[i]);
+			};
+		}
+
+		function add_result(short) {
+			result.push([short, tries, chord[0]]);
+		}
+
+		var ch = determine_extended_chord6(chord.slice(0, 6), true, true, true);
+		var intval6 = intervals.determine(chord[0], chord[6]);
+
+		for(var i = 0; i < ch.length; i++) {
+			var c = ch[i]; 
+			c = c.slice(chord[0].length, c.length);
+			if(c == '11') {
+				if(intval6 == 'major sixth') {
+					add_result('13');
+				}
+			} else if(c == 'm11'){
+				if(intval6 == 'major sixth') {
+					add_result('m13');
+				}
+			} else if(c == 'M11'){
+				if(intval6 == 'major sixth') {
+					add_result('M13');
+				}
+			}
+		}
+				
+		if(tries != 6) {
+			var arg1 = chord.slice(0, chord.length - 1);
+			arg1.unshift(chord[chord.length - 1]);
+			return inversion_exhauster(arg1, shorthand, tries + 1, result, polychords);
+		} else {
+			var res = [];
+			for(var i = 0; i < result.length; i++) {
+				var r = result[i];
+				if(shorthand) {
+					res.push(r[2] + r[0]);
+				} else {
+					res.push(r[2] + chord_shorthand_meaning[r[0]] + int_desc(r[1]));
+				}
+			}
+			for(var i = 0; i < polychords.length; i++) {
+				res.push(polychords[i]);
+			};
+			return res;
+		}
+	}
+	return inversion_exhauster(chord, shorthand, 1, [], []);
+}
+
 function int_desc(tries) {
 	/*Helper function that returns the inversion of the triad in a string*/
 	if(tries == 1) {
@@ -1083,6 +1477,52 @@ function int_desc(tries) {
 	} else if(tries == 4) {
 		return ", third inversion";
 	}
+}
+
+function determine_polychords(chord, shorthand) {
+	/*Determines the polychords in chord. Can handle anything from polychords based on two triads to 6 note extended chords*/
+	if(shorthand == null) {
+		shorthand = false;
+	}
+	var polychords = []
+
+	var function_list = [determine_triad, determine_seventh, determine_extended_chord5, determine_extended_chord6, determine_extended_chord7];
+
+	// Range tracking. 
+	if(chord.length <= 3) {
+		return [];
+	} else if(chord.length > 14) {
+		return [];
+	} else if(chord.length - 3 <= 5) {
+		function_nr = _.range(0, chord.length - 3);
+	} else {
+		function_nr = _.range(0, 5);
+	}
+
+	for(var i = 0; i < function_nr.length; i++) {
+		var f = function_nr[i];
+		for (var k = 0; k < function_nr.length; k++) {
+			var f2 = function_nr[k]
+			var r1 = function_list[f](chord.slice(chord.length -(3 + f), chord.length), true, true, true);
+			for(var j = 0; j < r1.length; j++) {
+				var chord1 = r1[j];
+				var r2 = function_list[f2](chord.slice(0, f2+3), true, true, true);
+				for(var l = 0; l < r2.length; l++) {
+					var chord2 = r2[l];
+					polychords.push(chord1 + '|' + chord2);
+				}
+			}
+		}
+	}
+
+	if(shorthand) {
+		for(var i = 0; i < polychords.length; i++) {
+			var p = polychords[i];
+			p = p + " polychord";
+		};
+	}
+
+	return polychords;
 }
 // A dictionairy that can be used to present
 // chord abbreviations. This dictionairy is also
@@ -1244,3 +1684,8 @@ exports.from_shorthand = from_shorthand;
 exports.chord_shorthand = chord_shorthand;
 exports.determine = determine;
 exports.determine_triad = determine_triad;
+exports.determine_seventh = determine_seventh;
+exports.determine_extended_chord5 = determine_extended_chord5;
+exports.determine_extended_chord6 = determine_extended_chord6;
+exports.determine_extended_chord7 = determine_extended_chord7;
+exports.determine_polychords = determine_polychords;
