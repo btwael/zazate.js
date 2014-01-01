@@ -4,14 +4,9 @@ var intervals = require('./intervals.js'),
 	_ = require('../node_modules/underscore');
 __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-// A cache for composed triads
 _triads_cache = {};
-// A cache for composed sevenths
 _sevenths_cache = {};
 
-// A dictionairy that can be used to present
-// lookup chord abbreviations. This dictionairy is also
-// used in determine_seventh()
 chord_shorthand_meaning = {
 		// Triads
 		"m" : " minor triad",
@@ -89,16 +84,10 @@ chord_shorthand_meaning = {
 // diatonic
 
 function triad(note, key) {
-	/*Returns the triad on note in key as a list.
-	Examples:
-	>>> triad("E", "C") /return ["E", "G", "B"]
-	>>> triad("E", "B") // return ["E", "G#", "B"]
-	*/
 	return [note, intervals.third(note, key), intervals.fifth(note, key)]
 }
 
 function triads(key) {
-	//Returns all the triads in key. Implemented using a cache.
 	if(_triads_cache.hasOwnProperty(key)) {
 		return _triads_cache[key];
 	}
@@ -112,42 +101,18 @@ function triads(key) {
 // absolute
 
 function major_triad(note) {
-	/*Builds a major triad on note.
-	Example:
-	{{{
-	>>> major_triad("C")
-	["C", "E", "G"]
-	*/
 	return [note, intervals.major_third(note), intervals.perfect_fifth(note)];
 }
 
 function minor_triad(note) {
-	/* Builds a minor triad on note.
-	Example:
-	{{{
-	>>> minor_triad("C")
-	["C", "Eb", "G"]
-	}}} */
 	return [note, intervals.minor_third(note), intervals.perfect_fifth(note)];
 }
 
 function diminished_triad(note) {
-	/* Builds a diminished triad on note.
-	Example:
-	{{{
-	>>> diminished_triad("C")
-	["C", "Eb", "Gb"]
-	}}}*/
 	return [note, intervals.minor_third(note), intervals.minor_fifth(note)];
 }
 
 function augmented_triad(note) {
-	/*Builds an augmented triad on note.
-	Example:
-	{{{
-	>>> augmented_triad("C")
-	["C", "E", "G#"]
-	}}}*/
 	return [note, intervals.major_third(note), notes.augment(intervals.major_fifth(note))];
 }
 
@@ -159,12 +124,6 @@ function augmented_triad(note) {
 // diatonic
 
 function seventh(note, key) {
-	/*Returns the seventh chord on note in key.
-	Example:
-	{{{
-	>>> seventh("C", "C")
-	["C", "E", "G", "B"]
-	}}}*/
 	var arr = triad(note, key);
 	arr.push(intervals.seventh(note, key));
 	return arr;
@@ -172,7 +131,6 @@ function seventh(note, key) {
 
 
 function sevenths(key) {
-	/*Returns all the sevenths chords in key in a list*/
 	if(_sevenths_cache.hasOwnProperty(key)) {
 		return _sevenths_cache[key];
 	}
@@ -187,78 +145,40 @@ function sevenths(key) {
 //absolute
 
 function major_seventh(note) {
-	/*Builds a major seventh on note.
-	Example:
-	{{{
-	>>> major_seventh("C") 
-	["C", "E", "G", "B"]
-	}}}*/
 	var arr = major_triad(note);
 	arr.push(intervals.major_seventh(note));
 	return arr;
 }
 
 function minor_seventh(note) {
-	/*Builds a minor seventh on note.
-	Example:
-	{{{
-	>>> minor_seventh("C")
-	["C", "Eb", "G", "Bb"]
-	}}}*/
 	var arr = minor_triad(note);
 	arr.push(intervals.minor_seventh(note));
 	return arr;
 }
 
 function dominant_seventh(note) {
-	/*Builds a dominant seventh on note.
-	Example:
-	{{{
-	>>> dominant_seventh("C")
-	["C", "E", "G", "Bb"]
-	}}}*/
 	var arr = major_triad(note);
 	arr.push(intervals.minor_seventh(note));
 	return arr;
 }
 
 function half_diminished_seventh(note) {
-	/*Builds a half diminished seventh (=minor seventh flat five) \
-	chord on note.
-		Example:
-	{{{
-	>>> half_diminished_seventh("C")
-	["C", "Eb", "Gb", "Bb"]
-	}}}*/
 	var arr = diminished_triad(note);
 	arr.push(intervals.minor_seventh(note));
 	return  arr;
 }
 
 function minor_seventh_flat_five(note) {
-	/*See half_diminished_seventh(note) for docs*/
 	return half_diminished_seventh(note);
 }
 
 function diminished_seventh(note) {
-	/*Builds a diminished seventh chord on note.
-	Example:
-	{{{
-	>>> diminished_seventh("C") 
-	["C", "Eb", "Gb", "Bbb"]
-	}}}*/
 	var arr = diminished_triad(note);
 	arr.push(notes.diminish(intervals.minor_seventh(note)));
 	return arr;
 }
 
 function minor_major_seventh(note) {
-	/*Builds a minor major seventh chord on note.
-	Example:
-	{{{
-	>>> minor_major_seventh("C")
-	["C", "Eb", "G", "B"]
-	}}}*/
 	var arr = minor_triad(note);
 	arr.push(intervals.major_seventh(note));
 	return arr;
@@ -271,48 +191,24 @@ function minor_major_seventh(note) {
 // absolute
 
 function minor_sixth(note) {
-	/*Builds a minor sixth chord on note.
-	Example:
-	{{{
-	>>> minor_sixth("C")
-	['C', 'Eb', 'G', 'A']
-	}}}*/
 	var arr = minor_triad(note);
 	arr.push(intervals.major_sixth(note));
 	return arr;
 }
 
 function major_sixth(note) {
-	/*Builds a major sixth chord on note.
-	Example:
-	{{{
-	>>> major_sixth("C")
-	['C', 'E', 'G', 'A']
-	}}}*/
 	var arr = major_triad(note);
 	arr.push(intervals.major_sixth(note));
 	return arr;
 }
 
 function dominant_sixth(note) {
-	/*Builds the altered chord 6/7 on note.
-	Example:
-	{{{
-	>>> dominant_sixth("C")
-	['C', 'E', 'G', 'A', 'Bb']
-	}}}*/
 	var arr = major_sixth(note);
 	arr.push(intervals.minor_seventh(note));
 	return arr;
 }
 
 function sixth_ninth(note) {
-	/*Builds the sixth/ninth chord on note.
-	Example:
-	{{{
-	>>> sixth_ninth('C')
-	['C', 'E', 'G', 'A', 'D']
-	}}}*/
 	var arr = major_sixth(note);
 	arr.push(intervals.major_second(note));
 	return arr;
@@ -325,60 +221,30 @@ function sixth_ninth(note) {
 // absolute
 
 function minor_ninth(note) {
-	/*Builds a minor ninth chord on note.
-	Example:
-	{{{
-	>>> minor_ninth("C")
-	['C', 'Eb', 'G', 'Bb', 'D']
-	}}}*/
 	var arr = minor_seventh(note);
 	arr.push(intervals.major_second(note));
 	return arr;
 }
 
 function major_ninth(note) {
-	/*Builds a major ninth chord on note.
-	Example:
-	{{{
-	>>> major_ninth("C")
-	['C', 'E', 'G', 'B', 'D']
-	}}}*/
 	var arr = major_seventh(note);
 	arr.push(intervals.major_second(note));
 	return arr;
 }
 
 function dominant_ninth(note) {
-	/*Builds a dominant ninth chord on note.
-	Example:
-	{{{
-	>>> dominant_ninth("C")
-	['C', 'E', 'G', 'Bb', 'D']
-	}}}*/
 	var arr = dominant_seventh(note);
 	arr.push(intervals.major_second(note));
 	return arr;
 }
 
 function dominant_flat_ninth(note) {
-	/*Builds a dominant flat ninth chord on note.
-	Example:
-	{{{
-	>>> dominant_ninth("C")
-	['C', 'E', 'G', 'Bb', 'Db']
-	}}}*/
 	var res = dominant_ninth(note);
 	res[4] = intervals.minor_second(note);
 	return res;
 }
 
 function dominant_sharp_ninth(note) {
-	/*Builds a dominant sharp ninth chord on note.
-	Example:
-	{{{
-	>>> dominant_ninth("C")
-	['C', 'E', 'G', 'Bb', 'D#']
-	}}}*/
 	var res = dominant_ninth(note);
 	res[4] = notes.augment(intervals.major_second(note));
 	return res;
@@ -395,22 +261,10 @@ function dominant_sharp_ninth(note) {
 
 
 function eleventh(note) {
-	/*Builds an eleventh chord on note.
-	Example:
-	{{{
-	>>> eleventh("C")
-	['C', 'G', 'Bb', 'F']
-	}}}*/
 	return [note, intervals.perfect_fifth(note), intervals.minor_seventh(note), intervals.perfect_fourth(note)];
 }
 
 function minor_eleventh(note) {
-	/*Builds a minor eleventh chord on note.
-	Example:
-	{{{
-	>>> minor_eleventh("C")
-	['C', 'Eb', 'G', 'Bb', 'F']
-	}}}*/
 	var arr = minor_seventh(note);
 	arr.push(intervals.perfect_fourth(note));
 	return arr;
@@ -423,12 +277,6 @@ function minor_eleventh(note) {
 // absolute
 
 function minor_thirteenth(note) {
-	/*Builds a minor thirteenth chord on note.
-	Example:
-	{{{
-	>>> minor_thirteenth('C')
-	['C', 'Eb', 'G', 'Bb', 'D', 'A']
-	}}}*/
 	var arr = minor_ninth(note);
 	arr.push(intervals.major_sixth(note));
 	return arr;
@@ -436,12 +284,6 @@ function minor_thirteenth(note) {
 
 
 function major_thirteenth(note) {
-	/*Builds a major thirteenth chord on note.
-	Example:
-	{{{
-	>>> major_thirteenth('C')
-	['C', 'E', 'G', 'B', 'D', 'A']
-	}}}*/
 	var arr = major_ninth(note);
 	arr.push(intervals.major_sixth(note));
 	return arr;
@@ -449,12 +291,6 @@ function major_thirteenth(note) {
 
 
 function dominant_thirteenth(note) {
-	/*Builds a dominant thirteenth chord on note.
-	Example:
-	{{{
-	>>> dominant_thirteenth('C')
-	['C', 'E', 'G', 'Bb', 'D', 'A']
-	}}}*/
 	var arr = dominant_ninth(note);
 	arr.push(intervals.major_sixth(note));
 	return arr;
@@ -467,51 +303,26 @@ function dominant_thirteenth(note) {
 // absolute
 
 function suspended_triad(note) {
-	/*An alias for suspended_fourth_triad*/
 	return suspended_fourth_triad(note)
 }
 
 
 function suspended_second_triad(note) {
-	/*Builds a suspended second triad on note.
-	Example:
-	{{{
-	>>> suspended_second_triad("C")
-	["C", "D", "G"]
-	}}}*/
 	return [note, intervals.major_second(note), intervals.perfect_fifth(note)];
 }
 
 
 function suspended_fourth_triad(note) {
-	/*Builds a suspended fourth triad on note.
-	Example:
-	{{{
-	>>> suspended_fourth_triad("C")
-	["C", "F", "G"]
-	}}}*/
 	return [note, intervals.perfect_fourth(note), intervals.perfect_fifth(note)]
 }
 
 function suspended_seventh(note) {
-	/*Builds a suspended (flat) seventh chord on note.
-	Example:
-	{{{
-	>>> suspended_seventh("C")
-	["C", "F", "G", "Bb"]
-	}}}*/
 	var arr = suspended_fourth_triad(note);
 	arr.push(intervals.minor_seventh(note));
 	return arr;
 }
 
 function suspended_fourth_ninth(note) {
-	/*Builds a suspended fourth flat ninth chord on note.
-	Example:
-	{{{
-	>>> suspended_ninth("C")
-	['C', 'F', 'G', 'Db']
-	}}}*/
 	var arr = suspended_fourth_triad(note);
 	arr.push(intervals.minor_second(note));
 	return arr;
@@ -522,24 +333,12 @@ function suspended_fourth_ninth(note) {
 ===================================================================*/
 
 function augmented_major_seventh(note) {
-	/*Builds an augmented major seventh chord on note.
-	Example:
-	{{{
-	>>> augmented_major_seventh("C") 
-	["C", "E", "G#", "B"]
-	}}}*/
 	var arr = augmented_triad(note);
 	arr.push(intervals.major_seventh(note));
 	return arr;
 }
 
 function augmented_minor_seventh(note) {
-	/*Builds an augmented minor seventh chord on note.
-	Example:
-	{{{
-	>>> augmented_minor_seventh("C")
-	["C", "E", "G#", "Bb"]
-	}}}*/
 	var arr = augmented_triad(note);
 	arr.push(intervals.minor_seventh(note));
 	return arr;
@@ -548,37 +347,20 @@ function augmented_minor_seventh(note) {
 /*===================================================================
 							Various, Altered and Special chords
 ===================================================================*/
+
 function dominant_flat_five(note) {
-	/*Builds a dominant flat five chord on note.
-	Example:
-	{{{
-	>>> dominant_flat_five("C")
-	['C', 'E', 'Gb', 'Bb']
-	}}}*/
 	var res = dominant_seventh(note)
 	res[2] = notes.diminish(res[2])
 	return res;
 }
 
 function lydian_dominant_seventh(note) {
-	/*Builds the lydian dominant seventh (7#11) on note
-	Example:
-	{{{
-	>>> lydian_dominant_seventh('C')
-	['C', 'E', 'G', 'Bb', 'F#']
-	}}}*/
 	var arr = dominant_seventh(note);
 	arr.push(notes.augment(intervals.perfect_fourth(note)));
 	return arr;
 }
 
 function hendrix_chord(note) {
-	/*Builds the famous Hendrix chord (7b12)
-	Example:
-	{{{
-	>>> hendrix_chord('C')
-	['C', 'E', 'G', 'Bb', 'Eb']
-	}}}*/
 	var arr = dominant_seventh(note);
 	arr.push(intervals.minor_third(note));
 	return arr;
@@ -589,107 +371,58 @@ function hendrix_chord(note) {
 ===================================================================*/
 
 function tonic(key) {
-	/*Returns the tonic chord in key.
-	Example:
-	{{{
-	>>> tonic("C") 
-	["C", "E", "G"]
-	}}}*/
 	return triads(key)[0];
 }
 
 function tonic7(key) {
-	/*Same as tonic(key), but returns seventh chord instead*/
 	return sevenths(key)[0];
 }
 
 function supertonic(key) {
-	/*Returns the supertonic chord in key.
-	Example:
-	{{{
-	>>> supertonic("C")
-	["D", "F", "A"]
-	}}}*/
 	return triads(key)[1];
 }
 
 function supertonic7(key) {
-	/*Same as supertonic(key), but returns seventh chord*/
 	return sevenths(key)[1];
 }
 
 function mediant(key) {
-	/*Returns the mediant chord in key.
-	Example:
-	{{{
-	>>> mediant("C") 
-	["E", "G", "B"]
-	}}}*/
 	return triads(key)[2];
 }
 
 function mediant7(key) {
-	/*Same as mediant(key), but returns seventh chord*/
 	return sevenths(key)[2];
 }
 
 function subdominant(key) {
-	/*Returns the subdominant chord in key.
-	Example:
-	{{{
-	>>> subdominant("C") 
-	["F", "A", "C"]
-	}}}*/
 	return triads(key)[3];
 }
 
 function subdominant7(key) {
-	/*Same as subdominant(key), but returns seventh chord*/
 	return sevenths(key)[3];
 }
 
 function dominant(key) {
-	/*Returns the dominant chord in key.
-	Example:
-	{{{
-	>>> dominant("C") 
-	["G", "B", "D"]
-	}}}*/
 	return triads(key)[4];
 }
 
 function dominant7(key) {
-	/*Same as dominant(key), but returns seventh chord*/
 	return sevenths(key)[4];
 }
 
 function submediant(key) {
-	/*Returns the submediant chord in key.
-	Example:
-	{{{
-	>>> submediant("C") 
-	["A", "C", "E"]
-	}}}*/
 	return triads(key)[5];
 }
 
 function submediant7(key) {
-	/*Same as submediant(key), but returns seventh chord*/
 	return sevenths(key)[5];
 }
 
 function subtonic(key) {
-	/*Returns the subtonic in key.
-	Example:
-	{{{
-	>>> subtonic("C")
-	['B', 'D', 'F']
-	}}}*/
 	return triads(key)[6];
 }
 
 function subtonic7(key) {
-	/*Same as subtonic(key), but returns seventh chord*/
 	return sevenths(key)[6];
 }
 
@@ -790,24 +523,20 @@ function VII7(key) {
 ===================================================================*/
 
 function invert(chord) {
-	/*Inverts a given chord one time*/
 	var a = chord.slice(1, chord.length);
 	a.push(chord[0]);
 	return a;
 }
 
 function first_inversion(chord) {
-	/*The first inversion of a chord*/
 	return invert(chord)
 }
 
 function second_inversion(chord) {
-	/*Returns the second inversion of chord*/
 	return invert(invert(chord))
 }
 
 function third_inversion(chord) {
-	/*Returns the third inversion of chord*/
 	return invert(invert(invert(chord)))
 }
 
@@ -816,39 +545,6 @@ function third_inversion(chord) {
 ===================================================================*/
 
 function from_shorthand(shorthand_string, slash) {
-	/*Takes a chord written in shorthand and returns the notes in the \
-	chord. The function can recognize triads, sevenths, sixths, ninths, elevenths, \
-	thirteenths, slashed chords and a number of altered chords. \
-	The second argument should not be given and is only used for a recursive call \
-	when a slashed chord or polychord is found. See [http://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns Wikibooks] for a nice overview of chord patterns.
-		Example:
-	{{{
-	>>> from_shorthand("Amin")
-	["A", "C", "E"]
-	>>> from_shorthand("Am/M7")
-	["A", "C", "E", "G#"]
-	>>> from_shorthand("A")
-	["A", "C#", "E"]
-	>>> from_shorthand("A/G")
-	["G", "A", "C#", "E"]
-	>>> from_shorthand("Dm|G")
-	["G", "B", "D", "F", "A"]
-	}}}
-	Recognised abbreviations: the letters `m` and `M` in the following abbreviations  \
-	can always be substituted by respectively `min`, `mi` or `-` and `maj` or `ma` (eg. \
-	`from_shorthand("Amin7") == from_shorthand("Am7")`, etc.).
-	* Triads: *'m'*, *'M'* or *''*, *'dim'*. 
-	* Sevenths: *'m7'*, *'M7'*, *'7'*, *'m7b5'*, *'dim7'*, *'m/M7'* or *'mM7'*
-	* Augmented chords: *'aug'* or *'+'*, *'7#5'* or *'M7+5'*, *'M7+'*, *'m7+'*, *'7+'*
-	* Suspended chords: *'sus4'*, *'sus2'*, *'sus47'*, *'sus'*, *'11'*, *'sus4b9'* or *'susb9'*
-	* Sixths: *'6'*, *'m6'*, *'M6'*, *'6/7'* or *'67'*, *6/9* or *69*
-	* Ninths: *'9'*, *'M9'*, *'m9'*, *'7b9'*, *'7#9'*
-	* Elevenths: *'11'*, *'7#11'*, *'m11'*
-	* Thirteenths: *'13'*, *'M13'*, *'m13'*
-	* Altered chords: *'7b5'*, *'7b9'*, *'7#9'*, *'67'* or *'6/7'*
-	* Special: *'5'*, *'NC'*, *'hendrix'*
-	*/
-
 	//warning reduce?? 
 	if(typeof shorthand_string == 'array'){
 		var res = [];
@@ -946,7 +642,6 @@ function from_shorthand(shorthand_string, slash) {
 ===================================================================*/
 
 function determine(chord, shorthand, no_inversions, no_polychords) {
-	//Names a chord. Can determine almost every chord, from a simple triad to a fourteen note polychord.
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -979,21 +674,6 @@ function determine(chord, shorthand, no_inversions, no_polychords) {
 
 
 function determine_triad(triad, shorthand, no_inversions, placeholder) {
-	/*Names the triad. Returns answers in a list. The third argument should \
-	not be given. If shorthand is True the answers will be in abbreviated form.
-
-	Can determine major, minor, diminished and suspended triads. \
-	Also knows about invertions.
-
-	Examples:
-	{{{
-	>>> determine_triad(["A", "C", "E"])
-	'A minor triad'
-	>>> determine_triad(["C", "E", "A"]) 
-	'A minor triad, first inversion'
-	>>> determine_triad(["A", "C", "E"], True)
-	'Am'
-	}}}*/
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -1074,17 +754,6 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 }
 
 function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
-	/*Determines the type of seventh chord. Returns the results in a
-	lists, ordered on inversions. Expects `seventh` to be a
-	list of 4 notes. If `shorthand` is set to True, results
-	will be returned in chord shorthand ('Cmin7', etc.) - inversions will be
-	dropped in that case.
-		Example:
-	{{{
-	>>> determine_seventh(['C', 'E', 'G', 'B'])
-	['C major seventh']
-	}}}*/
-
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -1208,7 +877,6 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 }
 
 function determine_extended_chord5(chord, shorthand, no_inversions, no_polychords) {
-	/*Determines the names of an extended chord*/
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -1305,7 +973,6 @@ function determine_extended_chord5(chord, shorthand, no_inversions, no_polychord
 }
 
 function determine_extended_chord6(chord, shorthand, no_inversions, no_polychords) {
-	/*Determines the names of an 6 note chord*/
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -1390,7 +1057,6 @@ function determine_extended_chord6(chord, shorthand, no_inversions, no_polychord
 }
 
 function determine_extended_chord7(chord, shorthand, no_inversions, no_polychords) {
-	/*Determines the names of an 7 note chord*/	
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -1467,7 +1133,6 @@ function determine_extended_chord7(chord, shorthand, no_inversions, no_polychord
 }
 
 function int_desc(tries) {
-	/*Helper function that returns the inversion of the triad in a string*/
 	if(tries == 1) {
 		return "";
 	} else if(tries == 2) {
@@ -1480,7 +1145,6 @@ function int_desc(tries) {
 }
 
 function determine_polychords(chord, shorthand) {
-	/*Determines the polychords in chord. Can handle anything from polychords based on two triads to 6 note extended chords*/
 	if(shorthand == null) {
 		shorthand = false;
 	}
@@ -1524,9 +1188,7 @@ function determine_polychords(chord, shorthand) {
 
 	return polychords;
 }
-// A dictionairy that can be used to present
-// chord abbreviations. This dictionairy is also
-// used in from_shorthand()
+
 chord_shorthand = {
 		// Triads
 		"m" : minor_triad,
