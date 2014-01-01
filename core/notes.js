@@ -1,10 +1,6 @@
 var intervals = require('./intervals.js'),
 	_ = require('../node_modules/underscore');
 
-
-// _note_dict is a mapping of the C scale to half notes. It is used to calculate 
-// for instance C# (add 1 to 0), Fb (substract 1 from 5), etc. in note_to_int
-// and it is also used in is_valid_note to check formatting validity.
 _note_dict = {
 	'C' : 0, 
 	'D' : 2,
@@ -33,10 +29,6 @@ Array.prototype.hasObject = (
 );
 
 function int_to_note(note_int) {
-	/* Converts integers in the range of 0-11 to notes in the 
-	form of C or C# (no Cb). You can use int_to_note in diatonic_key to
-	do theoretically correct conversions that bear the key in mind. */
-
 	if(!_.range(0,12).hasObject(note_int)) {
 		throw "RangeError: int out of bounds (0-11):" + note_int;
 	}
@@ -46,12 +38,10 @@ function int_to_note(note_int) {
 
 
 function is_enharmonic(note1, note2) {
-	// Test whether note1 and note2 are enharmonic, ie. they sound the same
 	return note_to_int(note1) == note_to_int(note2);
 }
 
 function is_valid_note(note) {
-	// Returns true if note is in a recognised format. False if not
 	if(!_note_dict.hasOwnProperty(note[0])) {
 		return false;
 	}
@@ -67,9 +57,6 @@ function is_valid_note(note) {
 }
 
 function note_to_int(note) {
-	/* Converts notes in the form of C, C#, Cb, C##, etc. to 
-	an integer in the range of 0-11. Throws an !NoteFormatError
-	exception if the note format is not recognised. */
 	if(is_valid_note(note)) {
 		val = _note_dict[note[0]];
 	} else {
@@ -90,8 +77,6 @@ function note_to_int(note) {
 }
 
 function remove_redundant_accidentals(note) {
-	/* Removes redundant #'s and b's from the given note. \
-	For example: C##b becomes C#, Eb##b becomes E, etc. */
 	var result, token, val, _i, _len, _ref;
 	val = 0;
 	_ref = note.slice(1, note.length);
@@ -119,10 +104,6 @@ function remove_redundant_accidentals(note) {
 }
 
 function augment(note) {
-	/* Augments a given note. 
-	Examples:
-	>>> augment("C") // return 'C#'
-	>>> augment("Cb") // return 'C' */
 	if(note[note.length-1] != 'b') {
 		return note + '#';
 	} else {
@@ -131,10 +112,6 @@ function augment(note) {
 }
 
 function diminish(note) {
-	/* Diminishes a given note.
-	Examples:
-	>>> diminish("C") // return 'Cb'
-	>>> diminish("C#") //return 'C' */
 	if(note[note.length-1] != '#') {
 		return note + 'b';
 	} else {
@@ -143,16 +120,10 @@ function diminish(note) {
 }
 
 function to_major(note) {
-	/* Returns the major of `note`.
-	Example:
-	>>> to_major("A") // return 'C' */
 	return intervals.minor_third(note);
 }
 
 function to_minor(note) {
-	/* Returns the minor of note.
-	Example:
-	>>> to_minor("C") // return 'A' */
 	return intervals.major_sixth(note);
 }
 

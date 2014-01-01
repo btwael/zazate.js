@@ -6,32 +6,14 @@ var intervals = require('./intervals.js'),
 // The diatonic scales and its modes
 
 function diatonic(note) {
-	/*Returns the diatonic scale starting on note.
-	Example:
-	{{{
-	>>> diatonic("C")
-	["C", "D", "E", "F", "G", "A", "B"]
-	}}}*/
 	return get_notes(note);
 }
 
 function ionian(note) {
-	/*Returns the ionian mode scale starting on note.
-	Example:
-	{{{
-	>>> ionian("C")
-	["C", "D", "E", "F", "G", "A", "B"]
-	}}}*/
 	return diatonic(note);
 }
 
 function dorian(note) {
-	/*Returns the dorian mode scale starting on note.
-	Example:
-	{{{
-	>>> dorian("D") 
-	["D", "E", "F", "G", "A", "B", "C"]
-	}}}*/
 	var i = ionian(intervals.minor_seventh(note));
 	var arr = i.slice(1, i.length);
 	arr.push(i[0]);
@@ -39,12 +21,6 @@ function dorian(note) {
 }
 
 function phrygian(note) {
-	/*Returns the phrygian mode scale starting on note.
-	Example:
-	{{{
-	>>> phrygian("E") 
-	["E", "F", "G", "A", "B", "C", "D"]
-	}}}*/
 	var i = ionian(intervals.minor_sixth(note));
 	var arr = i.slice(2, i.length);
 	for (var k = 0; k < 2; k++) {
@@ -54,12 +30,6 @@ function phrygian(note) {
 }
 
 function lydian(note) {
-	/*Returns the lydian mode scale starting on note.
-	Example:
-	{{{
-	>>> lydian("F") 
-	["F", "G", "A", B", "C", "D", "E"]
-	}}}*/
 	var i = ionian(intervals.perfect_fifth(note))
 	var arr = i.slice(3, i.length);
 	for (var k = 0; k < 3; k++) {
@@ -69,12 +39,6 @@ function lydian(note) {
 }
 
 function mixolydian(note) {
-	/*Returns the mixolydian mode scale starting on note.
-	Example:
-	{{{
-	>>> mixolydian("G")
-	["G", "A", "B", "C", "D", "E", "F"]
-	}}}*/
 	var i = ionian(intervals.perfect_fourth(note))
 	var arr = i.slice(4, i.length);
 	for (var k = 0; k < 4; k++) {
@@ -84,12 +48,6 @@ function mixolydian(note) {
 }
 
 function aeolian(note) {
-	/*Returns the aeolian mode scale starting on note.
-	Example:
-	{{{
-	>>> aeolian("A")
-	["A", "B", "C", "D", "E", "F", "G"]
-	}}}*/
 	var i = ionian(intervals.minor_third(note))
 	var arr = i.slice(5, i.length);
 	for (var k = 0; k < 5; k++) {
@@ -99,12 +57,6 @@ function aeolian(note) {
 }
 
 function locrian(note) {
-	/*Returns the locrian mode scale starting on note.
-	Example:
-	{{{
-	>>> locrian("B")
-	["B", "C", "D", "E", "F", "G", "A"]
-	}}}*/
 	var i = ionian(intervals.minor_second(note))
 	var arr = i.slice(6, i.length);
 	for (var k = 0; k < 6; k++) {
@@ -116,12 +68,6 @@ function locrian(note) {
 // The minor modes
 
 function natural_minor(note) {
-	/*Returns the natural minor scale starting on note.
-	Example:
-	{{{
-	>>> natural_minor("A")
-	["A", "B", "C", "D", "E", "F", "G"]
-	}}}*/
 	var i = get_notes(notes.to_major(note));
 	var arr = i.slice(5, i.length);
 	for (var k = 0; k < 5; k++) {
@@ -131,24 +77,12 @@ function natural_minor(note) {
 }
 
 function harmonic_minor(note) {
-	/*Returns the harmonic minor scale starting on note.
-	Example:
-	{{{
-	>>> harmonic_minor("A")
-	"A", "B", "C", "D", "E", "F", "G#"]
-	}}}*/
 	var nat = natural_minor(note);
 	nat[6] = notes.augment(nat[6]);
 	return nat;
 }
 
 function melodic_minor(note) {
-	/*Returns the melodic minor scale starting on note.
-	Example:
-	{{{
-	>>> melodic_minor("A")
-	["A", "B", "C", "D", "E", "F#", "G#"]
-	}}}*/
 	var har = harmonic_minor(note);
 	har[5] = notes.augment(har[5]);
 	return har;
@@ -163,12 +97,6 @@ function chromatic(note) {
 }
 
 function whole_note(note) {
-	/*Returns the whole note scale starting on note.
-	Example:
-	{{{
-	>>> whole_note("C")
-	["C", "D", "E", "F#", "G#", "A#"]
-	}}}*/
 	var n = 0;
 	var last = note;
 	var res = [last];
@@ -182,12 +110,6 @@ function whole_note(note) {
 }
 
 function diminished(note) {
-	/*Returns the diminshed scale on note.
-	Example:
-	{{{
-	>>> diminished("C")
-	['C', 'D', 'Eb', 'F', 'Gb', 'Ab', 'A', 'B']
-	}}}*/
 	function whole_step_half_step(n) {
 		var res = [intervals.major_second(n), intervals.minor_third(n)];
 		return res;
@@ -209,14 +131,6 @@ function diminished(note) {
 }
 
 function determine(scale) {
-	/*Determines the kind of scale. Can recognize all the diatonic modes and \
-	the minor scales.
-	Example:
-	{{{
-	>>> determine(["C", "D", "E", "F", "G", "A", "B"])
-	'C ionian'
-	}}}*/
-
 	var possible_result = [
 		["ionian",
 			["major second", "major third", "perfect fourth", 
