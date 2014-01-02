@@ -43,6 +43,11 @@ See functions of each library in documentation below.
 	* [remove_redundant_accidentals(note)](#notes_remove_redundant_accidentals) - function
 	* [to_major(note)](#notes_to_major) - function
 	* [to_minor(note)](#notes_to_minor) - function
+* [diatonic](#diatonic)
+	* [basic_keys](#diatonic_basic_keys) - attribute
+	* [get_notes(key)](#diatonic_get_notes) - function
+	* [int_to_note(note_int, key)](#diatonic_int_to_note) - function
+	* [interval(key, start_note, interval)](#diatonic_interval) - function
 
 <a name="notes" />
 ### notes
@@ -95,7 +100,7 @@ Converts integers in the range of 0-11 to notes in the form of C or C# (no Cb). 
 Removes redundant #'s and b's from the given note. For example: C##b becomes C#, Eb##b becomes E, etc.  
 
 ---------------------------------------
-<a name="to_major" />
+<a name="notes_to_major" />
 #### to_major(note)
 Returns the major of note. 
 ```js
@@ -103,11 +108,34 @@ zazate.notes.to_major('A'); // return 'C'
 ```
 
 ---------------------------------------
-<a name="to_minor" />
+<a name="notes_to_minor" />
 #### to_minor(note)
 Returns the minor of note. 
 ```js
 zazate.notes.to_minor('C'); // return 'A'
 ```
+
+---------------------------------------
+<a name="diatonic" />
+### diatonic
+---------------------------------------
+<a name="diatonic_basic_keys" />
+#### basic_keys
+Just a list(array): ['Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#']
+
+---------------------------------------
+<a name="diatonic_get_notes" />
+#### get_notes(key)
+Returns an ordered list of the notes in this key. For example: if the key is set to 'F', this function will return ['F', 'G', 'A', 'Bb', 'C', 'D', 'E']. Exotic or ridiculous keys like 'C####' or even 'Gbb##bb#b##' will work; Note however that the latter example will also get cleaned up to 'G'. This function will raise an Error if the key isn't recognised 
+
+---------------------------------------
+<a name="diatonic_int_to_note" />
+#### int_to_note(note_int, key)
+A better implementation of int_to_note found in the [notes](#notes) module. This version bears the key in mind and thus creates theoretically correct notes. Will throw an Error if note_int is not in range(0,12) 
+
+---------------------------------------
+<a name="diatonic_interval" />
+#### interval(key, start_note, interval)
+Returns the note found at the interval starting from start_note in the given key. For example interval('C', 'D', 1) will return 'E'. Will raise an Error if the start_note is not a valid note. 
 
 ---------------------------------------
