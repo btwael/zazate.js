@@ -48,6 +48,40 @@ See functions of each library in documentation below.
 	* [get_notes(key)](#diatonic_get_notes) - function
 	* [int_to_note(note_int, key)](#diatonic_int_to_note) - function
 	* [interval(key, start_note, interval)](#diatonic_interval) - function
+* [intervals](#intervals)
+	* augmented_unison(note1, note2, shorthand) - function
+	* [determine(note1, note2, shorthand)](#intervals_determine) - function
+	* [fifth(note, key)](#intervals_fifth) - function
+	* [fourth(note, key)](#intervals_fourth) - function
+	* [from_shorthand(note, interval, up)](#intervals_from_shorthand) - function
+	* [get_interval(note, interval, key)](#intervals_get_interval) - function
+	* [interval(interval)](#intervals_interval) - function
+	* [is_consonant(note1, note2, include_fourths)](#intervals_is_consonant) - function
+	* [is_dissonant(note1, note2, include_fourths)](#intervals_is_dissonant) - function
+	* [is_imperfect_consonant(note1, note2)](#intervals_is_imperfect_consonant) - function
+	* [is_perfect_consonant(note1, note2, include_fourths)](#intervals_is_perfect_consonant) - function
+	* major_fifth(note) - function
+	* major_fourth(note) - function
+	* major_second(note) - function
+	* major_seventh(note) - function
+	* major_sixth(note) - function
+	* major_third(note) - function
+	* major_unison(note) - function
+	* [measure(note1, note2)](#intervals_measure) - function
+	* minor_fifth(note) - function
+	* minor_fourth(note) - function
+	* minor_second(note) - function
+	* minor_seventh(note) - function
+	* minor_sixth(note) - function
+	* minor_third(note) - function
+	* minor_unison(note) - function
+	* perfect_fifth(note) - function
+	* perfect_fourth(note) - function
+	* [second(note, key)](#intervals_second) - function
+	* [seventh(note, key)](#intervals_seventh) - function
+	* [sixth(note, key)](#intervals_sixth) - function
+	* [third(note, key)](#intervals_third) - function
+	* [unison(note, key)](#intervals_unison) - function
 
 <a name="notes" />
 ### notes
@@ -137,5 +171,145 @@ A better implementation of int_to_note found in the [notes](#notes) module. This
 <a name="diatonic_interval" />
 #### interval(key, start_note, interval)
 Returns the note found at the interval starting from start_note in the given key. For example interval('C', 'D', 1) will return 'E'. Will raise an Error if the start_note is not a valid note. 
+
+---------------------------------------
+<a name="intervals" />
+### intervals
+---------------------------------------
+<a name="intervals_determine" />
+#### determine(note1, note2, shorthand)
+* **Default values**: shorthand = false 
+* Names the interval between note1 and note2.
+
+```js
+zazate.intervals.determine("C", "E"); // return 'major third'
+zazate.intervals.determine("C", "Eb"); // return 'minor third'
+zazate.intervals.determine("C", "E#"); // return 'augmented third'
+zazate.intervals.determine("C", "Ebb"); // return 'diminished third'
+zazate.intervals.determine("C", "G"); // return 'perfect fifth'
+zazate.intervals.determine("C", "F"); // return 'perfect fourth'
+```
+
+---------------------------------------
+<a name="intervals_fifth" />
+#### fifth(note, key)
+Take the diatonic fifth of note in key. 
+```js
+zazate.intervals.fifth("E", "C"); // return 'B'
+zazate.intervals.fifth("E", "F"); // return 'Bb'
+```
+
+---------------------------------------
+<a name="intervals_fourth" />
+#### fourth(note, key)
+Take the diatonic fourth of note in key. 
+```js
+zazate.intervals.fourth("E", "C"); // return 'A'
+zazate.intervals.fourth("E", "B"); // return 'A#'
+```
+
+---------------------------------------
+<a name="intervals_from_shorthand" />
+#### from_shorthand(note, interval, up)
+* **Default values**: up = true 
+* Returns the note on interval up or down. 
+
+```js
+zazate.intervals.from_shorthand("A", "b3"); // return 'C'
+zazate.intervals.from_shorthand("D", "2"); // return 'A'
+zazate.intervals.from_shorthand("E", "2", false); // return 'D'
+```
+
+---------------------------------------
+<a name="intervals_get_interval" />
+#### get_interval(note, interval, key)
+* **Default values**: key = 'C' 
+* Gets the note an interval (in half notes) away from the given note. This will produce mostly theoretical sound results, but you should use the minor and major functions to work around the corner cases. 
+
+---------------------------------------
+<a name="intervals_invert" />
+#### invert(interval)
+Invert an interval represented as [note1, note2]. 
+```js
+zazate.intervals.invert(["C", "E"]); // return ["E", "C"]
+```
+
+---------------------------------------
+<a name="intervals_is_consonant" />
+#### is_consonant(note1, note2, include_fourths)
+* **Default values**: include_fourths = true 
+* A consonance is a harmony, chord, or interval considered stable, as opposed to a dissonance (see is_dissonant). This function tests whether the given interval is consonant. This basically means that it checks whether the interval is (or sounds like) a unison, third, sixth, perfect fourth or perfect fifth. In classical music the fourth is considered dissonant when used contrapuntal, which is why you can choose to exclude it. 
+
+---------------------------------------
+<a name="intervals_is_dissonant" />
+#### is_dissonant(note1, note2, include_fourths)
+* **Default values**: include_fourths = true 
+* Tests whether an interval is considered unstable, dissonant. In the default case perfect fourths are considered consonant, but this can be changed with the exclude_fourths flag.  
+
+---------------------------------------
+<a name="intervals_is_imperfect_consonant" />
+#### is_imperfect_consonant(note1, note2)
+Imperfect consonances are either minor or major thirds or minor or major sixths. 
+
+---------------------------------------
+<a name="intervals_is_perfect_consonant" />
+#### is_perfect_consonant(note1, note2, include_fourths)
+* **Default values**: include_fourths = true
+* Perfect consonances are either unisons, perfect fourths or fifths, or octaves (which is the same as a unison in this model; see the container.Note class for more). Perfect fourths are usually included as well, but are considered dissonant when used contrapuntal, which is why you can exclude them.  
+
+---------------------------------------
+<a name="intervals_measure" />
+#### measure(note1, note2)
+Returns an integer in the range of 0-11, determining the half note steps between note1 and note2. 
+```js
+zazate.intervals.measure("C", "D"); // return 2
+zazate.intervals.measure("D", "C"); // return 10
+```
+
+---------------------------------------
+<a name="intervals_second" />
+#### second(note, key)
+Take the diatonic second of note in key. 
+```js
+zazate.intervals.second("E", "C"); // return 'F'
+zazate.intervals.second("E", "D"); // return 'F#'
+```
+
+---------------------------------------
+<a name="intervals_seventh" />
+#### seventh(note, key)
+Take the diatonic seventh of note in key. 
+```js
+zazate.intervals.seventh("E", "C"); // return 'D'
+zazate.intervals.seventh("E", "B"); // return 'D#'
+```
+
+---------------------------------------
+<a name="intervals_sixth" />
+#### sixth(note, key)
+Take the diatonic sixth of note in key. 
+```js
+zazate.intervals.sixth("E", "C"); // return 'C'
+zazate.intervals.sixth("E", "B"); // return 'C#'
+```
+
+---------------------------------------
+<a name="intervals_third" />
+#### third(note, key)
+Take the diatonic third of note in key. 
+```js
+zazate.intervals.third("E", "C"); // return 'G'
+zazate.intervals.third("E", "E"); // return 'G#'
+```
+
+---------------------------------------
+<a name="intervals_from_shorthand" />
+#### unison(note, key)
+* **Default values**: key = null 
+* One of the most useless methods ever written, which returns the unison of note. The key is not at all important, but is here for consistency reasons only.
+
+```js
+zazate.intervals.unison("C"); // return 'C'
+```
 
 ---------------------------------------
