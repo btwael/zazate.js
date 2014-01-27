@@ -82,6 +82,24 @@ See functions of each library in documentation below.
 	* [sixth(note, key)](#intervals_sixth) - function
 	* [third(note, key)](#intervals_third) - function
 	* [unison(note, key)](#intervals_unison) - function
+* [chords](#chords)
+	* I(key) - function
+	* I7(key) - function
+	* II(key) - function
+	* II7(key) - function
+	* III(key) - function
+	* III7(key) - function
+	* IV(key) - function
+	* IV7(key) - function
+	* V(key) - function
+	* V7(key) - function
+	* VI(key) - function
+	* VI7(key) - function
+	* VII(key) - function
+	* VII7(key) - function
+	* [augmented_major_seventh(note)](#chords_augmented_major_seventh) - function
+	* [augmented_minor_seventh(note)](#chords_augmented_minor_seventh) - function
+	* [augmented_triad(note)](#chords_augmented_triad) - function
 
 <a name="notes" />
 ### notes
@@ -310,6 +328,33 @@ zazate.intervals.third("E", "E"); // return 'G#'
 
 ```js
 zazate.intervals.unison("C"); // return 'C'
+```
+
+---------------------------------------
+<a name="chords" />
+### chords
+---------------------------------------
+<a name="chords_augmented_major_seventh" />
+#### augmented_major_seventh(note)
+Builds an augmented major seventh chord on note. 
+```js
+zazate.chords.augmented_major_seventh("C") // ["C", "E", "G#", "B"]
+```
+
+---------------------------------------
+<a name="chords_augmented_minor_seventh" />
+#### augmented_minor_seventh(note)
+Builds an augmented minor seventh chord on note. 
+```js
+zazate.chords.augmented_minor_seventh("C") // ["C", "E", "G#", "Bb"]
+```
+
+---------------------------------------
+<a name="chords_augmented_triad" />
+#### augmented_triad(note)
+Builds an augmented triad on note. 
+```js
+zazate.chords.augmented_triad("C") // ["C", "E", "G#"]
 ```
 
 ---------------------------------------
