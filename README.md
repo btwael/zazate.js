@@ -100,6 +100,10 @@ See functions of each library in documentation below.
 	* [augmented_major_seventh(note)](#chords_augmented_major_seventh) - function
 	* [augmented_minor_seventh(note)](#chords_augmented_minor_seventh) - function
 	* [augmented_triad(note)](#chords_augmented_triad) - function
+	* [determine(chord, shorthand, no_inversions, no_polychords)](#chords_determine) - function
+	* [determine_extended_chord5(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord5) - function
+	* [determine_extended_chord6(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord6) - function
+	* [determine_extended_chord7(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord7) - function
 
 <a name="notes" />
 ### notes
@@ -356,5 +360,29 @@ Builds an augmented triad on note.
 ```js
 zazate.chords.augmented_triad("C") // ["C", "E", "G#"]
 ```
+
+---------------------------------------
+<a name="chords_determine" />
+#### determine(chord, shorthand, no_inversions, no_polychords)
+* **Default values**: shorthand = False, no_inversions = False, no_polychords = False 
+* Names a chord. Can determine almost every chord, from a simple triad to a fourteen note polychord. 
+
+---------------------------------------
+<a name="chords_determine_extended_chord5" />
+#### determine_extended_chord5(chord, shorthand, no_inversions, no_polychords)
+* **Default values**: shorthand = False, no_inversions = False, no_polychords = False 
+* Determines the names of an extended chord 
+
+---------------------------------------
+<a name="chords_determine_extended_chord6" />
+#### determine_extended_chord6(chord, shorthand, no_inversions, no_polychords)
+* **Default values**: shorthand = False, no_inversions = False, no_polychords = False 
+* Determines the names of an 6 note chord 
+
+---------------------------------------
+<a name="chords_determine_extended_chord7" />
+#### determine_extended_chord7(chord, shorthand, no_inversions, no_polychords)
+* **Default values**: shorthand = False, no_inversions = False, no_polychords = False 
+* Determines the names of an 7 note chord 
 
 ---------------------------------------
