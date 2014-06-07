@@ -105,6 +105,8 @@ See functions of each library in documentation below.
 	* [determine_extended_chord6(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord6) - function
 	* [determine_extended_chord7(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord7) - function
 
+*More documentation is coming soon!!*
+
 <a name="notes" />
 ### notes
 ---------------------------------------
