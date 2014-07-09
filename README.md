@@ -106,6 +106,9 @@ See functions of each library in documentation below.
 	* [determine_extended_chord7(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord7) - function
 	* [determine_polychords(chord, shorthand)](#chords_determine_polychords) - function
 	* [determine_seventh(seventh, shorthand, no_inversion, no_polychords)](#chords_determine_seventh) - function
+	* [diminished_seventh(note)](#chords_diminished_seventh) - function
+	* [diminished_triad(note)](#chords_diminished_triad) - function
+	* [dominant(key)](#chords_dominant) - function
 
 **More documentation is coming soon!!**
 
@@ -402,6 +405,43 @@ zazate.chords.augmented_triad("C") // ["C", "E", "G#"]
 * Determines the type of seventh chord. Returns the results in a lists, ordered on inversions. Expects seventh to be a list of 4 notes. If shorthand is set to True, results will be returned in chord shorthand ('Cmin7', etc.) - inversions will be dropped in that case. 
 ```js
 zazate.chords.determine_seventh(['C', 'E', 'G', 'B']) // ['C major seventh']
+```
+
+---------------------------------------
+<a name="chords_determine_triad" />
+#### determine_triad(triad, shorthand, no_inversions, placeholder)
+* **Default values**: shorthand = False, no_inversions = False, placeholder = None 
+* Names the triad. Returns answers in a list. The third argument should not be given. If shorthand is True the answers will be in abbreviated form.
+
+Can determine major, minor, diminished and suspended triads. Also knows about invertions. 
+```js
+zazate.chords.determine_triad(["A", "C", "E"]) // 'A minor triad'
+zazate.chords.determine_triad(["C", "E", "A"]) // 'A minor triad, first inversion'
+zazate.chordsdetermine_triad(["A", "C", "E"], True) // 'Am'
+```
+
+---------------------------------------
+<a name="chords_diminished_seventh" />
+#### diminished_seventh(note)
+Builds a diminished seventh chord on note. 
+```js
+zazate.chords.diminished_seventh("C") // ["C", "Eb", "Gb", "Bbb"]
+```
+
+---------------------------------------
+<a name="chords_diminished_triad" />
+#### diminished_triad(note)
+Builds a diminished triad on note.
+```js
+zazate.chords.diminished_triad("C") // ["C", "Eb", "Gb"]
+```
+
+---------------------------------------
+<a name="chords_dominant" />
+#### dominant(key)
+Returns the dominant chord in key. 
+```js
+zazate.chords.dominant("C")  // ["G", "B", "D"]
 ```
 
 ---------------------------------------
