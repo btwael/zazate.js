@@ -104,6 +104,8 @@ See functions of each library in documentation below.
 	* [determine_extended_chord5(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord5) - function
 	* [determine_extended_chord6(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord6) - function
 	* [determine_extended_chord7(chord, shorthand, no_inversions, no_polychords)](#chords_determine_extended_chord7) - function
+	* [determine_polychords(chord, shorthand)](#chords_determine_polychords) - function
+	* [determine_seventh(seventh, shorthand, no_inversion, no_polychords)](#chords_determine_seventh) - function
 
 **More documentation is coming soon!!**
 
@@ -386,5 +388,20 @@ zazate.chords.augmented_triad("C") // ["C", "E", "G#"]
 #### determine_extended_chord7(chord, shorthand, no_inversions, no_polychords)
 * **Default values**: shorthand = False, no_inversions = False, no_polychords = False 
 * Determines the names of an 7 note chord 
+
+---------------------------------------
+<a name="chords_determine_polychords" />
+#### determine_polychords(chord, shorthand)
+* **Default values**: shorthand = False 
+* Determines the polychords in chord. Can handle anything from polychords based on two triads to 6 note extended chords. 
+
+---------------------------------------
+<a name="chords_determine_seventh" />
+#### determine_seventh(seventh, shorthand, no_inversion, no_polychords)
+* **Default values**: shorthand = False, no_inversion = False, no_polychords = False  
+* Determines the type of seventh chord. Returns the results in a lists, ordered on inversions. Expects seventh to be a list of 4 notes. If shorthand is set to True, results will be returned in chord shorthand ('Cmin7', etc.) - inversions will be dropped in that case. 
+```js
+zazate.chords.determine_seventh(['C', 'E', 'G', 'B']) // ['C major seventh']
+```
 
 ---------------------------------------
