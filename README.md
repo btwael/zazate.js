@@ -109,6 +109,8 @@ See functions of each library in documentation below.
 	* [diminished_seventh(note)](#chords_diminished_seventh) - function
 	* [diminished_triad(note)](#chords_diminished_triad) - function
 	* [dominant(key)](#chords_dominant) - function
+	* [dominant7(key)](#chords_dominant7) - function
+	* [dominant_flat_five(note)](#chords_dominant_flat_five) - function
 
 **More documentation is coming soon!!**
 
@@ -442,6 +444,19 @@ zazate.chords.diminished_triad("C") // ["C", "Eb", "Gb"]
 Returns the dominant chord in key. 
 ```js
 zazate.chords.dominant("C")  // ["G", "B", "D"]
+```
+
+---------------------------------------
+<a name="chords_dominant7" />
+#### dominant7(key)
+Same as [dominant(key)](#chords_dominant), but returns seventh chord 
+
+---------------------------------------
+<a name="chords_dominant_flat_five" />
+#### dominant_flat_five(note)
+Builds a dominant flat five chord on note.  
+```js
+zazate.chords.dominant_flat_five("C") // ['C', 'E', 'Gb', 'Bb']
 ```
 
 ---------------------------------------
