@@ -111,6 +111,8 @@ See functions of each library in documentation below.
 	* [dominant(key)](#chords_dominant) - function
 	* [dominant7(key)](#chords_dominant7) - function
 	* [dominant_flat_five(note)](#chords_dominant_flat_five) - function
+	* [dominant_flat_ninth(note)](#chords_dominant_flat_ninth) - function
+	* [dominant_ninth(note)](#chords_dominant_ninth) - function
 
 **More documentation is coming soon!!**
 
@@ -457,6 +459,22 @@ Same as [dominant(key)](#chords_dominant), but returns seventh chord
 Builds a dominant flat five chord on note.  
 ```js
 zazate.chords.dominant_flat_five("C") // ['C', 'E', 'Gb', 'Bb']
+```
+
+---------------------------------------
+<a name="chords_dominant_flat_ninth" />
+#### dominant_flat_ninth(note)
+Builds a dominant flat ninth chord on note.  
+```js
+zazate.chords.dominant_ninth("C") // ['C', 'E', 'G', 'Bb', 'Db']
+```
+
+---------------------------------------
+<a name="chords_dominant_ninthh" />
+#### dominant_ninth(note)
+Builds a dominant ninth chord on note.  
+```js
+zazate.chords.dominant_ninth("C") // ['C', 'E', 'G', 'Bb', 'D']
 ```
 
 ---------------------------------------
