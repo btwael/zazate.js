@@ -113,6 +113,8 @@ See functions of each library in documentation below.
 	* [dominant_flat_five(note)](#chords_dominant_flat_five) - function
 	* [dominant_flat_ninth(note)](#chords_dominant_flat_ninth) - function
 	* [dominant_ninth(note)](#chords_dominant_ninth) - function
+	* [dominant_seventh(note)](#chords_dominant_seventh) - function
+	* [dominant_sharp_ninth(note)](#chords_dominant_sharp_ninth) - function
 
 **More documentation is coming soon!!**
 
@@ -466,15 +468,31 @@ zazate.chords.dominant_flat_five("C") // ['C', 'E', 'Gb', 'Bb']
 #### dominant_flat_ninth(note)
 Builds a dominant flat ninth chord on note.  
 ```js
-zazate.chords.dominant_ninth("C") // ['C', 'E', 'G', 'Bb', 'Db']
+zazate.chords.dominant_flat_ninth("C") // ['C', 'E', 'G', 'Bb', 'Db']
 ```
 
 ---------------------------------------
-<a name="chords_dominant_ninthh" />
+<a name="chords_dominant_ninth" />
 #### dominant_ninth(note)
 Builds a dominant ninth chord on note.  
 ```js
 zazate.chords.dominant_ninth("C") // ['C', 'E', 'G', 'Bb', 'D']
+```
+
+---------------------------------------
+<a name="chords_dominant_seventh" />
+#### dominant_seventh(note)
+Builds a dominant seventh chord on note.  
+```js
+zazate.chords.dominant_seventh("C") // ["C", "E", "G", "Bb"]
+```
+
+---------------------------------------
+<a name="chords_dominant_ninthh" />
+#### dominant_sharp_ninth(note)
+Builds a dominant sharp ninth chord on note.  
+```js
+zazate.chords.dominant_sharp_ninth("C") // ['C', 'E', 'G', 'Bb', 'D#']
 ```
 
 ---------------------------------------
