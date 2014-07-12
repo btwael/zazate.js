@@ -115,6 +115,11 @@ See functions of each library in documentation below.
 	* [dominant_ninth(note)](#chords_dominant_ninth) - function
 	* [dominant_seventh(note)](#chords_dominant_seventh) - function
 	* [dominant_sharp_ninth(note)](#chords_dominant_sharp_ninth) - function
+	* [dominant_sixth(note)](#chords_dominant_sixth) - function
+	* [dominant_thirteenth(note)](#chords_dominant_thirteenth) - function
+	* [eleventh(note)](#chords_eleventh) - function
+	* [first_inversion(chord)](#chords_first_inversion) - function
+	* [from_shorthand(shorthand_string, slash)](#chords_from_shorthand) - function
 
 **More documentation is coming soon!!**
 
@@ -488,11 +493,45 @@ zazate.chords.dominant_seventh("C") // ["C", "E", "G", "Bb"]
 ```
 
 ---------------------------------------
-<a name="chords_dominant_ninthh" />
+<a name="chords_dominant_ninth" />
 #### dominant_sharp_ninth(note)
 Builds a dominant sharp ninth chord on note.  
 ```js
 zazate.chords.dominant_sharp_ninth("C") // ['C', 'E', 'G', 'Bb', 'D#']
 ```
 
+---------------------------------------
+<a name="chords_dominant_sixth" />
+#### dominant_sixth(note)
+Builds the altered chord 6/7 on note. 
+```js
+zazate.chords.dominant_sixth("C") // ['C', 'E', 'G', 'A', 'Bb']
+```
+
+---------------------------------------
+<a name="chords_dominant_thirteenth" />
+#### dominant_thirteenth(note)
+Builds a dominant thirteenth chord on note.  
+```js
+zazate.chords.dominant_thirteenth('C') // ['C', 'E', 'G', 'Bb', 'D', 'A']
+```
+
+---------------------------------------
+<a name="chords_eleventh" />
+#### eleventh(note)
+Builds an eleventh chord on note.  
+```js
+zazate.chords.eleventh("C") // ['C', 'G', 'Bb', 'F']
+```
+
+---------------------------------------
+<a name="chords_first_inversion" />
+#### first_inversion(chord)
+The first inversion of a chord 
+
+---------------------------------------
+<a name="chords_from_shorthand" />
+#### from_shorthand(shorthand_string, slash)
+* **Default values**: slash = false
+* Takes a chord written in shorthand and returns the notes in the chord. The function can recognize triads, sevenths, sixths, ninths, elevenths, thirteenths, slashed chords and a number of altered chords. The second argument should not be given and is only used for a recursive call when a slashed chord or polychord is found. See [Wikibooks](http://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns) for a nice overview of chord patterns. 
 ---------------------------------------
