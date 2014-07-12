@@ -533,5 +533,27 @@ The first inversion of a chord
 <a name="chords_from_shorthand" />
 #### from_shorthand(shorthand_string, slash)
 * **Default values**: slash = false
-* Takes a chord written in shorthand and returns the notes in the chord. The function can recognize triads, sevenths, sixths, ninths, elevenths, thirteenths, slashed chords and a number of altered chords. The second argument should not be given and is only used for a recursive call when a slashed chord or polychord is found. See [Wikibooks](http://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns) for a nice overview of chord patterns. 
+* Takes a chord written in shorthand and returns the notes in the chord. The function can recognize triads, sevenths, sixths, ninths, elevenths, thirteenths, slashed chords and a number of altered chords. The second argument should not be given and is only used for a recursive call when a slashed chord or polychord is found. See [Wikibooks](http://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns) for a nice overview of chord patterns.
+
+ ```js
+zazate.chords.from_shorthand("Amin") // ["A", "C", "E"]
+zazate.chords.from_shorthand("Am/M7") // ["F", "Ab", "C", "E"]
+zazate.chords.from_shorthand("A") // ["A", "C#", "E"]
+zazate.chords.from_shorthand("A/G") // ["G", "A", "C#", "E"]
+zazate.chords.from_shorthand("Dm|G") // ["G", "B", "D", "F", "A"]
+```
+
+Recognised abbreviations: the letters m and M in the following abbreviations can always be substituted by respectively min, mi or - and maj or ma (eg. from_shorthand("Amin7") == from_shorthand("Am7"), etc.).
+
+* Triads: 'm', 'M' or '', 'dim'.
+* Sevenths: 'm7', 'M7', '7', 'm7b5', 'dim7', 'm/M7' or 'mM7'
+* Augmented chords: 'aug' or '+', '7#5' or 'M7+5', 'M7+', 'm7+', '7+'
+* Suspended chords: 'sus4', 'sus2', 'sus47', 'sus', '11', 'sus4b9' or 'susb9'
+* Sixths: '6', 'm6', 'M6', '6/7' or '67', 6/9 or 69
+* Ninths: '9', 'M9', 'm9', '7b9', '7#9'
+* Elevenths: '11', '7#11', 'm11'
+* Thirteenths: '13', 'M13', 'm13'
+* Altered chords: '7b5', '7b9', '7#9', '67' or '6/7'
+* Special: '5', 'NC', 'hendrix' 
+
 ---------------------------------------
