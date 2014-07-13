@@ -121,6 +121,11 @@ See functions of each library in documentation below.
 	* [first_inversion(chord)](#chords_first_inversion) - function
 	* [from_shorthand(shorthand_string, slash)](#chords_from_shorthand) - function
 	* [half_diminished_seventh(note)](#chords_half_diminished_seventh) - function
+	* [hendrix_chord(note)](#chords_hendrix_chord) - function
+	* ii(key) - function
+	* ii7(key) - function
+	* iii(key) - function
+	* iii7(key) - function
 
 **More documentation is coming soon!!**
 
@@ -563,6 +568,14 @@ Recognised abbreviations: the letters m and M in the following abbreviations can
 Builds a half diminished seventh (=minor seventh flat five) chord on note.  
 ```js
 zazate.chords.half_diminished_seventh("C") // ["C", "Eb", "Gb", "Bb"]
+```
+
+---------------------------------------
+<a name="chords_hendrix_chord" />
+#### hendrix_chord(note)
+Builds the famous Hendrix chord (7b12) 
+```js
+zazate.chords.hendrix_chord('C') // ['C', 'E', 'G', 'Bb', 'Eb']
 ```
 
 ---------------------------------------
