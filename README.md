@@ -120,6 +120,7 @@ See functions of each library in documentation below.
 	* [eleventh(note)](#chords_eleventh) - function
 	* [first_inversion(chord)](#chords_first_inversion) - function
 	* [from_shorthand(shorthand_string, slash)](#chords_from_shorthand) - function
+	* [half_diminished_seventh(note)](#chords_half_diminished_seventh) - function
 
 **More documentation is coming soon!!**
 
@@ -555,5 +556,13 @@ Recognised abbreviations: the letters m and M in the following abbreviations can
 * Thirteenths: '13', 'M13', 'm13'
 * Altered chords: '7b5', '7b9', '7#9', '67' or '6/7'
 * Special: '5', 'NC', 'hendrix' 
+
+---------------------------------------
+<a name="chords_half_diminished_seventh" />
+#### half_diminished_seventh(note)
+Builds a half diminished seventh (=minor seventh flat five) chord on note.  
+```js
+zazate.chords.half_diminished_seventh("C") // ["C", "Eb", "Gb", "Bb"]
+```
 
 ---------------------------------------
