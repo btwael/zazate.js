@@ -126,6 +126,10 @@ See functions of each library in documentation below.
 	* ii7(key) - function
 	* iii(key) - function
 	* iii7(key) - function
+	* [int_desc(tries)](#chords_int_desc) - function
+	* [invert(chord)](#chords_invert) - function
+	* [lydian_dominant_seventh(note)](#chords_lydian_dominant_seventh) - function
+	* [major_ninth(note)](#chords_major_ninth) - function
 
 **More documentation is coming soon!!**
 
@@ -573,9 +577,35 @@ zazate.chords.half_diminished_seventh("C") // ["C", "Eb", "Gb", "Bb"]
 ---------------------------------------
 <a name="chords_hendrix_chord" />
 #### hendrix_chord(note)
-Builds the famous Hendrix chord (7b12) 
+Builds the famous Hendrix chord (7b12).
 ```js
 zazate.chords.hendrix_chord('C') // ['C', 'E', 'G', 'Bb', 'Eb']
+```
+
+---------------------------------------
+<a name="chords_int_desc" />
+#### int_desc(tries)
+Helper function that returns the inversion of the triad in a string.
+
+---------------------------------------
+<a name="chords_invert" />
+#### invert(chord)
+Inverts a given chord one time.
+
+---------------------------------------
+<a name="chords_lydian_dominant_seventh" />
+#### lydian_dominant_seventh(note)
+Builds the lydian dominant seventh (7#11) on note.  
+```js
+zazate.chords.lydian_dominant_seventh('C') // ['C', 'E', 'G', 'Bb', 'F#']
+```
+
+---------------------------------------
+<a name="chords_major_ninth" />
+#### major_ninth(note)
+Builds a major ninth chord on note.  
+```js
+zazate.chords.major_ninth("C") // ['C', 'E', 'G', 'B', 'D']
 ```
 
 ---------------------------------------
