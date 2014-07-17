@@ -130,6 +130,9 @@ See functions of each library in documentation below.
 	* [invert(chord)](#chords_invert) - function
 	* [lydian_dominant_seventh(note)](#chords_lydian_dominant_seventh) - function
 	* [major_ninth(note)](#chords_major_ninth) - function
+	* [major_seventh(note)](#chords_major_seventh) - function
+	* [major_sixth(note)](#chords_major_sixth) - function
+	* [major_thirteenth(note)](#chords_major_thirteenth) - function
 
 **More documentation is coming soon!!**
 
@@ -606,6 +609,30 @@ zazate.chords.lydian_dominant_seventh('C') // ['C', 'E', 'G', 'Bb', 'F#']
 Builds a major ninth chord on note.  
 ```js
 zazate.chords.major_ninth("C") // ['C', 'E', 'G', 'B', 'D']
+```
+
+---------------------------------------
+<a name="chords_major_seventh" />
+#### major_seventh(note)
+Builds a major seventh chord on note.  
+```js
+zazate.chords.major_seventh("C") // ["C", "E", "G", "B"]
+```
+
+---------------------------------------
+<a name="chords_major_sixth" />
+#### major_sixth(note)
+Builds a major sixth chord on note.  
+```js
+zazate.chords.major_sixth("C") // ['C', 'E', 'G', 'A']
+```
+
+---------------------------------------
+<a name="chords_major_thirteenth" />
+#### major_thirteenth(note)
+Builds a major thirteenth chord on note.  
+```js
+zazate.chords.major_thirteenth("C") // ['C', 'E', 'G', 'B', 'D', 'A']
 ```
 
 ---------------------------------------
