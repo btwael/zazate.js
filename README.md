@@ -133,7 +133,7 @@ See functions of each library in documentation below.
 	* [major_seventh(note)](#chords_major_seventh) - function
 	* [major_sixth(note)](#chords_major_sixth) - function
 	* [major_thirteenth(note)](#chords_major_thirteenth) - function
-	* [major_triad(note)](#chords_major_triadh) - function
+	* [major_triad(note)](#chords_major_triad) - function
 	* [mediant(key)](#chords_mediant) - function
 	* [mediant7(key)](#chords_mediant7) - function
 	* [minor_eleventh(note)](#chords_minor_eleventh) - function
