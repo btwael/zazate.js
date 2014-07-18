@@ -133,6 +133,10 @@ See functions of each library in documentation below.
 	* [major_seventh(note)](#chords_major_seventh) - function
 	* [major_sixth(note)](#chords_major_sixth) - function
 	* [major_thirteenth(note)](#chords_major_thirteenth) - function
+	* [major_triad(note)](#chords_major_triadh) - function
+	* [mediant(key)](#chords_mediant) - function
+	* [mediant7(key)](#chords_mediant7) - function
+	* [minor_eleventh(note)](#chords_minor_eleventh) - function
 
 **More documentation is coming soon!!**
 
@@ -633,6 +637,35 @@ zazate.chords.major_sixth("C") // ['C', 'E', 'G', 'A']
 Builds a major thirteenth chord on note.  
 ```js
 zazate.chords.major_thirteenth("C") // ['C', 'E', 'G', 'B', 'D', 'A']
+```
+
+---------------------------------------
+<a name="chords_major_triad" />
+#### major_thirteenth(note)
+Builds a major triad  chord on note.  
+```js
+zazate.chords.major_triad("C") // ["C", "E", "G"]
+```
+
+---------------------------------------
+<a name="chords_mediant" />
+#### mediant(key)
+Returns the mediant chord in key. 
+```js
+zazate.chords.mediant("C") // ["E", "G", "B"]
+```
+
+---------------------------------------
+<a name="chords_mediant7" />
+#### mediant7(key)
+Same as mediant(key), but returns seventh chord 
+
+---------------------------------------
+<a name="chords_minor_eleventh" />
+#### minor_eleventh(note)
+Builds a minor eleventh chord on note.
+```js
+zazate.chords.minor_eleventh("C") // ['C', 'Eb', 'G', 'Bb', 'F']
 ```
 
 ---------------------------------------
