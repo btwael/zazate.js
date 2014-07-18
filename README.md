@@ -641,8 +641,8 @@ zazate.chords.major_thirteenth("C") // ['C', 'E', 'G', 'B', 'D', 'A']
 
 ---------------------------------------
 <a name="chords_major_triad" />
-#### major_thirteenth(note)
-Builds a major triad  chord on note.  
+#### major_triad(note)
+Builds a major triad chord on note.  
 ```js
 zazate.chords.major_triad("C") // ["C", "E", "G"]
 ```
