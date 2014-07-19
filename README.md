@@ -137,6 +137,8 @@ See functions of each library in documentation below.
 	* [mediant(key)](#chords_mediant) - function
 	* [mediant7(key)](#chords_mediant7) - function
 	* [minor_eleventh(note)](#chords_minor_eleventh) - function
+	* [minor_major_seventh(note)](#chords_minor_major_seventh) - function
+	* [minor_ninth(note)](#chords_minor_ninth) - function
 
 **More documentation is coming soon!!**
 
@@ -661,11 +663,19 @@ zazate.chords.mediant("C") // ["E", "G", "B"]
 Same as mediant(key), but returns seventh chord 
 
 ---------------------------------------
-<a name="chords_minor_eleventh" />
-#### minor_eleventh(note)
-Builds a minor eleventh chord on note.
+<a name="chords_minor_major_seventh" />
+#### minor_major_seventh(note)
+Builds a minor major seventh chord on note.
 ```js
-zazate.chords.minor_eleventh("C") // ['C', 'Eb', 'G', 'Bb', 'F']
+zazate.chords.minor_major_seventh("C") // ["C", "Eb", "G", "B"]
+```
+
+---------------------------------------
+<a name="chords_minor_ninth" />
+#### minor_ninth(note)
+Builds a minor ninth chord on note.
+```js
+zazate.chords.minor_ninth("C") // ['C', 'Eb', 'G', 'Bb', 'D']
 ```
 
 ---------------------------------------
