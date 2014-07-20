@@ -139,6 +139,10 @@ See functions of each library in documentation below.
 	* [minor_eleventh(note)](#chords_minor_eleventh) - function
 	* [minor_major_seventh(note)](#chords_minor_major_seventh) - function
 	* [minor_ninth(note)](#chords_minor_ninth) - function
+	* [minor_seventh(note)](#chords_minor_seventh) - function
+	* [minor_seventh_flat_five(note)](#chords_minor_seventh_flat_five) - function
+	* [minor_sixth(note)](#chords_minor_sixth) - function
+	* [minor_thirteenth(note)](#chords_minor_thirteenth) - function
 
 **More documentation is coming soon!!**
 
@@ -676,6 +680,35 @@ zazate.chords.minor_major_seventh("C") // ["C", "Eb", "G", "B"]
 Builds a minor ninth chord on note.
 ```js
 zazate.chords.minor_ninth("C") // ['C', 'Eb', 'G', 'Bb', 'D']
+```
+
+---------------------------------------
+<a name="chords_minor_seventh" />
+#### minor_seventh(note)
+Builds a minor seventh chord on note.
+```js
+zazate.chords.minor_seventh("C") // ["C", "Eb", "G", "Bb"]
+```
+
+---------------------------------------
+<a name="chords_minor_seventh_flat_five" />
+#### minor_seventh_flat_five(note)
+See half_diminished_seventh(note) for docs 
+
+---------------------------------------
+<a name="chords_minor_sixth" />
+#### minor_sixth(note)
+Builds a minor sixth chord on note.
+```js
+zazate.chords.minor_sixth("C") // ['C', 'Eb', 'G', 'A']
+```
+
+---------------------------------------
+<a name="chords_minor_thirteenth" />
+#### minor_thirteenth(note)
+Builds a minor thirteenth chord on note.
+```js
+zazate.chords.minor_thirteenth("C") // ['C', 'Eb', 'G', 'Bb', 'D', 'A']
 ```
 
 ---------------------------------------
