@@ -145,8 +145,9 @@ See functions of each library in documentation below.
 	* [minor_thirteenth(note)](#chords_minor_thirteenth) - function
 	* [minor_triad(note)](#chords_minor_triad) - function
 	* [second_inversion(chord)](#chords_second_inversion) - function
-	* [sevenths(note, key)](#chords_sevenths) - function
+	* [seventh(note, key)](#chords_seventh) - function
 	* [sevenths(key)](#chords_sevenths) - function
+	* [sixth_ninth(note)](#chords_sixth_ninth) - function
 
 **More documentation is coming soon!!**
 
@@ -737,8 +738,14 @@ zazate.chords.seventh("C", "C") // ["C", "E", "G", "B"]
 ```
 
 ---------------------------------------
-<a name="chords_seventh" />
-#### seventh(key)
+<a name="chords_sevenths" />
+#### sevenths(key)
 Returns all the sevenths chords in key in a list.
 
 ---------------------------------------
+<a name="chords_sixth_ninth" />
+#### sixth_ninth(note)
+Returns the sixth/ninth chord on note in key. 
+```js
+zazate.chords.sixth_ninth('C') // ['C', 'E', 'G', 'A', 'D']
+```
