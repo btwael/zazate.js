@@ -148,6 +148,7 @@ See functions of each library in documentation below.
 	* [seventh(note, key)](#chords_seventh) - function
 	* [sevenths(key)](#chords_sevenths) - function
 	* [sixth_ninth(note)](#chords_sixth_ninth) - function
+	* [subdominant(key)](#chords_subdominant) - function
 
 **More documentation is coming soon!!**
 
@@ -749,3 +750,13 @@ Returns the sixth/ninth chord on note in key.
 ```js
 zazate.chords.sixth_ninth('C') // ['C', 'E', 'G', 'A', 'D']
 ```
+
+---------------------------------------
+<a name="chords_subdominant" />
+#### subdominant(key)
+Returns the subdominant chord in key.  
+```js
+zazate.chords.subdominant('C') // ["F", "A", "C"]
+```
+
+---------------------------------------
