@@ -144,6 +144,9 @@ See functions of each library in documentation below.
 	* [minor_sixth(note)](#chords_minor_sixth) - function
 	* [minor_thirteenth(note)](#chords_minor_thirteenth) - function
 	* [minor_triad(note)](#chords_minor_triad) - function
+	* [second_inversion(chord)](#chords_second_inversion) - function
+	* [sevenths(note, key)](#chords_sevenths) - function
+	* [sevenths(key)](#chords_sevenths) - function
 
 **More documentation is coming soon!!**
 
@@ -719,5 +722,23 @@ Builds a minor triad chord on note.
 ```js
 zazate.chords.minor_triad("C") // ["C", "Eb", "G"]
 ```
+
+---------------------------------------
+<a name="chords_second_inversion" />
+#### second_inversion(chord)
+Returns the second inversion of chord.
+
+---------------------------------------
+<a name="chords_seventh" />
+#### seventh(note, key)
+Returns the seventh chord on note in key. 
+```js
+zazate.chords.seventh("C", "C") // ["C", "E", "G", "B"]
+```
+
+---------------------------------------
+<a name="chords_seventh" />
+#### seventh(key)
+Returns all the sevenths chords in key in a list.
 
 ---------------------------------------
