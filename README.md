@@ -143,6 +143,7 @@ See functions of each library in documentation below.
 	* [minor_seventh_flat_five(note)](#chords_minor_seventh_flat_five) - function
 	* [minor_sixth(note)](#chords_minor_sixth) - function
 	* [minor_thirteenth(note)](#chords_minor_thirteenth) - function
+	* [minor_triad(note)](#chords_minor_triad) - function
 
 **More documentation is coming soon!!**
 
@@ -709,6 +710,14 @@ zazate.chords.minor_sixth("C") // ['C', 'Eb', 'G', 'A']
 Builds a minor thirteenth chord on note.
 ```js
 zazate.chords.minor_thirteenth("C") // ['C', 'Eb', 'G', 'Bb', 'D', 'A']
+```
+
+---------------------------------------
+<a name="chords_minor_triad" />
+#### minor_triad(note)
+Builds a minor triad chord on note.
+```js
+zazate.chords.minor_triad("C") // ["C", "Eb", "G"]
 ```
 
 ---------------------------------------
