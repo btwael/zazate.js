@@ -151,6 +151,7 @@ See functions of each library in documentation below.
 	* [subdominant(key)](#chords_subdominant) - function
 	* [subdominant7(key)](#chords_subdominant7) - function
 	* [submediant(key)](#chords_submediant) - function
+	* [submediant7(key)](#chords_submediant7) - function
 
 **More documentation is coming soon!!**
 
@@ -764,7 +765,7 @@ zazate.chords.subdominant('C') // ["F", "A", "C"]
 ---------------------------------------
 <a name="chords_subdominant7" />
 #### subdominant7(key)
-Same as subdominant(key), but returns seventh chord 
+Same as subdominant(key), but returns seventh chord.
 
 ---------------------------------------
 <a name="chords_submediant" />
@@ -773,5 +774,10 @@ Returns the submediant chord in key.
 ```js
 zazate.chords.submediant('C') // ["A", "C", "E"]
 ```
+
+---------------------------------------
+<a name="chords_submediant7" />
+#### submediant7(key)
+Same as submediant(key), but returns seventh chord.
 
 ---------------------------------------
