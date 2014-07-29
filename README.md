@@ -155,6 +155,7 @@ See functions of each library in documentation below.
 	* [subtonic(key)](#chords_subtonic) - function
 	* [subtonic7(key)](#chords_subtonic7) - function
 	* [supertonic(key)](#chords_supertonic) - function
+	* [supertonic7(key)](#chords_supertonic7) - function
 
 **More documentation is coming soon!!**
 
