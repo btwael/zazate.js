@@ -805,3 +805,8 @@ zazate.chords.supertonic('C') // ["D", "F", "A"]
 ```
 
 ---------------------------------------
+<a name="chords_supertonic7" />
+#### supertonic7(key)
+Same as supertonic(key), but returns seventh chord.
+
+---------------------------------------
