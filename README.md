@@ -156,6 +156,7 @@ See functions of each library in documentation below.
 	* [subtonic7(key)](#chords_subtonic7) - function
 	* [supertonic(key)](#chords_supertonic) - function
 	* [supertonic7(key)](#chords_supertonic7) - function
+	* [suspended_fourth_ninth(key)](#chords_suspended_fourth_ninth) - function
 
 **More documentation is coming soon!!**
 
@@ -809,5 +810,13 @@ zazate.chords.supertonic('C') // ["D", "F", "A"]
 <a name="chords_supertonic7" />
 #### supertonic7(key)
 Same as supertonic(key), but returns seventh chord.
+
+---------------------------------------
+<a name="chords_suspended_fourth_ninth" />
+#### suspended_fourth_ninth(note)
+Builds a suspended fourth flat ninth chord on note.  
+```js
+zazate.chords.suspended_fourth_ninth('C') // ['C', 'F', 'G', 'Db']
+```
 
 ---------------------------------------
