@@ -156,8 +156,9 @@ See functions of each library in documentation below.
 	* [subtonic7(key)](#chords_subtonic7) - function
 	* [supertonic(key)](#chords_supertonic) - function
 	* [supertonic7(key)](#chords_supertonic7) - function
-	* [suspended_fourth_ninth(key)](#chords_suspended_fourth_ninth) - function
-	* [suspended_fourth_triad(key)](#chords_suspended_fourth_triad) - function
+	* [suspended_fourth_ninth(note)](#chords_suspended_fourth_ninth) - function
+	* [suspended_fourth_triad(note)](#chords_suspended_fourth_triad) - function
+	* [suspended_second_triad(note)](#chords_suspended_second_triad) - function
 
 **More documentation is coming soon!!**
 
@@ -825,7 +826,15 @@ zazate.chords.suspended_fourth_ninth('C') // ['C', 'F', 'G', 'Db']
 #### suspended_fourth_triad(note)
 Builds a suspended fourth triad on note.  
 ```js
-zazate.chords.suspended_fourth_ninth('C') // ["C", "F", "G"]
+zazate.chords.suspended_fourth_triad('C') // ["C", "F", "G"]
+```
+
+---------------------------------------
+<a name="chords_suspended_second_triad" />
+#### suspended_second_triad(note)
+Builds a suspended second triad on note.  
+```js
+zazate.chords.suspended_second_triad('C') // ["C", "D", "G"]
 ```
 
 ---------------------------------------
