@@ -159,6 +159,9 @@ See functions of each library in documentation below.
 	* [suspended_fourth_ninth(note)](#chords_suspended_fourth_ninth) - function
 	* [suspended_fourth_triad(note)](#chords_suspended_fourth_triad) - function
 	* [suspended_second_triad(note)](#chords_suspended_second_triad) - function
+	* [suspended_seventh(note)](#chords_suspended_seventh) - function
+	* [suspended_triad(note)](#chords_suspended_triad) - function
+	* [third_inversion(chord)](#chords_third_inversion) - function
 
 **More documentation is coming soon!!**
 
@@ -836,5 +839,23 @@ Builds a suspended second triad on note.
 ```js
 zazate.chords.suspended_second_triad('C') // ["C", "D", "G"]
 ```
+
+---------------------------------------
+<a name="chords_suspended_seventh" />
+#### suspended_seventh(note)
+Builds a suspended (flat) seventh chord on note. 
+```js
+zazate.chords.suspended_seventh('C') // ["C", "F", "G", "Bb"]
+```
+
+---------------------------------------
+<a name="chords_suspended_triad" />
+#### suspended_triad(note)
+An alias for suspended_fourth_triad 
+
+---------------------------------------
+<a name="chords_third_inversion" />
+#### third_inversion(chord)
+Returns the third inversion of chord.
 
 ---------------------------------------
