@@ -162,6 +162,14 @@ See functions of each library in documentation below.
 	* [suspended_seventh(note)](#chords_suspended_seventh) - function
 	* [suspended_triad(note)](#chords_suspended_triad) - function
 	* [third_inversion(chord)](#chords_third_inversion) - function
+	* [tonic(key)](#chords_tonic) - function
+	* [tonic7(key)](#chords_tonic7) - function
+	* [triad(note, key)](#chords_triad) - function
+	* [triads(key)](#chords_triads) - function
+	* vi(key) - function
+	* vi7(key) - function
+	* vii(key) - function
+	* vii7(key) - function
 
 **More documentation is coming soon!!**
 
@@ -857,5 +865,32 @@ An alias for suspended_fourth_triad
 <a name="chords_third_inversion" />
 #### third_inversion(chord)
 Returns the third inversion of chord.
+
+---------------------------------------
+<a name="chords_tonic" />
+#### tonic(key)
+Returns the tonic chord in key.  
+```js
+zazate.chords.tonic('C') // ["C", "E", "G"]
+```
+
+---------------------------------------
+<a name="chords_tonic7" />
+#### tonic7(key)
+Same as tonic(key), but returns seventh chord instead 
+
+---------------------------------------
+<a name="chords_triad" />
+#### triad(note, key)
+Returns the triad on note in key as an array.   
+```js
+zazate.chords.triad("E", "C") // ["E", "G", "B"]
+zazate.chords.triad("E", "B") // ["E", "G#", "B"]
+```
+
+---------------------------------------
+<a name="chords_triads" />
+#### triads(key)
+Returns all the triads in key. Implemented using a cache.
 
 ---------------------------------------
