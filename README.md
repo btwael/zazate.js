@@ -170,6 +170,10 @@ See functions of each library in documentation below.
 	* vi7(key) - function
 	* vii(key) - function
 	* vii7(key) - function
+* [scales](#scales)
+	* [aeolian(note)](#scales_aeolian) - function
+	* chromatic(note) - function
+	* [determine(scale)](#scales_determine) - function
 
 **More documentation is coming soon!!**
 
@@ -892,5 +896,24 @@ zazate.chords.triad("E", "B") // ["E", "G#", "B"]
 <a name="chords_triads" />
 #### triads(key)
 Returns all the triads in key. Implemented using a cache.
+
+---------------------------------------
+<a name="scales" />
+### scales
+---------------------------------------
+<a name="scales_aeolian" />
+#### aeolian(note)
+Returns the aeolian mode scale starting on note.  
+```js
+zazate.scales.aeolian("A") // ["A", "B", "C", "D", "E", "F", "G"]
+```
+
+---------------------------------------
+<a name="scales_determine" />
+#### determine(scale)
+Determines the kind of scale. Can recognize all the diatonic modes and the minor scales.  
+```js
+zazate.scales.determine(["C", "D", "E", "F", "G", "A", "B"]) // 'C ionian'
+```
 
 ---------------------------------------
