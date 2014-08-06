@@ -174,6 +174,9 @@ See functions of each library in documentation below.
 	* [aeolian(note)](#scales_aeolian) - function
 	* chromatic(note) - function
 	* [determine(scale)](#scales_determine) - function
+	* [diatonic(note)](#scales_diatonic) - function
+	* [diminished(note)](#scales_diminished) - function
+	* [dorian(note)](#scales_dorian) - function
 
 **More documentation is coming soon!!**
 
@@ -914,6 +917,30 @@ zazate.scales.aeolian("A") // ["A", "B", "C", "D", "E", "F", "G"]
 Determines the kind of scale. Can recognize all the diatonic modes and the minor scales.  
 ```js
 zazate.scales.determine(["C", "D", "E", "F", "G", "A", "B"]) // 'C ionian'
+```
+
+---------------------------------------
+<a name="scales_diatonic" />
+#### diatonic(note)
+Returns the diatonic mode scale starting on note.  
+```js
+zazate.scales.diatonic("C") // ["C", "D", "E", "F", "G", "A", "B"]
+```
+
+---------------------------------------
+<a name="scales_diminished" />
+#### diminished(note)
+Returns the diminished mode scale starting on note.  
+```js
+zazate.scales.diminished("C") // ['C', 'D', 'Eb', 'F', 'Gb', 'Ab', 'A', 'B']
+```
+
+---------------------------------------
+<a name="scales_dorian" />
+#### dorian(note)
+Returns the dorian mode scale starting on note.  
+```js
+zazate.scales.dorian("D") // ["D", "E", "F", "G", "A", "B", "C"]
 ```
 
 ---------------------------------------
