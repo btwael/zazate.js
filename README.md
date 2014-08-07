@@ -177,6 +177,9 @@ See functions of each library in documentation below.
 	* [diatonic(note)](#scales_diatonic) - function
 	* [diminished(note)](#scales_diminished) - function
 	* [dorian(note)](#scales_dorian) - function
+	* [get_notes(key)](#scales_get_notes) - function
+	* [harmonic_minor(note)](#scales_harmonic_minor) - function
+	* [ionian(note)](#scales_ionian) - function
 
 **More documentation is coming soon!!**
 
@@ -941,6 +944,27 @@ zazate.scales.diminished("C") // ['C', 'D', 'Eb', 'F', 'Gb', 'Ab', 'A', 'B']
 Returns the dorian mode scale starting on note.  
 ```js
 zazate.scales.dorian("D") // ["D", "E", "F", "G", "A", "B", "C"]
+```
+
+---------------------------------------
+<a name="scales_get_notes" />
+#### get_notes(key)
+Returns an ordered array of the notes in this key. For example: if the key is set to 'F', this function will return ['F', 'G', 'A', 'Bb', 'C', 'D', 'E']. Exotic or ridiculous keys like 'C####' or even 'Gbb##bb#b##' will work; Note however that the latter example will also get cleaned up to 'G'. This function will raise an NoteFormatError if the key isn't recognised 
+
+---------------------------------------
+<a name="scales_harmonic_minor" />
+#### harmonic_minor(note)
+Returns the harmonic minor mode scale starting on note.  
+```js
+zazate.scales.harmonic_minor("A") // ["A", "B", "C", "D", "E", "F", "G#"]
+```
+
+---------------------------------------
+<a name="scales_ionian" />
+#### ionian(note)
+Returns the ionian mode scale starting on note.  
+```js
+zazate.scales.ionian("C") // ["C", "D", "E", "F", "G", "A", "B"]
 ```
 
 ---------------------------------------
