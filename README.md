@@ -182,6 +182,8 @@ See functions of each library in documentation below.
 	* [ionian(note)](#scales_ionian) - function
 	* [locrian(note)](#scales_locrian) - function
 	* [lydian(note)](#scales_lydian) - function
+	* [melodic_minor(note)](#scales_melodic_minor) - function
+	* [mixolydian(note)](#scales_mixolydian) - function
 
 **More documentation is coming soon!!**
 
@@ -983,6 +985,22 @@ zazate.scales.locrian("B") // ["B", "C", "D", "E", "F", "G", "A"]
 Returns the lydian mode scale starting on note.  
 ```js
 zazate.scales.lydian("F") // ["F", "G", "A", "B", "C", "D", "E"]
+```
+
+---------------------------------------
+<a name="scales_melodic_minor" />
+#### lydian(note)
+Returns the melodic minor mode scale starting on note.  
+```js
+zazate.scales.melodic_minor("A") // ["A", "B", "C", "D", "E", "F#", "G#"]
+```
+
+---------------------------------------
+<a name="scales_mixolydian" />
+#### mixolydian(note)
+Returns the mixolydian mode scale starting on note.  
+```js
+zazate.scales.mixolydian("G") // ["G", "A", "B", "C", "D", "E", "F"]
 ```
 
 ---------------------------------------
