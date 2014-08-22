@@ -184,6 +184,9 @@ See functions of each library in documentation below.
 	* [lydian(note)](#scales_lydian) - function
 	* [melodic_minor(note)](#scales_melodic_minor) - function
 	* [mixolydian(note)](#scales_mixolydian) - function
+	* [natural_minor(note)](#scales_mixolydian) - function
+	* [phrygian(note)](#scales_mixolydian) - function
+	* [whole_note(note)](#scales_mixolydian) - function
 
 **More documentation is coming soon!!**
 
@@ -1001,6 +1004,30 @@ zazate.scales.melodic_minor("A") // ["A", "B", "C", "D", "E", "F#", "G#"]
 Returns the mixolydian mode scale starting on note.  
 ```js
 zazate.scales.mixolydian("G") // ["G", "A", "B", "C", "D", "E", "F"]
+```
+
+---------------------------------------
+<a name="scales_natural_minor" />
+#### natural_minor(note)
+Returns the natural minor mode scale starting on note.  
+```js
+zazate.scales.natural_minor("A") // ["A", "B", "C", "D", "E", "F", "G"]
+```
+
+---------------------------------------
+<a name="scales_phrygian" />
+#### phrygian(note)
+Returns the phrygian mode scale starting on note.  
+```js
+zazate.scales.phrygian("E") // ["E", "F", "G", "A", "B", "C", "D"]
+```
+
+---------------------------------------
+<a name="scales_whole_note" />
+#### whole_note(note)
+Returns the whole note mode scale starting on note.  
+```js
+zazate.scales.whole_note("E") // ["C", "D", "E", "F#", "G#", "A#"]
 ```
 
 ---------------------------------------
