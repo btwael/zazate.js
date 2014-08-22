@@ -3,6 +3,15 @@ zazate.js
 
 Zazate.js is music theory and notation package or module for Javascript, can be used by programmers, musicians, composers and researchers to make and investigate music. Zazate.js is integrated with a big numbers of functions related to find notes, chords and intervals.
 
+## Features
+* Work with notes, intervals, chords, scales, keys and meters in a simple and theoretically sound way.
+* Generate natural diatonic intervals (seconds, thirds, fourths, etc) and absolute intervals (minors second, perfect fifths, etc.)
+* Generate natural diatonic triads, seventh chords, and absolute chords directly or from shorthand (min7, m/M7, etc). zazate.js also knows about inversions, slashed chords and polychords.
+* Refer to chords by their diatonic function (tonic, subtonic, etc. or I, ii, iii, IV, etc).
+* Work with diatonic scales and their modes (ionian, mixolydian, etc.), generate the minor (natural, harmonic and melodic) and chromatic or whole note scales.
+* Recognize intervals, scales and hundreds of chords from lists of notes.
+* Recognize the harmonic functions of chords. 
+
 ## Installation
 via npm:
 ```bash
