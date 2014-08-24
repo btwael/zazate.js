@@ -1050,7 +1050,8 @@ zazate.scales.whole_note("E") // ["C", "D", "E", "F#", "G#", "A#"]
 ---------------------------------------
 <a name="meter" />
 ### meter
-A meter is represented by a array. 4/4 time would look like [4,4], 3/4 like [3,4], etc. 
+A meter is represented by a array. 4/4 time would look like [4,4], 3/4 like [3,4], etc.
+
 ---------------------------------------
 <a name="meter_common_time" />
 #### common_time
@@ -1064,6 +1065,7 @@ A meter (array) with value: [2,2]
 ---------------------------------------
 <a name="meter_is_asymmetrical" />
 #### is_asymmetrical(meter)
+
 Returns true if meter is an asymmetrical meter, false otherwise.  
 ```js
 zazate.meter.is_asymmetrical([3,4]) // true
