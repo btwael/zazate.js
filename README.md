@@ -196,6 +196,14 @@ See functions of each library in documentation below.
 	* [natural_minor(note)](#scales_mixolydian) - function
 	* [phrygian(note)](#scales_mixolydian) - function
 	* [whole_note(note)](#scales_mixolydian) - function
+* [meter](#meter)
+	* [common_time](#meter_common_time) - attribute
+	* [cut_time](#meter_cut_time) - attribute
+	* [is_asymmetrical(meter)](#meter_is_asymmetrical) - function
+	* [is_compound(meter)](#meter_is_compound) - function
+	* [is_simple(meter)](#meter_is_simple) - function
+	* [is_valid(meter)](#meter_is_valid) - function
+	* [valid_beat_duration(duration)](#meter_valid_beat_duration) - function
 
 **More documentation is coming soon!!**
 
@@ -1038,5 +1046,56 @@ Returns the whole note mode scale starting on note.
 ```js
 zazate.scales.whole_note("E") // ["C", "D", "E", "F#", "G#", "A#"]
 ```
+
+---------------------------------------
+<a name="meter" />
+### meter
+A meter is represented by a array. 4/4 time would look like [4,4], 3/4 like [3,4], etc. 
+---------------------------------------
+<a name="meter_common_time" />
+#### common_time
+A meter (array) with value: [4,4]
+
+---------------------------------------
+<a name="meter_cut_time" />
+#### cut_time
+A meter (array) with value: [2,2]
+
+---------------------------------------
+<a name="meter_is_asymmetrical" />
+#### is_asymmetrical(meter)
+Returns true if meter is an asymmetrical meter, false otherwise.  
+```js
+zazate.meter.is_asymmetrical([3,4]) // true
+zazate.meter.is_asymmetrical([3,4]) // false
+```
+
+---------------------------------------
+<a name="meter_is_compound" />
+#### is_compound(meter)
+Returns true if meter is a compund meter, false otherwise.  
+```js
+zazate.meter.is_compound([3,4]) // true
+zazate.meter.is_compound([3,4]) // false
+```
+
+---------------------------------------
+<a name="meter_is_simple" />
+#### is_simple(meter)
+Returns true if meter is a simple meter, false otherwise.  
+```js
+zazate.meter.is_simple([3,4]) // true
+zazate.meter.is_simple([3,4]) // true
+```
+
+---------------------------------------
+<a name="meter_is_valid" />
+#### is_valid(meter)
+Returns true if meter is a valid tuple representation of a meter. Examples for meters are [3,4] for 3/4, [4,4] for 4/4, etc. 
+
+---------------------------------------
+<a name="meter_valid_beat_duration" />
+#### valid_beat_duration(duration)
+Returns true when log2(duration) is an integer.
 
 ---------------------------------------
