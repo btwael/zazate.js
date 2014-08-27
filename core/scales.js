@@ -167,16 +167,11 @@ function determine(scale) {
 	var tonic = scale[0];
 	var n = 0;
 
-	// -- Describing the algorithm:
-	// Filter out all the wrong answers in possible_result
 	var arr = scale.slice(1, scale.length);
 	for (var i = 0; i < arr.length; i++) {
 		var note = arr[i];
-		// 1. Determine the interval
 		intval = intervals.determine(tonic, note);
 		temp = [];
-		// 2. Go through possible_result and add it to temp if 
-		// it's a hit, do nothing otherwise
 		for (var k = 0; k < possible_result.length; k++) {
 			var x = possible_result[k];
 			if(x[1][n] == intval) {
@@ -185,11 +180,9 @@ function determine(scale) {
 		}
 		n += 1;
 
-		// 3. Set possible_result to temp
 		possible_result = temp;
 	};
 
-	// Get the results from possible_result and return
 	var res = [];
 	for (var i = 0; i < possible_result.length; i++) {
 		var x = possible_result[i];
