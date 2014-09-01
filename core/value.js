@@ -91,73 +91,30 @@ function dots(value, nr) {
 	return (0.5 * value) / (1.0 - Math.pow(0.5, (nr + 1)));
 }
 
-/*def triplet(value):
-	"""Return the triplet note value.
+function triplet(value) {
+	return tuplet(value, 3, 2);
+}
 
-	A triplet divides the base value above into three parts. So a triplet
-	eighth note is a third of a quarter note.
+function quintuplet(value) {
+	return tuplet(value, 5, 4);
+}
 
-	Examples:
-	>>> triplet(eighth)
-	12
-	>>> triplet(4)
-	6
-	"""
-	return tuplet(value, 3, 2)
+function septuplet(value, in_fourths) {
+	if(in_fourths == null) {
+		in_fourths = true;
+	}
+	if(in_fourths) {
+		return tuplet(value, 7, 4);
+	} else {
+		return tuplet(value, 7, 8);
+	}
+}
 
-def quintuplet(value):
-	"""Return the quintuplet note value.
+function tuplet(value, rat1, rat2) {
+	return (rat1 * value) / rat2;
+}
 
-	A quintuplet divides the base value two above into five parts. So a
-	quintuplet eighth note is a fifth of a half note.
-
-	Examples:
-	>>> quintuplet(8)
-	10
-	>>> quintuplet(4)
-	5
-	"""
-	return tuplet(value, 5, 4)
-
-def septuplet(value, in_fourths=True):
-	"""Return the septuplet note value.
-
-	The usage of a septuplet is ambigious: seven notes can be played either
-	in the duration of four or eighth notes.
-
-	If in_fourths is set to True, this function will use 4, otherwise 8
-	notes. So a septuplet eighth note is respectively either 14 or 7.
-
-	Notice how
-	>>> septuplet(8, False) == septuplet(4, True)
-	True
-
-	Examples:
-	>>> septuplet(8)
-	14
-	>>> septuplet(8, False)
-	7
-	"""
-	if in_fourths:
-		return tuplet(value, 7, 4)
-	else:
-		return tuplet(value, 7, 8)
-
-def tuplet(value, rat1, rat2):
-	"""Return a tuplet.
-
-	A tuplet can be written as a ratio. For example: 5:4 means that you play
-	5 notes in the duration of 4 (a quintuplet), 3:2 means that you play 3
-	notes in the duration of 2 (a triplet), etc. This function calculates
-	the note value when playing in rat1:rat2.
-
-	Example:
-	>>> tuplet(8, 3, 2)
-	12
-	"""
-	return (rat1 * value) / float(rat2)
-
-def determine(value):
+/*def determine(value):
 	"""Analyse the value and return a tuple containing the parts it's made of.
 
 	The tuple respectively consists of the base note value, the number of
@@ -230,3 +187,7 @@ exports.base_septuplets = base_septuplets;
 exports.add = add;
 exports.subtract = subtract;
 exports.dots = dots;
+exports.triplet = triplet;
+exports.quintuplet = quintuplet;
+exports.septuplet = septuplets;
+exports.tuplet = tuplet;
