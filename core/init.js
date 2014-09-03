@@ -4,3 +4,4 @@ exports.intervals = require('./intervals.js');
 exports.chords = require('./chords.js');
 exports.scales = require('./scales.js');
 exports.meter = require('./meter.js');
+exports.value = require('./value.js');
