@@ -13,7 +13,6 @@ _note_dict = {
 
 fifths = ['F', 'C', 'G', 'D', 'A', 'E', 'B'];
 
-//Find object in array function
 Array.prototype.hasObject = (
 	!Array.indexOf ? function (o) {
 		var l = this.length + 1;
@@ -62,7 +61,6 @@ function note_to_int(note) {
 	} else {
 		throw "NoteFormatError: Unknown note format '" + note + "'";
 	}
-	// Check for '#' and 'b' postfixes
 	var post, _i, _len, _ref;
 	_ref = note.slice(1, note.length);
 	for(_i = 0, _len = _ref.length; _i < _len; _i++) {

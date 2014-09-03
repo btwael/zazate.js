@@ -6,9 +6,6 @@ function unison(note) {
 	return note
 }
 
-// Diatonic intervals.
-// Needs a note and a key.
-
 function second(note, key) {
 	return diatonic.interval(key, note, 1);
 }
@@ -32,9 +29,6 @@ function sixth(note, key) {
 function seventh(note, key) {
 	return diatonic.interval(key, note, 6);
 }
-
-// Absolute intervals
-// Needs a note
 
 function minor_unison(note) {
 	return notes.diminish(note);
@@ -163,8 +157,6 @@ function augment_or_diminish_until_the_interval_is_right(note1, note2, interval)
 		cur = measure(note1, note2);
 	}
 
-	// We are practically done right now, but we need to be able to create
-	// the minor seventh of Cb and get Bbb instead of B######### as the result
 	var token, val, _i, _len, _ref;
 
 	val = 0;
@@ -178,10 +170,6 @@ function augment_or_diminish_until_the_interval_is_right(note1, note2, interval)
 			val -= 1;
 		}
 	}
-
-	// These are some checks to see if we have generated too much #'s
-	// or too much b's. In these cases we need to convert #'s to b's
-	// and vice versa. 
 	
 	if (val > 6) {
 		val = val % 12;
@@ -191,7 +179,6 @@ function augment_or_diminish_until_the_interval_is_right(note1, note2, interval)
 		val = 12 + val;
 	}
 
-	// Rebuild the note
 	result = note2[0]
 
 	while (val > 0) {
@@ -216,11 +203,9 @@ function determine(note1, note2, shorthand) {
 	if (shorthand == null) {
 		shorthand = false;
 	}
-	// Corner case for unisons ('A' and 'Ab', for instance)
 	var get_val, x, y;
 	if (note1[0] === note2[0]) {
 		get_val = function(note) {
-			//Private function to count the value of accidentals
 			var r, x, _i, _len, _ref;
 			r = 0;
 			_ref = note.slice(1, note.length);
@@ -259,7 +244,6 @@ function determine(note1, note2, shorthand) {
 		}
 	}
 
-	// Other intervals
 	n1 = notes.fifths.indexOf(note1[0]);
 	n2 = notes.fifths.indexOf(note2[0]);
 
@@ -268,7 +252,6 @@ function determine(note1, note2, shorthand) {
 	if(n2 < n1) {
 		number_of_fifth_steps = notes.fifths.length - n1 + n2;
 	}
-	// [name, shorthand_name, half notes for major version of this interval]
 	fifth_steps = [
 		["unison", "1", 0],
 		["fifth", "5", 7],
@@ -279,18 +262,12 @@ function determine(note1, note2, shorthand) {
 		["fourth", "4", 5]
 	];
 
-	// Count half steps between note1 and note2
 	half_notes = measure(note1, note2);
-	// Get the proper list from the number of fifth steps
 	current = fifth_steps[number_of_fifth_steps];
 
-	// maj = number of major steps for this interval
 	maj = current[2];
 
-	// if maj is equal to the half steps between note1 and note2
-	// the interval is major or perfect
 	if(maj == half_notes) {
-		// Corner cases for perfect fifths and fourths
 		if(current[0] == "fifth") {
 			if(!shorthand) {
 				return "perfect fifth";
@@ -305,13 +282,11 @@ function determine(note1, note2, shorthand) {
 		}
 		return current[1];
 	} else if(maj + 1 <= half_notes) {
-	 // if maj + 1 is equal to half_notes, the interval is augmented.
 		if(!shorthand) {
 			return "augmented " + current[0];
 		}
 		return "#" * (half_notes - maj) + current[1];
 
-	// etc.
 	} else if(maj - 1 == half_notes) {
 		if(!shorthand) {
 			return "minor " + current[0];
@@ -331,12 +306,10 @@ function from_shorthand(note, interval, up) {
 		up = true;
 	}
 
-	//warning should be a valid note.
 	if(!notes.is_valid_note(note)) {
 		return false;
 	}
 
-	// [shorthand, interval function up, interval function down]
 	shorthand_lookup = [
 		["1", major_unison, major_unison],
 		["2", major_second, minor_seventh],
@@ -347,8 +320,6 @@ function from_shorthand(note, interval, up) {
 		["7", major_seventh, minor_second]
 	];
 
-	// Looking up last character in interval in shorthand_lookup
-	// and calling that function.
 	val = false;
 	var shorthand, _i, _len;
 	for (_i = 0, _len = shorthand_lookup.length; _i < _len; _i++) {
@@ -362,11 +333,9 @@ function from_shorthand(note, interval, up) {
 		}
 	}
 	
-	// warning Last character in interval should be 1-7
 	if(val == false) {
 		return false;
 	}
-	// Collect accidentals
 	var x, _i, _len;
 
 	for (_i = 0, _len = interval.length; _i < _len; _i++) {

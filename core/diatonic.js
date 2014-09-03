@@ -6,7 +6,6 @@ basic_keys = ["Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "
 _key_cache = {};
 
 function get_notes(key) {
-	//check cache
 	var key_dict;
 	if(_key_cache.hasOwnProperty(key)) {
 		return _key_cache[key];
@@ -18,8 +17,6 @@ function get_notes(key) {
 
 	var result = [];
 
-	// fifth_index = 0 is a special case. It's the key of F and needs 
-	// Bb instead of B included in the result.
 	if(fifth_index != 0) {
 		var x, _i, _j, _len, _len1, _ref, _ref1;
 		result.push(notes.fifths[(fifth_index - 1) % 7] + key.slice(1, key.length));
@@ -45,7 +42,6 @@ function get_notes(key) {
 
 	result.sort();
 
-	// Remove redundant #'s and b's from the result
 	result = result.map(notes.remove_redundant_accidentals);
 	tonic = result.indexOf(notes.remove_redundant_accidentals(key))
 
@@ -57,7 +53,6 @@ function get_notes(key) {
 		result.push(el);
 	}
 
-	// Save result to cache
 	_key_cache[key] = result;
 	return result;
 }

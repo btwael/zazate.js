@@ -3,8 +3,6 @@ var intervals = require('./intervals.js'),
 	get_notes = require('./diatonic.js').get_notes,
 	_ = require('underscore');
 
-// The diatonic scales and its modes
-
 function diatonic(note) {
 	return get_notes(note);
 }
@@ -87,8 +85,6 @@ function melodic_minor(note) {
 	har[5] = notes.augment(har[5]);
 	return har;
 }
-
-// Other scales
 
 function chromatic(note) {
 	return _.range(0,12).map(function(x) {

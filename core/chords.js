@@ -545,7 +545,6 @@ function third_inversion(chord) {
 ===================================================================*/
 
 function from_shorthand(shorthand_string, slash) {
-	//warning reduce?? 
 	if(typeof shorthand_string == 'array'){
 		var res = [];
 		for(var i = 0; i < shorthand_string.length; i++) {
@@ -557,7 +556,6 @@ function from_shorthand(shorthand_string, slash) {
 		return [];
 	}
 
-	//Shrink shorthand_string to a format recognised by chord_shorthand
 	shorthand_string = shorthand_string.replace('min', 'm');
 	shorthand_string = shorthand_string.replace('mi', 'm');
 	shorthand_string = shorthand_string.replace('-', 'm');
@@ -565,14 +563,12 @@ function from_shorthand(shorthand_string, slash) {
 	shorthand_string = shorthand_string.replace('maj', 'M');
 	shorthand_string = shorthand_string.replace('ma', 'M');
 
-	//Get the note name
 	if(!notes.is_valid_note(shorthand_string[0])) {
 		throw "NoteFormatError: Unrecognised note '" + shorthand_string[0] + "' in chord '" + shorthand_string + "'";
 	}
 
 	name = shorthand_string[0];
 
-	//Look for accidentals
 	for (_i = 0, _len = shorthand_string.slice(1, shorthand_string.length).length; _i < _len; _i++) {
 		n = shorthand_string.slice(1, shorthand_string.length)[_i];
 		if (n === '#') {
@@ -584,7 +580,6 @@ function from_shorthand(shorthand_string, slash) {
 		}
 	}
 
-	//Look for slashes and polychords '|'
 	slash_index = -1;
 	s = 0;
 	rest_of_string = shorthand_string.slice(name.length, shorthand_string.length);
@@ -593,13 +588,11 @@ function from_shorthand(shorthand_string, slash) {
 		if (n === '/') {
 			slash_index = s;
 		} else if (n === '|') {
-			//Generate polychord
 			return from_shorthand(shorthand_string.slice(0, name.length + s), from_shorthand(shorthand_string.slice(name.length + s + 1, shorthand_string.length)));
 		}
 		s += 1;
 	}
 
-	//Generate slash chord
 	if(slash_index != -1 && !(__indexOf.call(["m/M7", "6/9", "6/7"], rest_of_string) >= 0)) {
 		res = shorthand_string.slice(0, name.length + slash_index);
 		return from_shorthand(shorthand_string.slice(0, name.length + slash_index), shorthand_string.slice(name.length + slash_index + 1, shorthand_string.length))
@@ -607,19 +600,16 @@ function from_shorthand(shorthand_string, slash) {
 
 	shorthand_start = name.length;
 
-	//Return chord
 	short_chord = shorthand_string.slice(shorthand_start, shorthand_string.length);
 	if(chord_shorthand.hasOwnProperty(short_chord)) {
 		res = chord_shorthand[short_chord](name);
 		if(slash != null) {
-			//Add slashed chords
 			if(typeof slash == 'string') {
 				if(notes.is_valid_note(slash)) {
 					res.unshift(slash);
 				} else {
 					throw "NoteFormatError: Unrecognised note '" + slash + "' in slash chord '" + shorthand_string + "'";
 				}
-			//Add polychords
 			} else if(typeof slash == 'object') {
 				r = slash;
 				for (_i = 0, _len = res.length; _i < _len; _i++) {
@@ -681,12 +671,10 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 		no_inversions = false;
 	}
 	if(triad.length != 3) {
-		//warning: raise exception: not a triad
 		return false;
 	}
 
 	function inversion_exhauster(triad, shorthand, tries, resulta) {
-		/*Recursive helper function that runs tries every inversion
 		and saves the result.*/
 		var result = resulta;
 		var intval1 = intervals.determine(triad[0], triad[1], true);
@@ -700,9 +688,9 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 		if(intval == "25") {
 			add_result("sus2");
 		} else if(intval == "3b7") {
-			add_result("dom7"); // changed from just '7'
+			add_result("dom7");
 		} else if(intval == "3b5") { 
-			add_result("7b5"); // why not b5?
+			add_result("7b5");
 		} else if(intval == "35") {
 			add_result("M");
 		} else if(intval == "3#5") {
@@ -764,31 +752,22 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 		no_polychords = false;
 	}
 	if(seventh.length != 4) {
-		//warning raise exception: seventh chord is not a seventh chord
 		return false
 	}
 
 	function inversion_exhauster(seventh, shorthand, tries, resulta, polychordsa) {
-		/*determine sevenths recursive functions*/
-
-		// Check whether the first three notes of seventh 
-		// are part of some triad.
 		var result = resulta;
 		var polychords = polychordsa;
 		var triads = determine_triad(seventh.slice(0, 3), true, true);
-
-		// Get the interval between the first and last note
 		var intval3 = intervals.determine(seventh[0], seventh[3]);
 
 		function add_result(short, poly) {
-			// helper function
 			if(poly == null) {
 				poly = false;
 			}
 			result.push([short, tries, seventh[0], poly]);
 		}
 
-		// Recognizing polychords
 		if(tries == 1 && !no_polychords) {
 			var p = determine_polychords(seventh, shorthand);
 			for (var i = 0; i < p.length; i++) {
@@ -796,10 +775,8 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 			};
 		}
 
-		// Recognizing sevenths
 		for(var i = 0; i < triads.length; i++) {
 			var triad = triads[i];
-			// Basic triads
 			triad = triad.slice(seventh[0].length, triad.length);
 			if(triad == "m") {
 				if(intval3 == "minor seventh") {
@@ -836,7 +813,6 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 				} else if(intval3 == "minor second") {
 					add_result("sus4b9");
 				}
-			// Other
 			} else if(triad == 'm7') {
 				if(intval3 == 'perfect fourth') {
 					add_result("11");
@@ -847,15 +823,12 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 				}
 			}
 		}
-		// Loop until we have exhausted all the inversions
 		if(tries != 4 && !no_inversion) {
 			var arg1 = seventh.slice(0, seventh.length - 1);
 			arg1.unshift(seventh[seventh.length - 1]);
 			return inversion_exhauster(arg1, shorthand, tries + 1, result, polychords);
 		} else {
-			// Return results
 			var res = [];
-			// Reset seventh
 			var arr = seventh.slice(0, 3);
 			arr.unshift(seventh[3]);
 			seventh = arr;
@@ -887,7 +860,6 @@ function determine_extended_chord5(chord, shorthand, no_inversions, no_polychord
 		no_polychords = false;
 	}
 	if(chord.length != 5) {
-		//warning raise exeption: not an extended chord
 		return false;
 	}
 
@@ -903,7 +875,6 @@ function determine_extended_chord5(chord, shorthand, no_inversions, no_polychord
 		var triads = determine_triad(chord.slice(0, 3), true, true);
 		var sevenths = determine_seventh(chord.slice(0, 4), true, true, true);
 
-		// Determine polychords
 		if(tries == 1 && !no_polychords){
 			var p = determine_polychords(chord, shorthand);
 			for (var i = 0; i < p.length; i++) {
@@ -911,7 +882,6 @@ function determine_extended_chord5(chord, shorthand, no_inversions, no_polychord
 			};
 		}
 
-		// Determine 'normal' chords
 		var intval4 = intervals.determine(chord[0], chord[4]);
 		for(var i = 0; i < sevenths.length; i++) {
 			var seventh = sevenths[i];
@@ -984,15 +954,12 @@ function determine_extended_chord6(chord, shorthand, no_inversions, no_polychord
 	}
 
 	if(chord.length != 6) {
-		//warning raise exeption: not an extended chord
 		return false;
 	}
 
 	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
-		/*Recursive helper function*/
 		var polychords = polychordsa;
 		var result = resulta;
-		// Determine polychords
 		if(tries == 1 && !no_polychords) {
 			var p = determine_polychords(chord, shorthand);
 			for (var i = 0; i < p.length; i++) {
@@ -1068,15 +1035,12 @@ function determine_extended_chord7(chord, shorthand, no_inversions, no_polychord
 	}
 
 	if(chord.length != 7) {
-		//warning raise exeption: not an extended chord
 		return false;
 	}
 
 	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
-		/*Recursive helper function*/
 		var polychords = polychordsa;
 		var result = resulta;
-		// Determine polychords
 		if(tries == 1 && !no_polychords) {
 			var p = determine_polychords(chord, shorthand);
 			for (var i = 0; i < p.length; i++) {
@@ -1152,7 +1116,6 @@ function determine_polychords(chord, shorthand) {
 
 	var function_list = [determine_triad, determine_seventh, determine_extended_chord5, determine_extended_chord6, determine_extended_chord7];
 
-	// Range tracking. 
 	if(chord.length <= 3) {
 		return [];
 	} else if(chord.length > 14) {
