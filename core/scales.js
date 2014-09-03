@@ -1,7 +1,7 @@
 var intervals = require('./intervals.js'),
 	notes = require('./notes.js'),
 	get_notes = require('./diatonic.js').get_notes,
-	_ = require('../node_modules/underscore');
+	_ = require('underscore');
 
 // The diatonic scales and its modes
 

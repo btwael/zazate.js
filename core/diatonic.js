@@ -1,5 +1,5 @@
 var notes = require('./notes.js'),
-	_ = require('../node_modules/underscore');
+	_ = require('underscore');
 
 basic_keys = ["Gb", "Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#"];
 

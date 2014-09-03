@@ -1,6 +1,6 @@
 var notes = require('./notes.js'),
 	diatonic = require('./diatonic.js');
-	_ = require('../node_modules/underscore');
+	_ = require('underscore');
 
 function unison(note) {
 	return note
@@ -403,6 +403,7 @@ function is_perfect_consonant(note1, note2, include_fourths) {
 	dhalf = measure(note1, note2);
 	return (dhalf === 0 || dhalf === 7) || (include_fourths && dhalf === 5);
 }
+
 function is_imperfect_consonant(note1, note2) {
 	var _ref;
 	return (_ref = measure(note1, note2)) === 3 || _ref === 4 || _ref === 8 || _ref === 9;
