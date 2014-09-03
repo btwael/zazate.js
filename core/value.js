@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var longa = 0.25,
 	breve = 0.5,
 	semibreve = 1,
@@ -114,51 +116,41 @@ function tuplet(value, rat1, rat2) {
 	return (rat1 * value) / rat2;
 }
 
-/*def determine(value):
-	"""Analyse the value and return a tuple containing the parts it's made of.
-
-	The tuple respectively consists of the base note value, the number of
-	dots, and the ratio (see tuplet).
-
-	Examples:
-	>>> determine(8)
-	(8, 0, 1, 1)
-	>>> determine(12)
-	(8, 0, 3, 2)
-	>>> determine(14)
-	(8, 0, 7, 4)
-
-	This function recognizes all the base values, triplets, quintuplets,
-	septuplets and up to four dots. The values are matched on range.
-	"""
-	i = -2
-	for v in base_values:
-		if value == v:
-			return (value, 0, 1, 1)
-		if value < v:
-			break
-		i += 1
-	scaled = float(value) / 2 ** i
-	if scaled >= 0.9375:  # base value
-		return (base_values[i], 0, 1, 1)
-	elif scaled >= 0.8125:
-		# septuplet: scaled = 0.875
-		return (base_values[i + 1], 0, 7, 4)
-	elif scaled >= 17 / 24.0:
-		# triplet: scaled = 0.75
-		return (base_values[i + 1], 0, 3, 2)
-	elif scaled >= 31 / 48.0:
-		# dotted note (one dot): scaled = 2/3.0
-		return (v, 1, 1, 1)
-	elif scaled >= 67 / 112.0:
-		# quintuplet: scaled = 0.625
-		return (base_values[i + 1], 0, 5, 4)
-	d = 3
-	for x in range(2, 5):
-		d += 2 ** x
-		if scaled == 2.0 ** x / d:
-			return (v, x, 1, 1)
-	return (base_values[i + 1], 0, 1, 1)*/
+function determine(value) {
+	var i = -2,
+		v;
+	for (var _i = 0; _i < base_values.length; _i++) {
+		v = base_values[_i];
+		if(value == v) {
+			return [value, 0, 1, 1];
+		}
+		if(value < v) {
+			break;
+		}
+		i++
+	};
+	var scaled = value / Math.pow(2, i)
+	if(scaled >= 0.9375) {
+		return [base_values[i], 0, 1, 1];
+	} else if(scaled >= 0.8125) {
+		return [base_values[i + 1], 0, 7, 4];
+	} else if (scaled >= 17 / 24.0) {
+		return [base_values[i + 1], 0, 3, 2];
+	} else if (scaled >= 31 / 48.0) {
+		return [v, 1, 1, 1];
+	} else if (scaled >= 67 / 112.0) {
+		return [base_values[i + 1], 0, 5, 4];
+	}
+	var d = 3;
+	for (var _i = 0; _i < _.range(2, 5).length; _i++) {
+		var x = _.range(2, 5)[_i];
+		d += Math.pow(2, x);
+		if(scaled == Math.pow(2.0, x / d)) {
+			return [v, x, 1, 1];
+		}
+	};
+	return [base_values[i + 1], 0, 1, 1];
+}
 //exports
 exports.longa = longa;
 exports.breve = breve;
@@ -189,5 +181,5 @@ exports.subtract = subtract;
 exports.dots = dots;
 exports.triplet = triplet;
 exports.quintuplet = quintuplet;
-exports.septuplet = septuplets;
+exports.septuplet = septuplet;
 exports.tuplet = tuplet;
