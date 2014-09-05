@@ -675,7 +675,6 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 	}
 
 	function inversion_exhauster(triad, shorthand, tries, resulta) {
-		and saves the result.*/
 		var result = resulta;
 		var intval1 = intervals.determine(triad[0], triad[1], true);
 		var intval2 = intervals.determine(triad[0], triad[2], true);
