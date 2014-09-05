@@ -1,13 +1,12 @@
 var intervals = require('./intervals.js'),
 	notes = require('./notes.js'),
 	diatonic = require('./diatonic.js'),
-	_ = require('underscore');
-__indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+	_ = require('underscore'),
+	__indexOf = [].indexOf || function(item) {for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
+	_triads_cache = {},
+	_sevenths_cache = {};
 
-_triads_cache = {};
-_sevenths_cache = {};
-
-chord_shorthand_meaning = {
+var chord_shorthand_meaning = {
 		// Triads
 		"m" : " minor triad",
 		"M" : " major triad",
@@ -1150,7 +1149,7 @@ function determine_polychords(chord, shorthand) {
 	return polychords;
 }
 
-chord_shorthand = {
+var chord_shorthand = {
 		// Triads
 		"m" : minor_triad,
 		"M" : major_triad, 
