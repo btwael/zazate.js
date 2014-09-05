@@ -675,9 +675,9 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 	}
 
 	function inversion_exhauster(triad, shorthand, tries, resulta) {
-		var result = resulta;
-		var intval1 = intervals.determine(triad[0], triad[1], true);
-		var intval2 = intervals.determine(triad[0], triad[2], true);
+		var result = resulta,
+			intval1 = intervals.determine(triad[0], triad[1], true),
+			intval2 = intervals.determine(triad[0], triad[2], true);
 
 		function add_result(short) {
 			result.push([short, tries, triad[0]]);
@@ -717,8 +717,8 @@ function determine_triad(triad, shorthand, no_inversions, placeholder) {
 		}
 
 		if(tries != 3 && !no_inversions) {
-			var arr = [triad[triad.length-1]];
-			var m = triad.slice(0, triad.length-1);
+			var arr = [triad[triad.length-1]],
+				m = triad.slice(0, triad.length-1);
 			for (var i = 0; i < m.length; i++) {
 				arr.push(m[i]);
 			};
@@ -755,10 +755,10 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 	}
 
 	function inversion_exhauster(seventh, shorthand, tries, resulta, polychordsa) {
-		var result = resulta;
-		var polychords = polychordsa;
-		var triads = determine_triad(seventh.slice(0, 3), true, true);
-		var intval3 = intervals.determine(seventh[0], seventh[3]);
+		var result = resulta,
+			polychords = polychordsa,
+			triads = determine_triad(seventh.slice(0, 3), true, true),
+			intval3 = intervals.determine(seventh[0], seventh[3]);
 
 		function add_result(short, poly) {
 			if(poly == null) {
@@ -827,8 +827,8 @@ function determine_seventh(seventh, shorthand, no_inversion, no_polychords) {
 			arg1.unshift(seventh[seventh.length - 1]);
 			return inversion_exhauster(arg1, shorthand, tries + 1, result, polychords);
 		} else {
-			var res = [];
-			var arr = seventh.slice(0, 3);
+			var res = [],
+				arr = seventh.slice(0, 3);
 			arr.unshift(seventh[3]);
 			seventh = arr;
 			for(var i = 0; i < result.length; i++) {
@@ -864,15 +864,15 @@ function determine_extended_chord5(chord, shorthand, no_inversions, no_polychord
 
 	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
 		/*Recursive helper function*/
-		var polychords = polychordsa;
-		var result = resulta;
+		var polychords = polychordsa,
+			result = resulta;
 
 		function add_result(short) {
 			result.push([short, tries, chord[0]]);
 		}
 
-		var triads = determine_triad(chord.slice(0, 3), true, true);
-		var sevenths = determine_seventh(chord.slice(0, 4), true, true, true);
+		var triads = determine_triad(chord.slice(0, 3), true, true),
+			sevenths = determine_seventh(chord.slice(0, 4), true, true, true);
 
 		if(tries == 1 && !no_polychords){
 			var p = determine_polychords(chord, shorthand);
@@ -957,8 +957,8 @@ function determine_extended_chord6(chord, shorthand, no_inversions, no_polychord
 	}
 
 	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
-		var polychords = polychordsa;
-		var result = resulta;
+		var polychords = polychordsa,
+			result = resulta;
 		if(tries == 1 && !no_polychords) {
 			var p = determine_polychords(chord, shorthand);
 			for (var i = 0; i < p.length; i++) {
@@ -970,8 +970,8 @@ function determine_extended_chord6(chord, shorthand, no_inversions, no_polychord
 			result.push([short, tries, chord[0]]);
 		}
 
-		var ch = determine_extended_chord5(chord.slice(0, 5), true, true, true);
-		var intval5 = intervals.determine(chord[0], chord[5]);
+		var ch = determine_extended_chord5(chord.slice(0, 5), true, true, true),
+			intval5 = intervals.determine(chord[0], chord[5]);
 
 		for(var i = 0; i < ch.length; i++) {
 			var c = ch[i];
@@ -1038,8 +1038,8 @@ function determine_extended_chord7(chord, shorthand, no_inversions, no_polychord
 	}
 
 	function inversion_exhauster(chord, shorthand, tries, resulta, polychordsa) {
-		var polychords = polychordsa;
-		var result = resulta;
+		var polychords = polychordsa,
+			result = resulta;
 		if(tries == 1 && !no_polychords) {
 			var p = determine_polychords(chord, shorthand);
 			for (var i = 0; i < p.length; i++) {
@@ -1051,8 +1051,8 @@ function determine_extended_chord7(chord, shorthand, no_inversions, no_polychord
 			result.push([short, tries, chord[0]]);
 		}
 
-		var ch = determine_extended_chord6(chord.slice(0, 6), true, true, true);
-		var intval6 = intervals.determine(chord[0], chord[6]);
+		var ch = determine_extended_chord6(chord.slice(0, 6), true, true, true),
+			intval6 = intervals.determine(chord[0], chord[6]);
 
 		for(var i = 0; i < ch.length; i++) {
 			var c = ch[i]; 
@@ -1111,9 +1111,8 @@ function determine_polychords(chord, shorthand) {
 	if(shorthand == null) {
 		shorthand = false;
 	}
-	var polychords = []
-
-	var function_list = [determine_triad, determine_seventh, determine_extended_chord5, determine_extended_chord6, determine_extended_chord7];
+	var polychords = [],
+		function_list = [determine_triad, determine_seventh, determine_extended_chord5, determine_extended_chord6, determine_extended_chord7];
 
 	if(chord.length <= 3) {
 		return [];
@@ -1128,11 +1127,11 @@ function determine_polychords(chord, shorthand) {
 	for(var i = 0; i < function_nr.length; i++) {
 		var f = function_nr[i];
 		for (var k = 0; k < function_nr.length; k++) {
-			var f2 = function_nr[k]
-			var r1 = function_list[f](chord.slice(chord.length -(3 + f), chord.length), true, true, true);
+			var f2 = function_nr[k],
+				r1 = function_list[f](chord.slice(chord.length -(3 + f), chord.length), true, true, true);
 			for(var j = 0; j < r1.length; j++) {
-				var chord1 = r1[j];
-				var r2 = function_list[f2](chord.slice(0, f2+3), true, true, true);
+				var chord1 = r1[j],
+					r2 = function_list[f2](chord.slice(0, f2+3), true, true, true);
 				for(var l = 0; l < r2.length; l++) {
 					var chord2 = r2[l];
 					polychords.push(chord1 + '|' + chord2);
