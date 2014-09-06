@@ -2,62 +2,68 @@ var notes = require('./notes'),
 	chords = require('./chords'),
 	intervals = require('./intervals');
 
+Array.prototype.hasObject = (
+	!Array.indexOf ? function (o) {
+		var l = this.length + 1;
+		while (l -= 1){
+			if (this[l - 1] === o) {
+				return true;
+			}
+		}
+		return false;
+	} : function (o) {
+		return (this.indexOf(o) !== -1);
+	}
+);
+
 var numerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII' ],
 	numeral_intervals = [0, 2, 4, 5, 7, 9, 11];
+
+function to_chords(progression, key) {
+	if(key == null) {
+		key = 'C';
+	}
+
+	if(typeof progression == 'string') {
+		progression = [progression];
+	}
+
+	var result = [];
+	for (var i = 0; i < progression.length; i++) {
+		var chord = progression[i];
+
+		var rslt = parse_string(chord),
+			roman_numeral = rslt[0],
+			acc = rslt[1],
+			suffix = rslt[2],
+			r;
+		if(!numerals.hasObject(roman_numeral)) {
+			return [];
+		}
+
+		if(suffix == '7' || suffix == '') {
+			roman_numeral += suffix;
+			r = chords[roman_numeral](key);
+		} else {
+			r = chords[roman_numeral](key);
+			r = chords.chord_shorthand[suffix](r[0]);
+		}
+
+		while(acc < 0) {
+			r = r.map(notes.diminish);
+			acc += 1;
+		}
+		while(acc > 0) {
+			r = r.map(notes.diminish);
+			acc -= 1;
+		}
+
+		result.push(r);
+	};
+	return result;
+}
+
 /*
-def to_chords(progression, key = 'C'):
-	"""Converts a list of chord functions (eg `['I', 'V7']`) or \
-a string (eg. 'I7') to a list of chords. \
-Any number of accidentals can be used as prefix to augment or diminish; \
-for example: bIV or #I. All the chord abbreviations in the chord module \
-can be used as suffixes; for example: Im7, IVdim7, etc. \
-You can combine prefixes and suffixes to manage complex progressions: \
-#vii7, #iidim7, iii7, etc. \
-Using 7 as suffix is ambiguous, since it is classicly used to denote \
-the seventh chord when talking about progressions instead of _just_ the \
-dominanth seventh chord. We have taken the classic route; I7 \
-will get you a major seventh chord. If you specifically want a dominanth \
-seventh, use Idom7."""
-
-	if type(progression) == str:
-		progression = [progression]
-
-	result = []
-	for chord in progression:
-		
-		# strip preceding accidentals from the string
-		roman_numeral, acc, suffix = parse_string(chord)
-
-		# There is no roman numeral parsing, just a simple check.
-		# Sorry to disappoint.
-		#warning Should throw exception
-		if roman_numeral not in numerals:
-			return []
-
-		# These suffixes don't need any post processing
-		if suffix == '7' or suffix == '':
-			roman_numeral += suffix
-
-			# ahh Python. Everything is a dict.
-			r = chords.__dict__[roman_numeral](key)
-		else:
-			r = chords.__dict__[roman_numeral](key)
-			r = chords.chord_shorthand[suffix](r[0])
-
-
-		# Let the accidentals do their work
-		while acc < 0:
-			r = map(notes.diminish, r)
-			acc += 1
-		while acc > 0:
-			r = map(notes.augment, r)
-			acc -= 1
-
-		result.append(r)
-	return result
-	
-
-
 def determine(chord, key, shorthand = False):
 	"""Determines the harmonic function of chord in key. This function can also deal with lists of chords. 
 {{{ 
@@ -173,33 +179,31 @@ def determine(chord, key, shorthand = False):
 		result.append(func)
 
 	return result
+*/
+function parse_string(progression) {
+	var acc = 0,
+		roman_numeral = "",
+		suffix = "",
+		i = 0;
 
-def parse_string(progression):
-	"""Returns a tuple (roman numeral, accidentals, chord suffix). 
-{{{
->>> progressions.parse_string("I")
-('I', 0, '')
->>> progressions.parse_string("bIM7")
-('I', -1, 'M7')
-}}}"""
-	acc = 0
-	roman_numeral = ""
-	suffix = ""
-	i =0 
+	for (var j = 0; j < progression.length; j++) {
+		var c = progression[j];
+		if(c == '#'){
+			acc += 1;
+		} else if(c == 'b') {
+			acc -= 1;
+		} else if (c.toUpperCase() == 'I' || c.toUpperCase() == 'V') {
+			roman_numeral += c.toUpperCase();
+		} else {
+			break;
+		}
+		i += 1;
+	};
+	suffix = progression.slice(i, progression.length);
+	return [roman_numeral, acc, suffix];
+}
 
-	for c in progression:
-		if c == '#':
-			acc += 1
-		elif c == 'b':
-			acc -= 1
-		elif c.upper() == 'I' or c.upper() == 'V':
-			roman_numeral += c.upper()
-		else:
-			break
-		i += 1
-	suffix = progression[i:]
-	return (roman_numeral, acc, suffix)
-
+/*
 def tuple_to_string(prog_tuple):
 	"""Creates a string from tuples returned by parse_string"""
 	roman, acc, suff = prog_tuple
@@ -476,5 +480,8 @@ def skip(roman_numeral, skip = 1):
 	return numerals[i % 7]
 */
 //export
-exports.numerals = numerals
-exports.numeral_intervals = numeral_intervals
+exports.numerals = numerals;
+exports.numeral_intervals = numeral_intervals;
+exports.to_chords = to_chords;
+
+exports.parse_string = parse_string;
