@@ -203,23 +203,27 @@ function parse_string(progression) {
 	return [roman_numeral, acc, suffix];
 }
 
-/*
-def tuple_to_string(prog_tuple):
-	"""Creates a string from tuples returned by parse_string"""
-	roman, acc, suff = prog_tuple
-	if acc > 6:
-		acc = 0 - (acc % 6)
-	elif acc < -6:
-		acc = (acc % 6)
-	while acc < 0:
-		roman = 'b' + roman
-		acc += 1
-	while acc > 0:
-		roman = '#' + roman
-		acc -= 1
-	return roman + suff
-	
+function tuple_to_string(prog_tuple) {
+	var roman = prog_tuple[0], 
+		acc = prog_tuple[1], 
+		suff = prog_tuple[2];
 
+	if(acc > 6) {
+		acc = 0 - (acc % 6);
+	} else if(acc < -6) {
+		acc = (acc % 6);
+	}
+	while(acc < 0) {
+		roman = 'b' + roman;
+		acc += 1;
+	}
+	while(acc > 0) {
+		roman = '#' + roman;
+		acc -= 1;
+	}
+	return roman + suff;
+}
+/*
 def substitute_harmonic(progression, substitute_index, ignore_suffix = False):
 	"""Does simple harmonic substitutions. Returns a \
 list of possible substitions for `progression[substitute_index]`. \
@@ -485,3 +489,4 @@ exports.numeral_intervals = numeral_intervals;
 exports.to_chords = to_chords;
 
 exports.parse_string = parse_string;
+exports.tuple_to_string = tuple_to_string;
