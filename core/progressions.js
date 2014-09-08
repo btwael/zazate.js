@@ -468,21 +468,16 @@ and `progression2` is `interval`"""
 		acc += 1
 		j += 1
 	return acc
-	
+*/	
 
-def skip(roman_numeral, skip = 1):
-	"""Skips `skip` places to the next roman numeral. 
-{{{
->>> progressions.skip("I")
-'II'
->>> progressions.skip("VII")
-'I'
->>> progressions.skip("I", 2)
-'III'
-}}}"""
-	i = numerals.index(roman_numeral) + skip
-	return numerals[i % 7]
-*/
+function skip(roman_numeral, skipi) {
+	if(skipi == null) {
+		skipi = 1;
+	}
+	var i = numerals.indexOf(roman_numeral) + skipi;
+	console.log(i)
+	return numerals[i % 7];
+}
 //export
 exports.numerals = numerals;
 exports.numeral_intervals = numeral_intervals;
@@ -490,3 +485,5 @@ exports.to_chords = to_chords;
 
 exports.parse_string = parse_string;
 exports.tuple_to_string = tuple_to_string;
+
+exports.skip = skip;
