@@ -223,40 +223,53 @@ function tuple_to_string(prog_tuple) {
 	}
 	return roman + suff;
 }
+
+function substitute_harmonic(progression, substitute_index, ignore_suffix) {
+	if(ignore_suffix == null) {
+		ignore_suffix = false;
+	}
+	var simple_substitutions = [
+			["I", "III"],
+			["I", "VI"],
+			["IV", "II"],
+			["IV", "VI"],
+			["V", "VII"],
+		],
+		res = [],
+		rslt = parse_string(progression[substitute_index]),
+		roman = rslt[0],
+		acc = rslt[1],
+		suff = rslt[2];
+	if(suff == '' || suff == '7' || ignore_suffix) {
+		for (var i = 0; i < simple_substitutions.length; i++) {
+			var subs = simple_substitutions[i];
+			if(roman == subs[0]) {
+				r = subs[1];
+			} else {
+				r = null;
+			}
+			if(r == null)  {
+				
+				if(roman == subs[1]) {
+					r = subs[0];
+				} else {
+					r = null;
+				}
+			}
+			if(r != null) {
+				if(suff == '7') {
+					suff = suff;
+				} else {
+					suff = '';
+				}
+				res.push(tuple_to_string([r, acc, suff]))
+			}
+		};
+	}
+	return res;
+}
+
 /*
-def substitute_harmonic(progression, substitute_index, ignore_suffix = False):
-	"""Does simple harmonic substitutions. Returns a \
-list of possible substitions for `progression[substitute_index]`. \
-If `ignore_suffix` is set to True the suffix of the chord being substituted \
-will be ignored. Otherwise only progressions without a suffix, or with suffix '7' \
-will be substituted. The following table is used to convert progressions: 
-|| I || III || 
-|| I || VI || 
-|| IV || II || 
-|| IV || VI || 
-|| V || VII ||"""
-
-	simple_substitutions = [
-			("I", "III"),
-			("I", "VI"),
-			("IV", "II"),
-			("IV", "VI"),
-			("V", "VII"),
-			]
-	res = []
-	roman, acc, suff = parse_string(progression[substitute_index])
-	if suff == '' or suff == '7' or ignore_suffix:
-		for subs in simple_substitutions:
-			r = subs[1] if roman == subs[0] else None
-			if r == None:
-				r = subs[0] if roman == subs[1] else None
-			if r != None:
-				suff = suff if suff == '7' else ''
-				res.append(tuple_to_string((r, acc, suff)))
-	return res
-
-
-
 def substitute_minor_for_major(progression, substitute_index, ignore_suffix = False):
 	"""Substitutes minor chords for its major equivalent. Recognizes 'm' and 'm7' suffixes \
 and ['II', 'III', 'VI'] if there is no suffix.
@@ -485,5 +498,6 @@ exports.to_chords = to_chords;
 
 exports.parse_string = parse_string;
 exports.tuple_to_string = tuple_to_string;
+exports.substitute_harmonic = substitute_harmonic;
 
 exports.skip = skip;
