@@ -464,24 +464,25 @@ of each result will be recursively added as well.
 			new_progr[substitute_index] = x
 			res2 += substitute(new_progr, substitute_index, depth - 1)
 	return res + res2
+*/
 
-def interval_diff(progression1, progression2, interval):
-	"""Returns the number of half steps progression2 needs to be \
-diminished or augmented until the interval between `progression1` \
-and `progression2` is `interval`"""
-	i = numeral_intervals[numerals.index(progression1)]
-	j = numeral_intervals[numerals.index(progression2)]
-	acc = 0
-	if j < i:
-		j += 12
-	while j - i > interval:
-		acc -= 1
-		j -= 1
-	while j - i < interval:
+function interval_diff(progression1, progression2, interval) {
+	var i = numeral_intervals[numerals.indexOf(progression1)],
+		j = numeral_intervals[numerals.indexOf(progression2)];
+		acc = 0;
+	if (j < i) {
+		j += 12;
+	}
+	while(j - i > interval) {
+		acc -= 1;
+		j -= 1;
+	}
+	while(j - i < interval) {
 		acc += 1
 		j += 1
-	return acc
-*/	
+	}
+	return acc;
+}
 
 function skip(roman_numeral, skipi) {
 	if(skipi == null) {
@@ -500,4 +501,5 @@ exports.parse_string = parse_string;
 exports.tuple_to_string = tuple_to_string;
 exports.substitute_harmonic = substitute_harmonic;
 
+exports.interval_diff = interval_diff;
 exports.skip = skip;
