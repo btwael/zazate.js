@@ -269,36 +269,31 @@ function substitute_harmonic(progression, substitute_index, ignore_suffix) {
 	return res;
 }
 
+
+function substitute_minor_for_major(progression, substitute_index, ignore_suffix) {
+	if(ignore_suffix == null) {
+		ignore_suffix = false;
+	}
+	var res = [],
+		rslt = parse_string(progression[substitute_index]),
+		roman = rslt[0],
+		acc = rslt[1],
+		suff = rslt[2];
+	if(suff == 'm' || suff == 'm7' || (suff == '' && ["II", "III", "VI"].hasObject(roman)) || ignore_suffix) {
+		var n = skip(roman, 2),
+			a = interval_diff(roman, n, 3) + acc;
+		if(suff == 'm' || ignore_suffix) {
+			res.push(tuple_to_string([n, a, 'M']));
+		} else if(suff == 'm7' || ignore_suffix) {
+			res.push(tuple_to_string([n, a, 'M7']));
+		} else if(suff == '' || ignore_suffix) {
+			res.push(tuple_to_string([n, a, '']));
+		}
+	}
+	return res;
+}
+
 /*
-def substitute_minor_for_major(progression, substitute_index, ignore_suffix = False):
-	"""Substitutes minor chords for its major equivalent. Recognizes 'm' and 'm7' suffixes \
-and ['II', 'III', 'VI'] if there is no suffix.
-{{{
->>> progressions.substitute_minor_for_major(["VI"], 0)
-["I"]
->>> progressions.substitute_minor_for_major(["Vm"], 0)
-["bVIIM"]
->>> progressions.substitute_minor_for_major(["VIm7"], 0)
-["IM7"]
-}}}"""
-	roman, acc, suff = parse_string(progression[substitute_index])
-	res = []
-
-	# Minor to major substitution
-	if suff == 'm' or suff == 'm7' or (suff == '' and roman in ["II", "III", "VI"]) or ignore_suffix:
-		n = skip(roman, 2)
-		a = interval_diff(roman, n, 3) + acc
-		if suff == 'm' or ignore_suffix:
-			res.append(tuple_to_string((n, a, 'M')))
-		elif suff == 'm7' or ignore_suffix:
-			res.append(tuple_to_string((n, a, 'M7')))
-		elif suff == '' or ignore_suffix:
-			res.append(tuple_to_string((n, a, '')))
-	return res
-
-
-
-
 def substitute_major_for_minor(progression, substitute_index, ignore_suffix = False):
 	"""Substitutes major chords for their minor equivalent. Recognizes 'M' and 'M7' suffixes \
 and ['I', 'IV', 'V'] if there is no suffix.
@@ -489,7 +484,6 @@ function skip(roman_numeral, skipi) {
 		skipi = 1;
 	}
 	var i = numerals.indexOf(roman_numeral) + skipi;
-	console.log(i)
 	return numerals[i % 7];
 }
 //export
@@ -500,6 +494,7 @@ exports.to_chords = to_chords;
 exports.parse_string = parse_string;
 exports.tuple_to_string = tuple_to_string;
 exports.substitute_harmonic = substitute_harmonic;
+exports.substitute_minor_for_major = substitute_minor_for_major;
 
 exports.interval_diff = interval_diff;
 exports.skip = skip;
