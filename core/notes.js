@@ -1,17 +1,16 @@
 var intervals = require('./intervals.js'),
 	_ = require('underscore');
 
-_note_dict = {
-	'C' : 0, 
-	'D' : 2,
-	'E' : 4,
-	'F' : 5, 
-	'G' : 7,
-	'A' : 9,
-	'B' : 11 
-};
-
-fifths = ['F', 'C', 'G', 'D', 'A', 'E', 'B'];
+var _note_dict = {
+		'C' : 0, 
+		'D' : 2,
+		'E' : 4,
+		'F' : 5, 
+		'G' : 7,
+		'A' : 9,
+		'B' : 11 
+	},
+	fifths = ['F', 'C', 'G', 'D', 'A', 'E', 'B'];
 
 Array.prototype.hasObject = (
 	!Array.indexOf ? function (o) {
