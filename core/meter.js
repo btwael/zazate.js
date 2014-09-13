@@ -1,5 +1,5 @@
-common_time = (4, 4);
-cut_time = (2, 2);
+var common_time = [4, 4],
+	cut_time = [2, 2];
 
 function valid_beat_duration(duration) {
 	if(duration == 0) {
@@ -34,6 +34,8 @@ function is_asymmetrical(meter) {
 	return is_valid(meter) && meter[0] % 2 == 1;
 }
 //export
+exports.common_time = common_time;
+exports.cut_time = cut_time;
 exports.valid_beat_duration = valid_beat_duration;
 exports.is_valid = is_valid;
 exports.is_compound = is_compound;
