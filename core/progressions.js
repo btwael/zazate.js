@@ -293,33 +293,30 @@ function substitute_minor_for_major(progression, substitute_index, ignore_suffix
 	return res;
 }
 
+function substitute_major_for_minor(progression, substitute_index, ignore_suffix) {
+	if(ignore_suffix == null) {
+		ignore_suffix = false;
+	}
+	var res = [],
+		rslt = parse_string(progression[substitute_index]),
+		roman = rslt[0],
+		acc = rslt[1],
+		suff = rslt[2];
+	if(suff == 'M' || suff == 'M7' || (suff == '' && ["I", "IV", "V"].hasObject(roman)) || ignore_suffix) {
+		var n = skip(roman, 5),
+			a = interval_diff(roman, n, 9) + acc;
+		if(suff == 'M' || ignore_suffix) {
+			res.push(tuple_to_string([n, a, 'm']));
+		} else if(suff == 'M7' || ignore_suffix) {
+			res.push(tuple_to_string([n, a, 'm7']));
+		} else if(suff == '' || ignore_suffix) {
+			res.push(tuple_to_string([n, a, '']));
+		}
+	}
+	return res;
+}
+
 /*
-def substitute_major_for_minor(progression, substitute_index, ignore_suffix = False):
-	"""Substitutes major chords for their minor equivalent. Recognizes 'M' and 'M7' suffixes \
-and ['I', 'IV', 'V'] if there is no suffix.
-{{{
->>> progressions.substitute_major_for_minor(["I"], 0)
-["VI"]
->>> progressions.substitute_major_for_minor(["VM7"], 0)
-["IIIm7"]
-}}}"""
-	roman, acc, suff = parse_string(progression[substitute_index])
-	res = []
-
-	# Major to minor substitution
-	if suff == 'M' or suff == 'M7' or (suff == '' and roman in ["I", "IV", "V"]) or ignore_suffix:
-		n = skip(roman, 5)
-		a = interval_diff(roman, n, 9) + acc
-		if suff == 'M' or ignore_suffix:
-			res.append(tuple_to_string((n, a, 'm')))
-		elif suff == 'M7' or ignore_suffix:
-			res.append(tuple_to_string((n, a, 'm7')))
-		elif suff == '' or ignore_suffix:
-			res.append(tuple_to_string((n, a, '')))
-	return res
-
-
-
 def substitute_diminished_for_diminished(progression, substitute_index, ignore_suffix = False):
 	"""Substitutes a diminished chord for another diminished chord. Recognizes the 'dim' and 'dim7' \
 suffix and "VI" if there is no suffix.
