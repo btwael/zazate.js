@@ -1,6 +1,7 @@
 var notes = require('./notes'),
 	chords = require('./chords'),
-	intervals = require('./intervals');
+	intervals = require('./intervals'),
+	_ = require('underscore');
 
 Array.prototype.hasObject = (
 	!Array.indexOf ? function (o) {
@@ -316,34 +317,33 @@ function substitute_major_for_minor(progression, substitute_index, ignore_suffix
 	return res;
 }
 
+function substitute_diminished_for_diminished(progression, substitute_index, ignore_suffix) {
+	if(ignore_suffix == null) {
+		ignore_suffix = false;
+	}
+	var res = [],
+		rslt = parse_string(progression[substitute_index]),
+		roman = rslt[0],
+		acc = rslt[1],
+		suff = rslt[2];
+	if(suff == 'dim7' || suff == 'dim' || (suff == '' && ["VII"].hasObject(roman)) || ignore_suffix) {
+		if(suff == '') {
+			suff = 'dim'
+		}
+		var last = roman,
+			range = _.range(3);
+		for (var i = 0; i < range.length; i++) {
+			var x = range[i],
+				next = skip(last, 2);
+			acc += interval_diff(last, next, 3);
+			res.push(tuple_to_string([next , acc, suff]));
+			last = next;
+		}
+	}
+	return res;
+}
+
 /*
-def substitute_diminished_for_diminished(progression, substitute_index, ignore_suffix = False):
-	"""Substitutes a diminished chord for another diminished chord. Recognizes the 'dim' and 'dim7' \
-suffix and "VI" if there is no suffix.
-{{{
->>> progressions.substitute_diminished_for_diminished(["VII"], 0)
-["IIdim", "bIVdim", "bbVIdim"]
-}}}"""
-	roman, acc, suff = parse_string(progression[substitute_index])
-	res = []
-
-	# Diminished progressions
-	if suff == 'dim7' or suff == 'dim' or (suff == '' and roman in ["VII"]) or ignore_suffix:
-	
-		if suff == '': suff = 'dim'
-
-		# Add diminished chord
-		last = roman
-		for x in range(3):
-
-			next = skip(last, 2)
-			acc += interval_diff(last, next, 3)
-			res.append(tuple_to_string((next , acc, suff)))
-			last = next
-	return res
-
-
-
 def substitute_diminished_for_dominant(progression, substitute_index, ignore_suffix = False):
 	roman, acc, suff = parse_string(progression[substitute_index])
 	res = []
@@ -492,6 +492,7 @@ exports.parse_string = parse_string;
 exports.tuple_to_string = tuple_to_string;
 exports.substitute_harmonic = substitute_harmonic;
 exports.substitute_minor_for_major = substitute_minor_for_major;
+exports.substitute_diminished_for_diminished = substitute_diminished_for_diminished;
 
 exports.interval_diff = interval_diff;
 exports.skip = skip;
