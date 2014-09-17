@@ -343,30 +343,34 @@ function substitute_diminished_for_diminished(progression, substitute_index, ign
 	return res;
 }
 
+function substitute_diminished_for_dominant(progression, substitute_index, ignore_suffix) {
+		if(ignore_suffix == null) {
+		ignore_suffix = false;
+	}
+	var res = [],
+		rslt = parse_string(progression[substitute_index]),
+		roman = rslt[0],
+		acc = rslt[1],
+		suff = rslt[2];
+	if(suff == 'dim7' || suff == 'dim' || (suff == '' && ["VII"].hasObject(roman)) || ignore_suffix) {
+		if(suff == '') {
+			suff = 'dim'
+		}
+		var last = roman,
+			range = _.range(4);
+		for (var i = 0; i < range.length; i++) {
+			var x = range[i],
+				next = skip(last, 2),
+				dom = skip(last, 5);
+			var a = interval_diff(last, dom, 8) + acc;
+			res.push(tuple_to_string([dom, a, 'dom7']));
+			last = next;
+		}
+	}
+	return res;
+}
+
 /*
-def substitute_diminished_for_dominant(progression, substitute_index, ignore_suffix = False):
-	roman, acc, suff = parse_string(progression[substitute_index])
-	res = []
-
-	# Diminished progressions
-	if suff == 'dim7' or suff == 'dim' or (suff == '' and roman in ["VII"]) or ignore_suffix:
-	
-		if suff == '': suff = 'dim'
-
-		# Add diminished chord
-		last = roman
-		for x in range(4):
-
-			next = skip(last, 2)
-			dom = skip(last, 5)
-			a = interval_diff(last, dom, 8) + acc
-			res.append(tuple_to_string((dom, a, 'dom7')))
-			last = next
-	return res
-
-
-
-
 def substitute(progression, substitute_index, depth = 0):
 	"""Gives a list of possible substitutions for \
 `progression[substitute_index]`. If depth > 0 the substitutions \
