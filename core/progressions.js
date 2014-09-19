@@ -497,6 +497,7 @@ exports.tuple_to_string = tuple_to_string;
 exports.substitute_harmonic = substitute_harmonic;
 exports.substitute_minor_for_major = substitute_minor_for_major;
 exports.substitute_diminished_for_diminished = substitute_diminished_for_diminished;
+exports.substitute_diminished_for_dominant = substitute_diminished_for_dominant; 
 
 exports.interval_diff = interval_diff;
 exports.skip = skip;
