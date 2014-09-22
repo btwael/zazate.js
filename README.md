@@ -36,6 +36,8 @@ In zazatz.js, there are the following libraries:
 * chords
 * scales
 * meter
+* values (need documentation)
+* progressions (not full yet)
 
 See functions of each library in documentation below.
 
