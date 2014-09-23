@@ -46,12 +46,12 @@ describe('Meter', function(){
 	describe('#common_time', function(){
 		it('should equal [4, 4].', function(){
 			meter.common_time.should.eql([4, 4]);
-		})
+		});
 	});
 	describe('#cut_time', function(){
 		it('should equal [2, 2].', function(){
 			meter.cut_time.should.eql([2, 2]);
-		})
+		});
 	});
 	describe('#is_asymmetrical()', function(){
 		it('should return true if meter is an asymmetrical meter, false otherwise.', function(){
@@ -59,7 +59,7 @@ describe('Meter', function(){
 				meter.is_asymmetrical(asymmetrical_meters[i]).should.eql(true);
 			};
 			meter.is_asymmetrical([4,4]).should.eql(false);
-		})
+		});
 	});
 	describe('#is_compound()', function(){
 		it('should return true if meter is a compund meter, false otherwise.', function(){
@@ -67,14 +67,14 @@ describe('Meter', function(){
 				meter.is_compound(compound_meters[i]).should.eql(true);
 			};
 			meter.is_compound([4,4]).should.eql(false);
-		})
+		});
 	});
 	describe('#is_simple()', function(){
 		it('should return true if meter is a simple meter, false otherwise.', function(){
 			for (var i = 0; i < simple_meters.length; i++) {
 				meter.is_simple(simple_meters[i]).should.eql(true);
 			};
-		})
+		});
 	});
 	describe('#is_valid()', function(){
 		it('should return true if meter is a valid array representation of a meter.', function(){
@@ -84,7 +84,7 @@ describe('Meter', function(){
 			for (var i = 0; i < compound_meters.length; i++) {
 				meter.is_valid(compound_meters[i]).should.eql(true);
 			};
-		})
+		});
 	});
 });
 
@@ -94,36 +94,96 @@ describe('Value', function(){
 	describe('#base_quintuplets', function(){
 		it('should equal [0.3125, 0.625, 1.25, 2.5, 5, 10, 20, 40, 80, 160].', function(){
 			value.base_quintuplets.should.eql([0.3125, 0.625, 1.25, 2.5, 5, 10, 20, 40, 80, 160]);
-		})
+		});
 	});
 	describe('#base_septuplets', function(){
 		it('should equal [0.4375, 0.875, 1.75, 3.5, 7, 14, 28, 56, 112, 224].', function(){
 			value.base_septuplets.should.eql([0.4375, 0.875, 1.75, 3.5, 7, 14, 28, 56, 112, 224]);
-		})
+		});
 	});
 	describe('#base_triplets', function(){
 		it('should equal [0.375, 0.75, 1.5, 3, 6, 12, 24, 48, 96, 192].', function(){
 			value.base_triplets.should.eql([0.375, 0.75, 1.5, 3, 6, 12, 24, 48, 96, 192]);
-		})
+		});
 	});
 	describe('#base_values', function(){
 		it('should equal [0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128].', function(){
 			value.base_values.should.eql([0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128]);
-		})
+		});
 	});
 	describe('#breve', function(){
 		it('should equal 0.5.', function(){
 			value.breve.should.eql(0.5);
-		})
+		});
 	});
 	describe('#crotchet', function(){
 		it('should equal 4.', function(){
 			value.crotchet.should.eql(4);
-		})
+		});
 	});
 	describe('#demisemiquaver', function(){
 		it('should equal 32.', function(){
 			value.demisemiquaver.should.eql(32);
-		})
+		});
+	});
+	//
+	describe('#eighth', function(){
+		it('should equal 8.', function(){
+			value.eighth.should.eql(8);
+		});
+	});
+	describe('#half', function(){
+		it('should equal 2.', function(){
+			value.half.should.eql(2);
+		});
+	});
+	describe('#hemidemisemiquaver', function(){
+		it('should equal 64.', function(){
+			value.hemidemisemiquaver.should.eql(64);
+		});
+	});
+	describe('#hundred_twenty_eighth', function(){
+		it('should equal 128.', function(){
+			value.hundred_twenty_eighth.should.eql(128);
+		});
+	});
+	describe('#longa', function(){
+		it('should equal 0.25.', function(){
+			value.longa.should.eql(0.25);
+		});
+	});
+	describe('#minim', function(){
+		it('should equal 2.', function(){
+			value.minim.should.eql(2);
+		});
+	});
+	describe('#musicxml', function(){
+		it("should equal  {16: '16th', 1: 'whole', 2: 'half', 4: 'quarter', 32: '32th', 8: 'eighth', 64: '64th', 128: '128th'}.", function(){
+			value.musicxml.should.eql({
+				16: '16th',
+				1: 'whole',
+				2: 'half',
+				4: 'quarter',
+				32: '32th',
+				8: 'eighth',
+				64: '64th',
+				128: '128th'
+			});
+		});
+	});
+	describe('#quarter', function(){
+		it('should equal 4.', function(){
+			value.quarter.should.eql(4);
+		});
+	});
+	describe('#quasihemidemisemiquaver', function(){
+		it('should equal 128.', function(){
+			value.quasihemidemisemiquaver.should.eql(128);
+		});
+	});
+	describe('#quaver', function(){
+		it('should equal 8.', function(){
+			value.quaver.should.eql(8);
+		});
 	});
 });
