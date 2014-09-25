@@ -186,4 +186,39 @@ describe('Value', function(){
 			value.quaver.should.eql(8);
 		});
 	});
+	describe('#semibreve', function(){
+		it('should equal 1.', function(){
+			value.semibreve.should.eql(1);
+		});
+	});
+	describe('#semihemidemisemiquaver', function(){
+		it('should equal 128.', function(){
+			value.semihemidemisemiquaver.should.eql(128);
+		});
+	});
+	describe('#semiquaver', function(){
+		it('should equal 16.', function(){
+			value.semiquaver.should.eql(16);
+		});
+	});
+	describe('#sixteenth', function(){
+		it('should equal 16.', function(){
+			value.sixteenth.should.eql(16);
+		});
+	});
+	describe('#sixty_fourth', function(){
+		it('should equal 64.', function(){
+			value.sixty_fourth.should.eql(64);
+		});
+	});
+	describe('#thirty_second', function(){
+		it('should equal 32.', function(){
+			value.thirty_second.should.eql(32);
+		});
+	});
+	describe('#whole', function(){
+		it('should equal 1.', function(){
+			value.whole.should.eql(1);
+		});
+	});
 });
