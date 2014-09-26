@@ -183,3 +183,4 @@ exports.triplet = triplet;
 exports.quintuplet = quintuplet;
 exports.septuplet = septuplet;
 exports.tuplet = tuplet;
+exports.determine = determine;
