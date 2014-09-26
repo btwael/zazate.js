@@ -221,4 +221,16 @@ describe('Value', function(){
 			value.whole.should.eql(1);
 		});
 	});
+	describe('#add()', function(){
+		it('should return the value of the two combined.', function(){
+			value.add(value.eighth, value.quarter).should.eql(2.6666666666666665);
+		});
+	});
+	describe('#determine()', function(){
+		it('should analyse the value and return a array containing the parts it\'s made of.', function(){
+			value.determine(8).should.eql([8, 0, 1, 1]);
+			value.determine(12).should.eql([8, 0, 3, 2]);
+			value.determine(14).should.eql([8, 0, 7, 4]);
+		});
+	});
 });
