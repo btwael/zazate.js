@@ -233,4 +233,17 @@ describe('Value', function(){
 			value.determine(14).should.eql([8, 0, 7, 4]);
 		});
 	});
+	describe('#dots()', function(){
+		it('should returns the dotted note value.', function(){
+			value.dots(value.eighth).should.eql(5.3333333333333333);
+			value.dots(value.eighth, 2).should.eql(4.5714285714285712);
+			value.dots(value.quarter).should.eql(2.6666666666666665);
+		});
+	});
+	describe('#quintuplet()', function(){
+		it('should returns the quintuplet note value.', function(){
+			value.quintuplet(8).should.eql(10);
+			value.quintuplet(4).should.eql(5);
+		});
+	});
 });
