@@ -246,4 +246,15 @@ describe('Value', function(){
 			value.quintuplet(4).should.eql(5);
 		});
 	});
+	describe('#septuplet()', function(){
+		it('should returns the septuplet note value.', function(){
+			value.septuplet(8).should.eql(14);
+			value.septuplet(8, false).should.eql(7);
+		});
+	});
+	describe('#subtract()', function(){
+		it('should subtract from given note value.', function(){
+			value.subtract(value.quarter, value.eighth).should.eql(8);
+		});
+	});
 });
