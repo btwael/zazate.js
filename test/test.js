@@ -257,4 +257,15 @@ describe('Value', function(){
 			value.subtract(value.quarter, value.eighth).should.eql(8);
 		});
 	});
+	describe('#triplet()', function(){
+		it('should returns the triplet note value.', function(){
+			value.triplet(value.eighth).should.eql(12);
+			value.triplet(4).should.eql(6);
+		});
+	});
+	describe('#tuplet(value, rat1, rat2)', function(){
+		it('should calculates the note value when playing in rat1:rat2.', function(){
+			value.tuplet(8, 3, 2).should.eql(12);
+		});
+	});
 });
