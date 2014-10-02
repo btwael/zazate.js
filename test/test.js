@@ -269,3 +269,17 @@ describe('Value', function(){
 		});
 	});
 });
+// Test for scales
+describe('Scales', function(){
+	var scales = zazate.scales;
+	describe('#aeolian()', function(){
+		it('should return the aeolian mode scale starting on note.', function(){
+			scales.aeolian('A').should.eql(['A', 'B', 'C', 'D', 'E', 'F', 'G']);
+		});
+	});
+	describe('#chromatic()', function(){
+		it('should return the chromatic mode scale starting on note.', function(){
+			scales.chromatic('A').should.eql(['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']);
+		});
+	});
+});
