@@ -1,7 +1,7 @@
 var intervals = require('./intervals.js'),
 	notes = require('./notes.js'),
 	get_notes = require('./diatonic.js').get_notes,
-	_ = require('underscore');
+	_ = require('../../underscore');
 
 function diatonic(note) {
 	return get_notes(note);
