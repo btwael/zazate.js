@@ -1,7 +1,7 @@
 var notes = require('./notes'),
 	chords = require('./chords'),
 	intervals = require('./intervals'),
-	_ = require('underscore');
+	_ = require('../../underscore');
 
 Array.prototype.hasObject = (
 	!Array.indexOf ? function (o) {

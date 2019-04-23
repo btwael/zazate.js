@@ -1,5 +1,5 @@
 var intervals = require('./intervals.js'),
-	_ = require('underscore');
+	_ = require('../../underscore');
 
 var _note_dict = {
 		'C' : 0, 
