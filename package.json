@@ -1,6 +1,6 @@
 {
 	"name": "zazate.js",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "Music theory and notation library for javascript and node.js",
 	"author": {
 		"name": "Wael Amine Boutglay",
